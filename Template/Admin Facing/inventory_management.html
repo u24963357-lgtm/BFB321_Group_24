@@ -1,16 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inventory &amp; shipment planning | Kelvic the Artist</title>
-  <link rel="stylesheet" href="../../css/base.css">
-  <link rel="stylesheet" href="../../css/storage.css">
-  <link rel="stylesheet" href="../../css/logistics.css">
-</head>
-<body class="storage-page logistics-page">
+{% extends "base.html" %}
+
+{% block title %}Inventory &amp; shipment planning | Kelvic the Artist{% endblock %}
+{% block body_class %}storage-page logistics-page{% endblock %}
+{% set active_page = 'logistics' %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='storage.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='logistics.css') }}">
+{% endblock %}
+{% block content %}
   <header class="topbar">
-    <a class="brand" href="../index.html" aria-label="Kelvic the Artist home">
+    <a class="brand" href="{{ url_for('home') }}" aria-label="Kelvic the Artist home">
       <span class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 24 24">
           <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
@@ -37,7 +36,7 @@
   </header>
 
   <main class="container storage-content logistics-content">
-    <a class="back-link" href="../index.html">
+    <a class="back-link" href="{{ url_for('home') }}">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7" /></svg>
       Back to overview
     </a>
@@ -214,5 +213,4 @@
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
   </script>
-</body>
-</html>
+{% endblock %}

@@ -124,6 +124,10 @@
   margin-bottom: 25px;
 }
 
+.storage-page .page-header > div {
+  margin-right: auto;
+}
+
 .storage-page .eyebrow {
   margin: 0 0 5px;
   color: #607c6b;

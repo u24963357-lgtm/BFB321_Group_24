@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supply Chain Control Tower</title>
-    <link rel="stylesheet" href="../css/home.css">
-</head>
-<body class="home-page">
+{% extends "base.html" %}
+
+{% block title %}Supply Chain Control Tower{% endblock %}
+{% block body_class %}home-page{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+{% endblock %}
+{% set active_page = 'home' %}
+{% block content %}
     <main class="control-tower">
         <header class="welcome">
             <p class="eyebrow">Supply Chain Control Tower</p>
@@ -15,7 +15,7 @@
         </header>
 
         <nav class="area-grid" aria-label="Operations areas">
-            <a class="area-card production" href="/Template/Admin Facing/baseline_data.html">
+            <a class="area-card production" href="{{ url_for('production') }}">
                 <span class="card-top">
                     <svg class="area-icon" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M5 19V9h5v10M10 19V5h5v14M15 19v-7h4v7M3 19h18" />
@@ -37,7 +37,7 @@
                 </span>
             </a>
 
-            <a class="area-card logistics" href="/Template/Admin Facing/inventory_management.html">
+            <a class="area-card logistics" href="{{ url_for('logistics') }}">
                 <span class="card-top">
                     <svg class="area-icon" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M3 7h11v11H3zM14 11h4l3 3v4h-7z" />
@@ -60,7 +60,7 @@
                 </span>
             </a>
 
-            <a class="area-card sales" href="/Template/Admin Facing/order_management.html">
+            <a class="area-card sales" href="{{ url_for('orders') }}">
                 <span class="card-top">
                     <svg class="area-icon" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M6 4h12v16H6zM9 8h6M9 12h6M9 16h3" />
@@ -81,7 +81,7 @@
                 </span>
             </a>
 
-            <a class="area-card storage" href="/Template/Admin Facing/replenishment.html">
+            <a class="area-card storage" href="{{ url_for('storage') }}">
                 <span class="card-top">
                     <svg class="area-icon" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="m4 10 8-6 8 6v10H4zM9 20v-6h6v6M8 10h.01M12 10h.01M16 10h.01" />
@@ -103,5 +103,4 @@
             </a>
         </nav>
     </main>
-</body>
-</html>
+{% endblock %}

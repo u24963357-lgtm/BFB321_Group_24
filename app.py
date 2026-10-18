@@ -11,13 +11,23 @@ app = Flask(
 def home():
     return render_template('index.html')
 
-@app.route('/catalogue')
-def catalogue():
-    return render_template('customer facing/catalogue.html')
+@app.route('/production')
+def production():
+    return render_template('Admin Facing/baseline_data.html')
 
-@app.route('/admin')
-def admin_dashboard():
-    return render_template('Admin Facing/dashboard.html')
+@app.route('/logistics')
+def logistics():
+    return render_template('Admin Facing/inventory_management.html')
+
+@app.route('/orders')
+def orders():
+    return render_template('Admin Facing/order_management.html')
+
+@app.route('/storage')
+def storage():
+    return render_template('Admin Facing/replenishment.html')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

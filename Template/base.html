@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Supply Chain Control Tower{% endblock %}</title>
+    <link rel="stylesheet" href="../css/base.css">
+    {% block styles %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <header class="site-header">
+        <nav class="top-nav" aria-label="Main navigation">
+            <a class="nav-brand" href="{{ url_for('home') }}">Supply Chain Control Tower</a>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}"{% if active_page == 'home' %} aria-current="page"{% endif %}>Home</a>
+                <a href="{{ url_for('production') }}"{% if active_page == 'production' %} aria-current="page"{% endif %}>Production</a>
+                <a href="{{ url_for('logistics') }}"{% if active_page == 'logistics' %} aria-current="page"{% endif %}>Logistics</a>
+                <a href="{{ url_for('orders') }}"{% if active_page == 'orders' %} aria-current="page"{% endif %}>Sales / Orders</a>
+                <a href="{{ url_for('storage') }}"{% if active_page == 'storage' %} aria-current="page"{% endif %}>Storage</a>
+            </div>
+        </nav>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Kelvic_the_Artist</p>
+    </footer>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
