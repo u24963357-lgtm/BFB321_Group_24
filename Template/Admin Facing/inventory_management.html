@@ -3,33 +3,216 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inventory Management | Kelvic_the_Artist</title>
-  <link rel="stylesheet" href="../css/base.css">
+  <title>Inventory &amp; shipment planning | Kelvic the Artist</title>
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/storage.css">
+  <link rel="stylesheet" href="../../css/logistics.css">
 </head>
-<body>
-  <header>
-    <nav>
-      <a href="../index.html">Home</a>
-      <a href="admin_login.html">View as admin</a>
-      <a href="bill_of_materials.html">Bill of Materials</a>
-      <a href="add_new_artwork.html">Add New Artwork</a>
-      <a href="dashboard.html">Admin Dashboard</a>
-      <a href="inventory_management.html">Inventory Management</a>
-      <a href="order_management.html">Order Management</a>
-      <a href="replenishment.html">Replenishment</a>
-      <a href="suppliers.html">Suppliers</a>
-      <a href="baseline_data.html">Baseline Data</a>
-      <!-- etc. -->
-    </nav>
+<body class="storage-page logistics-page">
+  <header class="topbar">
+    <a class="brand" href="../index.html" aria-label="Kelvic the Artist home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
+          <path d="m8 10 4 2.3 4-2.3M8 13l4 2.3 4-2.3M12 12.3v4.5" />
+        </svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-title">Kelvic the Artist</span>
+        <span class="brand-sub">Operations command</span>
+      </span>
+    </a>
+
+    <div class="topbar-right">
+      <span class="pill-status"><span class="dot"></span>All systems operational</span>
+      <button class="icon-btn" type="button" aria-label="View active shipments" title="View active shipments" data-focus-shipments>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.5 15.5 4.2 4.2" /></svg>
+      </button>
+      <button class="icon-btn notification-button" type="button" aria-label="Notifications" title="Notifications">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" /></svg>
+        <span class="notification-dot" aria-hidden="true"></span>
+      </button>
+      <span class="avatar" aria-label="Signed in as Alex Morgan">AM</span>
+    </div>
   </header>
 
-  <main>
-    <h1>Inventory Management</h1>
-    <p>Placeholder content.</p>
+  <main class="container storage-content logistics-content">
+    <a class="back-link" href="../index.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7" /></svg>
+      Back to overview
+    </a>
+
+    <section class="page-header">
+      <div>
+        <p class="eyebrow">Logistics</p>
+        <h1 class="page-title">Inventory &amp; shipment planning</h1>
+        <p class="page-subtitle">Optimize order quantities, production batches, and active freight across the network.</p>
+      </div>
+      <button class="btn export-button" type="button" data-export-shipments>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 18v3h14v-3" /></svg>
+        Export report
+      </button>
+    </section>
+
+    <section class="card-grid storage-metrics logistics-metrics" aria-label="Logistics summary">
+      <article class="card">
+        <div class="card-top">
+          <span class="card-label">In transit</span>
+          <span class="card-badge">+8 today</span>
+        </div>
+        <div class="card-value">124 <small>shipments</small></div>
+      </article>
+      <article class="card">
+        <div class="card-top">
+          <span class="card-label">On-time rate</span>
+          <span class="card-badge">+1.2%</span>
+        </div>
+        <div class="card-value">96.4% <small>this month</small></div>
+      </article>
+      <article class="card">
+        <div class="card-top">
+          <span class="card-label">Avg. lead time</span>
+          <span class="card-badge">−0.4d</span>
+        </div>
+        <div class="card-value">3.8 <small>days</small></div>
+      </article>
+      <article class="card">
+        <div class="card-top">
+          <span class="card-label">Freight cost</span>
+          <span class="card-badge">−3.2%</span>
+        </div>
+        <div class="card-value">$42.8K <small>this week</small></div>
+      </article>
+    </section>
+
+    <section class="planning-grid" aria-label="Inventory planning models">
+      <article class="panel planning-panel">
+        <div class="planning-panel-head">
+          <div>
+            <h2 class="panel-title">Economic order quantity</h2>
+            <p class="panel-sub">Cost optimization by order quantity</p>
+          </div>
+          <span class="model-tag">EOQ</span>
+        </div>
+        <svg class="planning-chart" viewBox="0 0 400 150" role="img" aria-labelledby="eoq-title eoq-description">
+          <title id="eoq-title">Economic order quantity model</title>
+          <desc id="eoq-description">Ordering cost decreases as order size increases while holding cost rises. Their combined cost reaches its minimum at an order quantity of 1,240 units.</desc>
+          <g class="chart-grid">
+            <path d="M44 24H378M44 53H378M44 82H378M44 111H378" />
+          </g>
+          <path class="chart-axis" d="M44 15V119H380" />
+          <path class="chart-order-cost" d="M50 25 368 117" />
+          <path class="chart-holding-cost" d="M50 117 368 25" />
+          <path class="chart-total-fill" d="M50 107C103 67 150 36 210 29C269 35 319 67 368 107L368 117H50Z" />
+          <path class="chart-total-cost" d="M50 107C103 67 150 36 210 29C269 35 319 67 368 107" />
+          <path class="chart-optimum" d="M210 29V117" />
+          <circle class="chart-optimum-dot" cx="210" cy="29" r="4" />
+          <text class="chart-callout" x="220" y="23">Optimal EOQ: 1,240 units</text>
+          <text class="chart-axis-label" x="44" y="135">Order / production cycle</text>
+        </svg>
+      </article>
+
+      <article class="panel planning-panel">
+        <div class="planning-panel-head">
+          <div>
+            <h2 class="panel-title">Economic production quantity</h2>
+            <p class="panel-sub">Inventory level across each production cycle</p>
+          </div>
+          <span class="model-tag">EPQ</span>
+        </div>
+        <svg class="planning-chart" viewBox="0 0 400 150" role="img" aria-labelledby="epq-title epq-description">
+          <title id="epq-title">Economic production quantity model</title>
+          <desc id="epq-description">Inventory rises during production and falls as items are used. The dashed line marks an average inventory level of 620 units.</desc>
+          <g class="chart-grid">
+            <path d="M44 24H378M44 53H378M44 82H378M44 111H378" />
+          </g>
+          <path class="chart-axis" d="M44 15V119H380" />
+          <path class="chart-total-fill" d="M50 107 105 24V107 107L164 24V107 107L223 24V107 107L282 24V107 107L341 24V107 107L368 55V117H50Z" />
+          <path class="chart-sawtooth" d="M50 107 105 24V107L164 24V107L223 24V107L282 24V107L341 24V107L368 64" />
+          <path class="chart-average" d="M44 65H378" />
+          <text class="chart-average-label" x="269" y="59">Average inventory: 620</text>
+          <text class="chart-axis-label" x="44" y="135">Order / production cycle</text>
+        </svg>
+      </article>
+    </section>
+
+    <section class="panel shipment-panel" id="active-shipments" aria-labelledby="shipments-title">
+      <div class="panel-head shipment-panel-head">
+        <div>
+          <h2 class="panel-title" id="shipments-title" tabindex="-1">Active shipments</h2>
+          <p class="panel-sub">Live movement across your network</p>
+        </div>
+        <a class="btn btn-outline view-shipments" href="#active-shipments" data-view-shipments>View all shipments</a>
+      </div>
+      <div class="table-scroll">
+        <table class="shipment-table">
+          <thead>
+            <tr>
+              <th scope="col">Shipment</th>
+              <th scope="col">Origin</th>
+              <th scope="col">Destination</th>
+              <th scope="col">Status</th>
+              <th scope="col">Est. arrival</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="shipment-id">SHP-24908</td>
+              <td>Chicago, IL</td>
+              <td>Denver, CO</td>
+              <td><span class="badge ok">In transit</span></td>
+              <td>Today, 16:30</td>
+            </tr>
+            <tr>
+              <td class="shipment-id">SHP-24904</td>
+              <td>Austin, TX</td>
+              <td>Phoenix, AZ</td>
+              <td><span class="badge ok">On schedule</span></td>
+              <td>Tomorrow, 08:15</td>
+            </tr>
+            <tr>
+              <td class="shipment-id">SHP-24897</td>
+              <td>Portland, OR</td>
+              <td>Seattle, WA</td>
+              <td><span class="badge low">Delayed</span></td>
+              <td>Tomorrow, 14:20</td>
+            </tr>
+            <tr>
+              <td class="shipment-id">SHP-24891</td>
+              <td>Newark, NJ</td>
+              <td>Boston, MA</td>
+              <td><span class="badge ok">At terminal</span></td>
+              <td>May 24, 11:00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <p>&copy; 2026 Kelvic_the_Artist</p>
-  </footer>
+  <script>
+    const shipmentRows = [...document.querySelectorAll(".shipment-table tbody tr")];
+
+    document.querySelector("[data-focus-shipments]").addEventListener("click", () => {
+      document.querySelector("#shipments-title").scrollIntoView({ behavior: "smooth", block: "center" });
+      document.querySelector("#shipments-title").focus({ preventScroll: true });
+    });
+
+    document.querySelector("[data-export-shipments]").addEventListener("click", () => {
+      const rows = [
+        ["Shipment", "Origin", "Destination", "Status", "Estimated arrival"],
+        ...shipmentRows.map((row) => [...row.cells].map((cell) => cell.textContent.trim())),
+      ];
+      const csv = rows
+        .map((row) => row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(","))
+        .join("\r\n");
+      const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      const download = document.createElement("a");
+      download.href = url;
+      download.download = "active-shipments.csv";
+      download.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+  </script>
 </body>
 </html>

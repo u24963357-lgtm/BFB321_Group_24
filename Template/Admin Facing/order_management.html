@@ -3,33 +3,157 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order Management | Kelvic_the_Artist</title>
-  <link rel="stylesheet" href="../css/base.css">
+  <title>Demand &amp; fulfillment | Kelvic the Artist</title>
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/storage.css">
+  <link rel="stylesheet" href="../../css/sales.css">
 </head>
-<body>
-  <header>
-    <nav>
-      <a href="../index.html">Home</a>
-      <a href="admin_login.html">View as admin</a>
-      <a href="bill_of_materials.html">Bill of Materials</a>
-      <a href="add_new_artwork.html">Add New Artwork</a>
-      <a href="dashboard.html">Admin Dashboard</a>
-      <a href="inventory_management.html">Inventory Management</a>
-      <a href="order_management.html">Order Management</a>
-      <a href="replenishment.html">Replenishment</a>
-      <a href="suppliers.html">Suppliers</a>
-      <a href="baseline_data.html">Baseline Data</a>
-      <!-- etc. -->
-    </nav>
+<body class="storage-page sales-page">
+  <header class="topbar">
+    <a class="brand" href="../index.html" aria-label="Kelvic the Artist home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
+          <path d="m8 10 4 2.3 4-2.3M8 13l4 2.3 4-2.3M12 12.3v4.5" />
+        </svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-title">Kelvic the Artist</span>
+        <span class="brand-sub">Operations command</span>
+      </span>
+    </a>
+
+    <div class="topbar-right">
+      <span class="pill-status"><span class="dot"></span>All systems operational</span>
+      <button class="icon-btn" type="button" aria-label="View weekly order volume" title="View weekly order volume" data-focus-orders>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.5 15.5 4.2 4.2" /></svg>
+      </button>
+      <span class="icon-btn notification-icon" role="img" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" /></svg>
+      </span>
+      <span class="avatar" aria-label="Signed in as Alex Morgan">AM</span>
+    </div>
   </header>
 
-  <main>
-    <h1>Order Management</h1>
-    <p>Placeholder content.</p>
+  <main class="container storage-content sales-content">
+    <a class="back-link" href="../index.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7" /></svg>
+      Back to overview
+    </a>
+
+    <section class="page-header">
+      <div>
+        <p class="eyebrow">Sales / Orders</p>
+        <h1 class="page-title">Demand &amp; fulfillment</h1>
+        <p class="page-subtitle">Review order volume, fulfillment status, and customer demand.</p>
+      </div>
+      <button class="btn export-button" type="button" data-export-orders>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 18v3h14v-3" /></svg>
+        Export report
+      </button>
+    </section>
+
+    <section class="card-grid storage-metrics sales-metrics" aria-label="Sales summary">
+      <article class="card">
+        <div class="card-top">
+          <span class="card-label">Open orders</span>
+          <span class="card-badge">+24 today</span>
+        </div>
+        <div class="card-value">386 <small>orders</small></div>
+      </article>
+      <article class="card">
+        <div class="card-top">
+          <span class="card-label">Revenue</span>
+          <span class="card-badge">+14.7%</span>
+        </div>
+        <div class="card-value">$184K <small>this week</small></div>
+      </article>
+      <article class="card">
+        <div class="card-top">
+          <span class="card-label">Fill rate</span>
+          <span class="card-badge">+0.9%</span>
+        </div>
+        <div class="card-value">97.1% <small>fulfilled</small></div>
+      </article>
+      <article class="card">
+        <div class="card-top">
+          <span class="card-label">Backorders</span>
+          <span class="card-badge">−12.5%</span>
+        </div>
+        <div class="card-value">28 <small>orders</small></div>
+      </article>
+    </section>
+
+    <section class="panel output-panel order-volume-panel" aria-labelledby="order-volume-title">
+      <div class="output-panel-head">
+        <h2 class="panel-title" id="order-volume-title" tabindex="-1">Weekly order volume</h2>
+        <p class="panel-sub">Performance over the last seven days</p>
+      </div>
+      <div class="output-chart-wrap">
+        <svg class="output-chart" viewBox="0 0 1160 190" role="img" aria-labelledby="order-chart-title order-chart-description">
+          <title id="order-chart-title">Weekly order volume</title>
+          <desc id="order-chart-description">Daily order volume from Monday to Sunday: 248, 316, 292, 388, 352, 432, and 308 orders.</desc>
+          <g class="output-grid">
+            <path d="M0 25H1160M0 70H1160M0 115H1160M0 160H1160" />
+          </g>
+          <g class="output-bars">
+            <rect x="65" y="86" width="28" height="74" rx="3" />
+            <rect x="229" y="61" width="28" height="99" rx="3" />
+            <rect x="393" y="70" width="28" height="90" rx="3" />
+            <rect x="557" y="38" width="28" height="122" rx="3" />
+            <rect x="721" y="52" width="28" height="108" rx="3" />
+            <rect x="885" y="24" width="28" height="136" rx="3" />
+            <rect x="1049" y="64" width="28" height="96" rx="3" />
+          </g>
+          <path class="output-baseline" d="M0 160H1160" />
+          <g class="output-labels">
+            <text x="79" y="180">Mon</text>
+            <text x="243" y="180">Tue</text>
+            <text x="407" y="180">Wed</text>
+            <text x="571" y="180">Thu</text>
+            <text x="735" y="180">Fri</text>
+            <text x="899" y="180">Sat</text>
+            <text x="1063" y="180">Sun</text>
+          </g>
+        </svg>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <p>&copy; 2026 Kelvic_the_Artist</p>
-  </footer>
+  <script>
+    document.querySelector("[data-focus-orders]").addEventListener("click", () => {
+      const chartTitle = document.querySelector("#order-volume-title");
+      chartTitle.scrollIntoView({ behavior: "smooth", block: "center" });
+      chartTitle.focus({ preventScroll: true });
+    });
+
+    document.querySelector("[data-export-orders]").addEventListener("click", () => {
+      const rows = [
+        ["Sales metric", "Value"],
+        ["Open orders", "386 orders"],
+        ["Revenue", "$184K this week"],
+        ["Fill rate", "97.1% fulfilled"],
+        ["Backorders", "28 orders"],
+        [],
+        ["Day", "Orders"],
+        ["Monday", "248"],
+        ["Tuesday", "316"],
+        ["Wednesday", "292"],
+        ["Thursday", "388"],
+        ["Friday", "352"],
+        ["Saturday", "432"],
+        ["Sunday", "308"],
+      ];
+      const csv = rows
+        .map((row) => row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(","))
+        .join("\r\n");
+      const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      const download = document.createElement("a");
+      download.href = url;
+      download.download = "demand-and-fulfillment-report.csv";
+      download.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+  </script>
 </body>
 </html>

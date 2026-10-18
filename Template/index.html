@@ -1,29 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home Page | Kelvic_the_Artist</title>
-  <link rel="stylesheet" href="../css/base.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supply Chain Control Tower</title>
+    <link rel="stylesheet" href="../css/home.css">
 </head>
-<body>
-  <header>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="./customer facing/catalogue.html">Buyer View</a>
-      <a href="./Admin Facing/admin_login.html">Admin View</a>
+<body class="home-page">
+    <main class="control-tower">
+        <header class="welcome">
+            <p class="eyebrow">Supply Chain Control Tower</p>
+            <h1>Good morning Victor.</h1>
+            <p class="welcome-copy">Choose an area to view detailed operations, analytics, and records.</p>
+        </header>
 
-      <!-- etc. -->
-    </nav>
-  </header>
+        <nav class="area-grid" aria-label="Operations areas">
+            <a class="area-card production" href="/Template/Admin Facing/baseline_data.html">
+                <span class="card-top">
+                    <svg class="area-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 19V9h5v10M10 19V5h5v14M15 19v-7h4v7M3 19h18" />
+                        <path d="M7.5 12h.01M12.5 8h.01M17 15h.01" />
+                    </svg>
+                    <span class="arrow" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M5 12h13m-5-5 5 5-5 5" /></svg>
+                    </span>
+                </span>
+                <span class="card-title">
+                    <span class="area-name">Production</span>
+                    <span class="area-count">8 active lines</span>
+                </span>
+                <span class="card-divider"></span>
+                <span class="card-metric">
+                    <span class="metric-value">2,847</span>
+                    <span class="metric-label">units today</span>
+                    <span class="metric-trend">+2.4%</span>
+                </span>
+            </a>
 
-  <main>
-    <h1>Home Page</h1>
-    <p>Placeholder content.</p>
-  </main>
+            <a class="area-card logistics" href="/Template/Admin Facing/inventory_management.html">
+                <span class="card-top">
+                    <svg class="area-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 7h11v11H3zM14 11h4l3 3v4h-7z" />
+                        <circle cx="7.5" cy="19" r="1.5" />
+                        <circle cx="17.5" cy="19" r="1.5" />
+                    </svg>
+                    <span class="arrow" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M5 12h13m-5-5 5 5-5 5" /></svg>
+                    </span>
+                </span>
+                <span class="card-title">
+                    <span class="area-name">Logistics</span>
+                    <span class="area-count">124 in transit</span>
+                </span>
+                <span class="card-divider"></span>
+                <span class="card-metric">
+                    <span class="metric-value">96.4%</span>
+                    <span class="metric-label">on-time rate</span>
+                    <span class="metric-trend">+1.2%</span>
+                </span>
+            </a>
 
-  <footer>
-    <p>&copy; 2026 Kelvic_the_Artist</p>
-  </footer>
+            <a class="area-card sales" href="/Template/Admin Facing/order_management.html">
+                <span class="card-top">
+                    <svg class="area-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 4h12v16H6zM9 8h6M9 12h6M9 16h3" />
+                    </svg>
+                    <span class="arrow" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M5 12h13m-5-5 5 5-5 5" /></svg>
+                    </span>
+                </span>
+                <span class="card-title">
+                    <span class="area-name">Sales / Orders</span>
+                    <span class="area-count">386 open orders</span>
+                </span>
+                <span class="card-divider"></span>
+                <span class="card-metric">
+                    <span class="metric-value">$184K</span>
+                    <span class="metric-label">weekly revenue</span>
+                    <span class="metric-trend">+4.7%</span>
+                </span>
+            </a>
+
+            <a class="area-card storage" href="/Template/Admin Facing/replenishment.html">
+                <span class="card-top">
+                    <svg class="area-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="m4 10 8-6 8 6v10H4zM9 20v-6h6v6M8 10h.01M12 10h.01M16 10h.01" />
+                    </svg>
+                    <span class="arrow" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M5 12h13m-5-5 5 5-5 5" /></svg>
+                    </span>
+                </span>
+                <span class="card-title">
+                    <span class="area-name">Storage</span>
+                    <span class="area-count">18 low-stock SKUs</span>
+                </span>
+                <span class="card-divider"></span>
+                <span class="card-metric">
+                    <span class="metric-value">78.6%</span>
+                    <span class="metric-label">capacity used</span>
+                    <span class="metric-trend">+6.2%</span>
+                </span>
+            </a>
+        </nav>
+    </main>
 </body>
 </html>

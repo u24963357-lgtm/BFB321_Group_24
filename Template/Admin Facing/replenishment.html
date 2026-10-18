@@ -3,32 +3,215 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Replenishment | Kelvic_the_Artist</title>
-  <link rel="stylesheet" href="../css/base.css">
+  <title>Warehouse inventory | Kelvic the Artist</title>
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/storage.css">
 </head>
-<body>
-  <header>
-    <nav>
-      <a href="../index.html">Home</a>
-      <a href="admin_login.html">View as admin</a>
-      <a href="bill_of_materials.html">Bill of Materials</a>
-      <a href="add_new_artwork.html">Add New Artwork</a>
-      <a href="dashboard.html">Admin Dashboard</a>
-      <a href="inventory_management.html">Inventory Management</a>
-      <a href="order_management.html">Order Management</a>
-      <a href="replenishment.html">Replenishment</a>
-      <a href="suppliers.html">Suppliers</a>
-      <a href="baseline_data.html">Baseline Data</a>
-    </nav>
+<body class="storage-page">
+  <header class="topbar">
+    <a class="brand" href="../index.html" aria-label="Kelvic the Artist">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
+          <path d="m8 10 4 2.3 4-2.3M8 13l4 2.3 4-2.3M12 12.3v4.5" />
+        </svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-title">Kelvic the Artist</span>
+        <span class="brand-sub">Operations command</span>
+      </span>
+    </a>
+
+    <div class="topbar-right">
+      <span class="pill-status"><span class="dot"></span>All systems operational</span>
+      <button class="icon-btn" type="button" aria-label="Search" title="Search inventory" data-focus-search>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.5 15.5 4.2 4.2" /></svg>
+      </button>
+      <button class="icon-btn notification-button" type="button" aria-label="Notifications" title="Notifications">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" /></svg>
+        <span class="notification-dot" aria-hidden="true"></span>
+      </button>
+      <span class="avatar" aria-label="Signed in as Alex Morgan">AM</span>
+    </div>
   </header>
 
-  <main>
-    <h1>Baseline Data</h1>
-    <p>current stockouts,admin time, past sales data.</p>
+  <main class="container storage-content">
+    <a class="back-link" href="../index.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7" /></svg>
+      Back to overview
+    </a>
+
+    <section class="page-header">
+      <div>
+        <p class="eyebrow">Storage</p>
+        <h1 class="page-title">Warehouse inventory</h1>
+        <p class="page-subtitle">View SKU quantities, bin locations, and replenishment status across every warehouse.</p>
+      </div>
+      <button class="btn export-button" type="button" data-export>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 18v3h14v-3" /></svg>
+        Export report
+      </button>
+    </section>
+
+    <section class="card-grid storage-metrics" aria-label="Inventory summary">
+      <article class="card">
+        <div class="card-top">
+          <span class="card-label">Total SKUs</span>
+          <span class="card-badge">+24</span>
+        </div>
+        <div class="card-value">1,284 <small>active items</small></div>
+      </article>
+      <article class="card">
+        <div class="card-top">
+          <span class="card-label">Units on hand</span>
+          <span class="card-badge">+4.2%</span>
+        </div>
+        <div class="card-value">84,216 <small>all locations</small></div>
+      </article>
+      <article class="card">
+        <div class="card-top">
+          <span class="card-label">Capacity used</span>
+          <span class="card-badge">+2.4%</span>
+        </div>
+        <div class="card-value">78.6% <small>network-wide</small></div>
+      </article>
+      <article class="card">
+        <div class="card-top">
+          <span class="card-label">Low stock</span>
+          <span class="card-badge warn">Needs review</span>
+        </div>
+        <div class="card-value">18 <small>SKUs</small></div>
+      </article>
+    </section>
+
+    <section class="panel inventory-panel" aria-labelledby="inventory-title">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title" id="inventory-title">SKU inventory</h2>
+          <p class="panel-sub" id="inventory-count" aria-live="polite">7 inventory records shown</p>
+        </div>
+        <label class="search-control">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.5 15.5 4.2 4.2" /></svg>
+          <span class="visually-hidden">Search SKU or location</span>
+          <input class="search-input" type="search" placeholder="Search SKU or location" autocomplete="off" data-inventory-search>
+        </label>
+      </div>
+      <div class="table-scroll">
+        <table class="inventory-table">
+          <thead>
+            <tr>
+              <th scope="col">SKU</th>
+              <th scope="col">Product</th>
+              <th scope="col">Category</th>
+              <th scope="col">Location</th>
+              <th scope="col" class="quantity-heading">Quantity</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody data-inventory-rows>
+            <tr>
+              <td class="sku">SKU-10482</td>
+              <td>Precision bearing 20mm</td>
+              <td>Components</td>
+              <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-01 · A-14-03</span></td>
+              <td class="quantity">1,840</td>
+              <td><span class="badge ok">In stock</span></td>
+            </tr>
+            <tr>
+              <td class="sku">SKU-20741</td>
+              <td>Aluminum housing</td>
+              <td>Raw material</td>
+              <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-01 · B-08-12</span></td>
+              <td class="quantity">624</td>
+              <td><span class="badge ok">In stock</span></td>
+            </tr>
+            <tr>
+              <td class="sku">SKU-30918</td>
+              <td>Control module X4</td>
+              <td>Electronics</td>
+              <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-02 · C-02-08</span></td>
+              <td class="quantity">86</td>
+              <td><span class="badge low">Low stock</span></td>
+            </tr>
+            <tr>
+              <td class="sku">SKU-40233</td>
+              <td>Packing carton large</td>
+              <td>Packaging</td>
+              <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-03 · D-11-01</span></td>
+              <td class="quantity">4,250</td>
+              <td><span class="badge ok">In stock</span></td>
+            </tr>
+            <tr>
+              <td class="sku">SKU-50124</td>
+              <td>Drive belt 800mm</td>
+              <td>Components</td>
+              <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-01 · A-18-06</span></td>
+              <td class="quantity">312</td>
+              <td><span class="badge ok">In stock</span></td>
+            </tr>
+            <tr>
+              <td class="sku">SKU-60887</td>
+              <td>Industrial adhesive</td>
+              <td>Consumables</td>
+              <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-02 · E-04-02</span></td>
+              <td class="quantity">42</td>
+              <td><span class="badge reorder">Reorder</span></td>
+            </tr>
+            <tr>
+              <td class="sku">SKU-70336</td>
+              <td>Safety valve 12B</td>
+              <td>Components</td>
+              <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-04 · B-06-09</span></td>
+              <td class="quantity">168</td>
+              <td><span class="badge low">Low stock</span></td>
+            </tr>
+            <tr class="empty-state" hidden>
+              <td colspan="6">No inventory matches your search.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <p>&copy; 2026 Kelvic_the_Artist</p>
-  </footer>
+  <script>
+    const searchInput = document.querySelector("[data-inventory-search]");
+    const inventoryRows = [...document.querySelectorAll("[data-inventory-rows] tr:not(.empty-state)")];
+    const emptyState = document.querySelector(".empty-state");
+    const inventoryCount = document.querySelector("#inventory-count");
+
+    function getVisibleRows() {
+      return inventoryRows.filter((row) => !row.hidden);
+    }
+
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      for (const row of inventoryRows) {
+        row.hidden = !row.textContent.toLowerCase().includes(query);
+        if (!row.hidden) visibleCount += 1;
+      }
+
+      emptyState.hidden = visibleCount > 0;
+      inventoryCount.textContent = `${visibleCount} inventory ${visibleCount === 1 ? "record" : "records"} shown`;
+    });
+
+    document.querySelector("[data-focus-search]").addEventListener("click", () => searchInput.focus());
+
+    document.querySelector("[data-export]").addEventListener("click", () => {
+      const rows = getVisibleRows();
+      const csv = [
+        ["SKU", "Product", "Category", "Location", "Quantity", "Status"],
+        ...rows.map((row) => [...row.cells].map((cell) => cell.textContent.trim())),
+      ].map((row) => row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(",")).join("\r\n");
+      const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      const download = document.createElement("a");
+      download.href = url;
+      download.download = "warehouse-inventory.csv";
+      download.click();
+      URL.revokeObjectURL(url);
+    });
+  </script>
 </body>
 </html>
