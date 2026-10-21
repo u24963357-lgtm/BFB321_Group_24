@@ -24,7 +24,7 @@
 }
 
 .production-metrics.card-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
   margin-bottom: 17px;
 }
@@ -63,6 +63,59 @@
   letter-spacing: 0;
 }
 
+.production-metrics .painting-kpi-card {
+  border-color: #e8d8b3;
+  background: #fffdf8;
+}
+
+.production-metrics .painting-kpi-card .card-value {
+  color: #9b6b1f;
+}
+
+.production-metrics .painting-kpi-badge {
+  color: #8b5e16;
+  background: #f8edcf;
+}
+
+.painting-kpi-progress {
+  position: relative;
+  height: 7px;
+  margin-top: 12px;
+  overflow: visible;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    #d77870 0 33.33%,
+    #e2b550 33.33% 66.66%,
+    #67a47c 66.66% 100%
+  );
+}
+
+.painting-kpi-marker {
+  position: absolute;
+  top: 50%;
+  left: 66.67%;
+  width: 13px;
+  height: 13px;
+  border: 2px solid #fffdf8;
+  border-radius: 50%;
+  background: #a77420;
+  box-shadow: 0 0 0 1px #a77420;
+  transform: translate(-50%, -50%);
+}
+
+.painting-kpi-goal {
+  margin-top: 8px;
+  color: #78877d;
+  font-size: 9px;
+}
+
+.painting-kpi-goal strong {
+  margin-left: 3px;
+  color: #40584a;
+  font-weight: 600;
+}
+
 .output-panel {
   margin: 0;
   padding: 17px 19px 12px;
@@ -87,38 +140,46 @@
   font-size: 10px;
 }
 
-.output-chart-wrap {
-  padding-top: 11px;
+.painting-table-wrap {
+  overflow-x: auto;
 }
 
-.output-chart {
-  display: block;
+.painting-table {
   width: 100%;
-  height: 202px;
-  overflow: visible;
+  border-collapse: collapse;
+  color: #64736a;
+  font-size: 11px;
 }
 
-.output-grid path {
-  fill: none;
-  stroke: #e4e9e4;
-  stroke-width: 1;
+.painting-table th,
+.painting-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid #e3e8e3;
+  text-align: left;
 }
 
-.output-bars rect {
-  fill: #528066;
-}
-
-.output-baseline {
-  fill: none;
-  stroke: #d8e0d9;
-  stroke-width: 1;
-}
-
-.output-labels {
-  fill: #78877d;
-  font-family: inherit;
+.painting-table thead th {
+  color: #78877d;
+  background: #f4f6f3;
   font-size: 9px;
-  text-anchor: middle;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.painting-table tbody th {
+  color: #40584a;
+  font-weight: 550;
+}
+
+.painting-table tbody td {
+  width: 38%;
+  color: #89948d;
+}
+
+.painting-table tbody tr:last-child th,
+.painting-table tbody tr:last-child td {
+  border-bottom: 0;
 }
 
 #output-title:focus {
@@ -133,10 +194,6 @@
 }
 
 @media (max-width: 900px) {
-  .production-metrics.card-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .production-metrics .card {
     min-height: 110px;
   }
@@ -165,9 +222,6 @@
     min-height: 58px;
   }
 
-  .output-chart {
-    height: 165px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -189,7 +243,4 @@
     font-size: 21px;
   }
 
-  .output-chart {
-    height: 135px;
-  }
 }

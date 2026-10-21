@@ -24,7 +24,7 @@
 
     <div class="topbar-right">
       <span class="pill-status"><span class="dot"></span>All systems operational</span>
-      <button class="icon-btn" type="button" aria-label="View weekly order volume" title="View weekly order volume" data-focus-orders>
+      <button class="icon-btn" type="button" aria-label="View monthly order table" title="View monthly orders" data-focus-orders>
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.5 15.5 4.2 4.2" /></svg>
       </button>
       <span class="icon-btn notification-icon" role="img" aria-label="Notifications">
@@ -56,65 +56,61 @@
       <article class="card">
         <div class="card-top">
           <span class="card-label">Open orders</span>
-          <span class="card-badge">+24 today</span>
+          <span class="card-badge">+2 this month</span>
         </div>
-        <div class="card-value">386 <small>orders</small></div>
+        <div class="card-value">8 <small>orders</small></div>
       </article>
       <article class="card">
         <div class="card-top">
-          <span class="card-label">Revenue</span>
+          <span class="card-label"> Monthly Revenue</span>
           <span class="card-badge">+14.7%</span>
         </div>
-        <div class="card-value">$184K <small>this week</small></div>
+        <div class="card-value">R2,450 <small>this month</small></div>
       </article>
       <article class="card">
         <div class="card-top">
-          <span class="card-label">Fill rate</span>
+          <span class="card-label">Fulfillment rate</span>
           <span class="card-badge">+0.9%</span>
         </div>
-        <div class="card-value">97.1% <small>fulfilled</small></div>
+        <div class="card-value">99% <small>fulfilled</small></div>
       </article>
       <article class="card">
         <div class="card-top">
           <span class="card-label">Backorders</span>
           <span class="card-badge">−12.5%</span>
         </div>
-        <div class="card-value">28 <small>orders</small></div>
+        <div class="card-value">8<small>orders</small></div>
       </article>
     </section>
 
     <section class="panel output-panel order-volume-panel" aria-labelledby="order-volume-title">
       <div class="output-panel-head">
-        <h2 class="panel-title" id="order-volume-title" tabindex="-1">Weekly order volume</h2>
-        <p class="panel-sub">Performance over the last seven days</p>
+        <h2 class="panel-title" id="order-volume-title" tabindex="-1">Monthly orders</h2>
+        <p class="panel-sub">Order totals from January to December</p>
       </div>
-      <div class="output-chart-wrap">
-        <svg class="output-chart" viewBox="0 0 1160 190" role="img" aria-labelledby="order-chart-title order-chart-description">
-          <title id="order-chart-title">Weekly order volume</title>
-          <desc id="order-chart-description">Daily order volume from Monday to Sunday: 248, 316, 292, 388, 352, 432, and 308 orders.</desc>
-          <g class="output-grid">
-            <path d="M0 25H1160M0 70H1160M0 115H1160M0 160H1160" />
-          </g>
-          <g class="output-bars">
-            <rect x="65" y="86" width="28" height="74" rx="3" />
-            <rect x="229" y="61" width="28" height="99" rx="3" />
-            <rect x="393" y="70" width="28" height="90" rx="3" />
-            <rect x="557" y="38" width="28" height="122" rx="3" />
-            <rect x="721" y="52" width="28" height="108" rx="3" />
-            <rect x="885" y="24" width="28" height="136" rx="3" />
-            <rect x="1049" y="64" width="28" height="96" rx="3" />
-          </g>
-          <path class="output-baseline" d="M0 160H1160" />
-          <g class="output-labels">
-            <text x="79" y="180">Mon</text>
-            <text x="243" y="180">Tue</text>
-            <text x="407" y="180">Wed</text>
-            <text x="571" y="180">Thu</text>
-            <text x="735" y="180">Fri</text>
-            <text x="899" y="180">Sat</text>
-            <text x="1063" y="180">Sun</text>
-          </g>
-        </svg>
+      <div class="order-table-wrap">
+        <table class="order-table">
+          <thead>
+            <tr>
+              <th scope="col">Month</th>
+              <th scope="col">Orders</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">January</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">February</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">March</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">April</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">May</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">June</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">July</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">August</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">September</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">October</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">November</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">December</th><td aria-label="No total recorded">—</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
   </main>
@@ -129,19 +125,25 @@
     document.querySelector("[data-export-orders]").addEventListener("click", () => {
       const rows = [
         ["Sales metric", "Value"],
-        ["Open orders", "386 orders"],
-        ["Revenue", "$184K this week"],
+        ["Open orders", "8 orders"],
+        ["Revenue", "R 2,450 this month"],
         ["Fill rate", "97.1% fulfilled"],
         ["Backorders", "28 orders"],
         [],
-        ["Day", "Orders"],
-        ["Monday", "248"],
-        ["Tuesday", "316"],
-        ["Wednesday", "292"],
-        ["Thursday", "388"],
-        ["Friday", "352"],
-        ["Saturday", "432"],
-        ["Sunday", "308"],
+        [],
+        ["Month", "Orders"],
+        ["January", "Not recorded"],
+        ["February", "Not recorded"],
+        ["March", "Not recorded"],
+        ["April", "Not recorded"],
+        ["May", "Not recorded"],
+        ["June", "Not recorded"],
+        ["July", "Not recorded"],
+        ["August", "Not recorded"],
+        ["September", "Not recorded"],
+        ["October", "Not recorded"],
+        ["November", "Not recorded"],
+        ["December", "Not recorded"],
       ];
       const csv = rows
         .map((row) => row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(","))
