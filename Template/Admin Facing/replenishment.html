@@ -89,12 +89,16 @@
           <h2 class="panel-title" id="inventory-title">SKU inventory</h2>
           <p class="panel-sub" id="inventory-count" aria-live="polite">7 inventory records shown</p>
         </div>
-        <label class="search-control">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.5 15.5 4.2 4.2" /></svg>
-          <span class="visually-hidden">Search SKU or location</span>
-          <input class="search-input" type="search" placeholder="Search SKU or location" autocomplete="off" data-inventory-search>
-        </label>
+        <div class="inventory-toolbar">
+          <button class="btn inventory-add" type="button" data-add-inventory>Add SKU</button>
+          <label class="search-control">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.5 15.5 4.2 4.2" /></svg>
+            <span class="visually-hidden">Search SKU or location</span>
+            <input class="search-input" type="search" placeholder="Search SKU or location" autocomplete="off" data-inventory-search>
+          </label>
+        </div>
       </div>
+      <p class="inventory-message" aria-live="polite" data-inventory-message></p>
       <div class="table-scroll">
         <table class="inventory-table">
           <thead>
@@ -105,67 +109,68 @@
               <th scope="col">Location</th>
               <th scope="col" class="quantity-heading">Quantity</th>
               <th scope="col">Status</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody data-inventory-rows>
             <tr>
               <td class="sku">SKU-10482</td>
-              <td>Precision bearing 20mm</td>
-              <td>Components</td>
+              <td>Stretched cotton canvas, 40 x 50 cm</td>
+              <td>Canvases</td>
               <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-01 · A-14-03</span></td>
               <td class="quantity">1,840</td>
               <td><span class="badge ok">In stock</span></td>
             </tr>
             <tr>
               <td class="sku">SKU-20741</td>
-              <td>Aluminum housing</td>
-              <td>Raw material</td>
+              <td>Acrylic paint set, primary colours</td>
+              <td>Paints</td>
               <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-01 · B-08-12</span></td>
               <td class="quantity">624</td>
               <td><span class="badge ok">In stock</span></td>
             </tr>
             <tr>
               <td class="sku">SKU-30918</td>
-              <td>Control module X4</td>
-              <td>Electronics</td>
+              <td>Detail brush set, round sizes 0-6</td>
+              <td>Brushes</td>
               <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-02 · C-02-08</span></td>
               <td class="quantity">86</td>
               <td><span class="badge low">Low stock</span></td>
             </tr>
             <tr>
               <td class="sku">SKU-40233</td>
-              <td>Packing carton large</td>
-              <td>Packaging</td>
+              <td>Canvas panels, 20 x 25 cm (pack of 10)</td>
+              <td>Canvases</td>
               <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-03 · D-11-01</span></td>
               <td class="quantity">4,250</td>
               <td><span class="badge ok">In stock</span></td>
             </tr>
             <tr>
               <td class="sku">SKU-50124</td>
-              <td>Drive belt 800mm</td>
-              <td>Components</td>
+              <td>Flat shader brush, 25 mm</td>
+              <td>Brushes</td>
               <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-01 · A-18-06</span></td>
               <td class="quantity">312</td>
               <td><span class="badge ok">In stock</span></td>
             </tr>
             <tr>
               <td class="sku">SKU-60887</td>
-              <td>Industrial adhesive</td>
-              <td>Consumables</td>
+              <td>Heavy-body acrylic paint, titanium white</td>
+              <td>Paints</td>
               <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-02 · E-04-02</span></td>
               <td class="quantity">42</td>
               <td><span class="badge reorder">Reorder</span></td>
             </tr>
             <tr>
               <td class="sku">SKU-70336</td>
-              <td>Safety valve 12B</td>
-              <td>Components</td>
+              <td>Stainless-steel palette knife set</td>
+              <td>Painting tools</td>
               <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-04 · B-06-09</span></td>
               <td class="quantity">168</td>
               <td><span class="badge low">Low stock</span></td>
             </tr>
             <tr class="empty-state" hidden>
-              <td colspan="6">No inventory matches your search.</td>
+              <td colspan="7">No inventory matches your search.</td>
             </tr>
           </tbody>
         </table>
@@ -175,41 +180,290 @@
 
   <script>
     const searchInput = document.querySelector("[data-inventory-search]");
-    const inventoryRows = [...document.querySelectorAll("[data-inventory-rows] tr:not(.empty-state)")];
+    const inventoryBody = document.querySelector("[data-inventory-rows]");
     const emptyState = document.querySelector(".empty-state");
     const inventoryCount = document.querySelector("#inventory-count");
+    const inventoryMessage = document.querySelector("[data-inventory-message]");
+    const inventoryStorageKey = "kelvic-warehouse-inventory";
+    const inventoryStatuses = ["In stock", "Low stock", "Reorder"];
+    const defaultProductUpdates = {
+      "SKU-10482": ["Precision bearing 20mm", "Stretched cotton canvas, 40 x 50 cm", "Components", "Canvases"],
+      "SKU-20741": ["Aluminum housing", "Acrylic paint set, primary colours", "Raw material", "Paints"],
+      "SKU-30918": ["Control module X4", "Detail brush set, round sizes 0-6", "Electronics", "Brushes"],
+      "SKU-40233": ["Packing carton large", "Canvas panels, 20 x 25 cm (pack of 10)", "Packaging", "Canvases"],
+      "SKU-50124": ["Drive belt 800mm", "Flat shader brush, 25 mm", "Components", "Brushes"],
+      "SKU-60887": ["Industrial adhesive", "Heavy-body acrylic paint, titanium white", "Consumables", "Paints"],
+      "SKU-70336": ["Safety valve 12B", "Stainless-steel palette knife set", "Components", "Painting tools"],
+    };
 
-    function getVisibleRows() {
-      return inventoryRows.filter((row) => !row.hidden);
+    function getInventoryData(row) {
+      return {
+        sku: row.cells[0].textContent.trim(),
+        product: row.cells[1].textContent.trim(),
+        category: row.cells[2].textContent.trim(),
+        location: row.cells[3].textContent.trim(),
+        quantity: Number(row.cells[4].textContent.replaceAll(",", "").trim()),
+        status: row.cells[5].textContent.trim(),
+      };
     }
 
-    searchInput.addEventListener("input", () => {
+    function showInventoryMessage(message, isError = false) {
+      inventoryMessage.textContent = message;
+      inventoryMessage.classList.toggle("is-error", isError);
+    }
+
+    function makeInventoryButton(label, action, className = "") {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = label;
+      button.dataset.inventoryAction = action;
+      button.className = `inventory-row-button ${className}`.trim();
+      return button;
+    }
+
+    function renderInventoryItem(item) {
+      const row = document.createElement("tr");
+      const skuCell = row.insertCell();
+      skuCell.className = "sku";
+      skuCell.textContent = item.sku;
+      row.insertCell().textContent = item.product;
+      row.insertCell().textContent = item.category;
+      const locationCell = row.insertCell();
+      const location = document.createElement("span");
+      location.className = "location";
+      location.textContent = item.location;
+      locationCell.append(location);
+      const quantityCell = row.insertCell();
+      quantityCell.className = "quantity";
+      quantityCell.textContent = item.quantity.toLocaleString("en-US");
+      const statusCell = row.insertCell();
+      const badge = document.createElement("span");
+      badge.className = `badge ${item.status === "In stock" ? "ok" : item.status === "Low stock" ? "low" : "reorder"}`;
+      badge.textContent = item.status;
+      statusCell.append(badge);
+      const actionsCell = row.insertCell();
+      actionsCell.className = "inventory-row-actions";
+      actionsCell.append(
+        makeInventoryButton("Edit", "edit"),
+        makeInventoryButton("Delete", "delete", "delete-inventory"),
+      );
+      inventoryBody.insertBefore(row, emptyState);
+      return row;
+    }
+
+    function isInventoryItem(item) {
+      return item
+        && typeof item.sku === "string"
+        && typeof item.product === "string"
+        && typeof item.category === "string"
+        && typeof item.location === "string"
+        && Number.isInteger(item.quantity)
+        && item.quantity >= 0
+        && inventoryStatuses.includes(item.status);
+    }
+
+    function updateInventoryView() {
       const query = searchInput.value.trim().toLowerCase();
       let visibleCount = 0;
 
-      for (const row of inventoryRows) {
-        row.hidden = !row.textContent.toLowerCase().includes(query);
+      for (const row of inventoryBody.querySelectorAll("tr:not(.empty-state)")) {
+        const searchableText = row.hasAttribute("data-editing")
+          ? [...row.querySelectorAll("input, select")].map((field) => field.value).join(" ").toLowerCase()
+          : row.textContent.toLowerCase();
+        row.hidden = !searchableText.includes(query);
         if (!row.hidden) visibleCount += 1;
       }
 
       emptyState.hidden = visibleCount > 0;
       inventoryCount.textContent = `${visibleCount} inventory ${visibleCount === 1 ? "record" : "records"} shown`;
+    }
+
+    function saveInventory() {
+      try {
+        const items = [...inventoryBody.querySelectorAll("tr:not(.empty-state)")].map(getInventoryData);
+        localStorage.setItem(inventoryStorageKey, JSON.stringify(items));
+        showInventoryMessage("Inventory changes saved in this browser.");
+      } catch (error) {
+        showInventoryMessage("Could not save inventory changes in this browser.", true);
+        console.error("Unable to save inventory to browser storage.", error);
+      }
+      updateInventoryView();
+    }
+
+    function loadInventory() {
+      const defaults = [...inventoryBody.querySelectorAll("tr:not(.empty-state)")].map(getInventoryData);
+      let items = defaults;
+      try {
+        const savedItems = localStorage.getItem(inventoryStorageKey);
+        if (savedItems !== null) {
+          const parsedItems = JSON.parse(savedItems);
+          if (!Array.isArray(parsedItems) || !parsedItems.every(isInventoryItem)) {
+            throw new Error("Saved inventory data has an invalid format.");
+          }
+          items = parsedItems.map((item) => {
+            const update = defaultProductUpdates[item.sku];
+            if (!update || item.product !== update[0]) return item;
+            return {
+              ...item,
+              product: update[1],
+              category: item.category === update[2] ? update[3] : item.category,
+            };
+          });
+        }
+      } catch (error) {
+        showInventoryMessage("Saved inventory could not be loaded; showing the default list.", true);
+        console.error("Unable to load inventory from browser storage.", error);
+      }
+      inventoryBody.replaceChildren(emptyState);
+      items.forEach(renderInventoryItem);
+      updateInventoryView();
+    }
+
+    function createInventoryInput(value, label, type = "text") {
+      const input = document.createElement("input");
+      input.type = type;
+      input.value = String(value);
+      input.setAttribute("aria-label", label);
+      input.required = true;
+      if (type === "number") {
+        input.min = "0";
+        input.step = "1";
+      }
+      return input;
+    }
+
+    function startInventoryEdit(row, isNew = false) {
+      const item = getInventoryData(row);
+      row.dataset.editing = "true";
+      row.dataset.newItem = String(isNew);
+      row.dataset.original = JSON.stringify(item);
+      [
+        [item.sku, "SKU"],
+        [item.product, "Product"],
+        [item.category, "Category"],
+        [item.location, "Location"],
+      ].forEach(([value, label], index) => {
+        row.cells[index].replaceChildren(createInventoryInput(value, label));
+      });
+      row.cells[4].replaceChildren(createInventoryInput(item.quantity, "Quantity", "number"));
+
+      const statusSelect = document.createElement("select");
+      statusSelect.setAttribute("aria-label", "Inventory status");
+      inventoryStatuses.forEach((status) => {
+        const option = document.createElement("option");
+        option.value = status;
+        option.textContent = status;
+        option.selected = status === item.status;
+        statusSelect.append(option);
+      });
+      row.cells[5].replaceChildren(statusSelect);
+      row.cells[6].replaceChildren(
+        makeInventoryButton("Save", "save"),
+        makeInventoryButton("Cancel", "cancel"),
+      );
+      row.cells[0].className = "";
+      row.cells[4].className = "";
+      updateInventoryView();
+    }
+
+    function saveInventoryEdit(row) {
+      const inputs = [...row.querySelectorAll("input")];
+      if (inputs.some((input) => !input.value.trim() || !input.reportValidity())) {
+        showInventoryMessage("Complete each field with a valid quantity before saving.", true);
+        inputs.find((input) => !input.value.trim() || !input.checkValidity())?.focus();
+        return;
+      }
+
+      const item = {
+        sku: row.cells[0].querySelector("input").value.trim(),
+        product: row.cells[1].querySelector("input").value.trim(),
+        category: row.cells[2].querySelector("input").value.trim(),
+        location: row.cells[3].querySelector("input").value.trim(),
+        quantity: Number(row.cells[4].querySelector("input").value),
+        status: row.cells[5].querySelector("select").value,
+      };
+      const duplicateSku = [...inventoryBody.querySelectorAll("tr:not(.empty-state)")]
+        .some((otherRow) => otherRow !== row && getInventoryData(otherRow).sku.toLowerCase() === item.sku.toLowerCase());
+      if (duplicateSku) {
+        showInventoryMessage("SKU values must be unique.", true);
+        row.cells[0].querySelector("input").focus();
+        return;
+      }
+
+      const replacement = renderInventoryItem(item);
+      inventoryBody.insertBefore(replacement, row);
+      row.remove();
+      saveInventory();
+    }
+
+    document.querySelector("[data-add-inventory]").addEventListener("click", () => {
+      if (inventoryBody.querySelector("[data-editing]")) {
+        showInventoryMessage("Save or cancel the current edit before adding an SKU.", true);
+        return;
+      }
+      const row = renderInventoryItem({
+        sku: `SKU-${Date.now()}`,
+        product: "",
+        category: "",
+        location: "",
+        quantity: 0,
+        status: "In stock",
+      });
+      startInventoryEdit(row, true);
+      row.cells[1].querySelector("input").focus();
+      updateInventoryView();
     });
+
+    inventoryBody.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-inventory-action]");
+      if (!button) return;
+      const row = button.closest("tr");
+      const action = button.dataset.inventoryAction;
+
+      if (action === "edit") {
+        if (inventoryBody.querySelector("[data-editing]")) {
+          showInventoryMessage("Save or cancel the current edit before editing another SKU.", true);
+          return;
+        }
+        startInventoryEdit(row);
+      } else if (action === "save") {
+        saveInventoryEdit(row);
+      } else if (action === "cancel") {
+        if (row.dataset.newItem === "true") {
+          row.remove();
+        } else {
+          const original = JSON.parse(row.dataset.original);
+          const replacement = renderInventoryItem(original);
+          inventoryBody.insertBefore(replacement, row);
+          row.remove();
+        }
+        showInventoryMessage("Inventory edit cancelled.");
+        updateInventoryView();
+      } else if (action === "delete" && window.confirm(`Delete SKU ${getInventoryData(row).sku}?`)) {
+        row.remove();
+        saveInventory();
+      }
+    });
+
+    searchInput.addEventListener("input", updateInventoryView);
 
     document.querySelector("[data-focus-search]").addEventListener("click", () => searchInput.focus());
 
     document.querySelector("[data-export]").addEventListener("click", () => {
-      const rows = getVisibleRows();
+      const visibleItems = [...inventoryBody.querySelectorAll("tr:not(.empty-state)")]
+        .filter((row) => !row.hidden && !row.hasAttribute("data-editing"));
       const csv = [
         ["SKU", "Product", "Category", "Location", "Quantity", "Status"],
-        ...rows.map((row) => [...row.cells].map((cell) => cell.textContent.trim())),
+        ...visibleItems.map((row) => [...row.cells].slice(0, 6).map((cell) => cell.textContent.trim())),
       ].map((row) => row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(",")).join("\r\n");
       const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
       const download = document.createElement("a");
       download.href = url;
       download.download = "warehouse-inventory.csv";
       download.click();
-      URL.revokeObjectURL(url);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
+
+    loadInventory();
   </script>
 {% endblock %}

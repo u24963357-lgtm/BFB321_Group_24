@@ -80,7 +80,7 @@
           <span class="card-label">Freight cost</span>
           <span class="card-badge">−3.2%</span>
         </div>
-        <div class="card-value">$42.8K <small>this week</small></div>
+        <div class="card-value">R500 <small>this week</small></div>
       </article>
     </section>
 
@@ -139,10 +139,18 @@
       <div class="panel-head shipment-panel-head">
         <div>
           <h2 class="panel-title" id="shipments-title" tabindex="-1">Active shipments</h2>
-          <p class="panel-sub">Live movement across your network</p>
+          <p class="panel-sub">Current shipments and delivery history across your network</p>
         </div>
-        <a class="btn btn-outline view-shipments" href="#active-shipments" data-view-shipments>View all shipments</a>
+        <div class="shipment-actions">
+          <button class="btn btn-outline history-toggle" type="button" aria-expanded="false" data-toggle-history>
+            Show past shipments
+          </button>
+          <button class="btn btn-outline add-shipment" type="button" data-add-shipment>
+            Add shipment
+          </button>
+        </div>
       </div>
+      <p class="shipment-message" aria-live="polite" data-shipment-message></p>
       <div class="table-scroll">
         <table class="shipment-table">
           <thead>
@@ -151,37 +159,52 @@
               <th scope="col">Origin</th>
               <th scope="col">Destination</th>
               <th scope="col">Status</th>
-              <th scope="col">Est. arrival</th>
+              <th scope="col">Arrival / delivery</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="shipment-id">SHP-24908</td>
-              <td>Chicago, IL</td>
-              <td>Denver, CO</td>
+              <td>Pretoria, Gauteng</td>
+              <td>Johannesburg, Gauteng</td>
               <td><span class="badge ok">In transit</span></td>
               <td>Today, 16:30</td>
             </tr>
             <tr>
               <td class="shipment-id">SHP-24904</td>
-              <td>Austin, TX</td>
-              <td>Phoenix, AZ</td>
+              <td>Pretoria, Gauteng</td>
+              <td>Sandton, Gauteng</td>
               <td><span class="badge ok">On schedule</span></td>
               <td>Tomorrow, 08:15</td>
             </tr>
             <tr>
               <td class="shipment-id">SHP-24897</td>
-              <td>Portland, OR</td>
-              <td>Seattle, WA</td>
+              <td>Pretoria, Gauteng</td>
+              <td>Centurion, Gauteng</td>
               <td><span class="badge low">Delayed</span></td>
               <td>Tomorrow, 14:20</td>
             </tr>
             <tr>
               <td class="shipment-id">SHP-24891</td>
-              <td>Newark, NJ</td>
-              <td>Boston, MA</td>
+              <td>Pretoria, Gauteng</td>
+              <td>Kempton Park, Gauteng</td>
               <td><span class="badge ok">At terminal</span></td>
               <td>May 24, 11:00</td>
+            </tr>
+            <tr data-past-shipment hidden>
+              <td class="shipment-id">SHP-24886</td>
+              <td>Pretoria, Gauteng</td>
+              <td>Midrand, Gauteng</td>
+              <td><span class="badge ok">Delivered</span></td>
+              <td>Oct 20, 2026</td>
+            </tr>
+            <tr data-past-shipment hidden>
+              <td class="shipment-id">SHP-24880</td>
+              <td>Pretoria, Gauteng</td>
+              <td>Roodepoort, Gauteng</td>
+              <td><span class="badge ok">Delivered</span></td>
+              <td>Oct 19, 2026</td>
             </tr>
           </tbody>
         </table>
@@ -190,7 +213,240 @@
   </main>
 
   <script>
-    const shipmentRows = [...document.querySelectorAll(".shipment-table tbody tr")];
+    const shipmentBody = document.querySelector(".shipment-table tbody");
+    const historyToggle = document.querySelector("[data-toggle-history]");
+    const shipmentMessage = document.querySelector("[data-shipment-message]");
+    const storageKey = "kelvic-logistics-shipments";
+    const statuses = ["In transit", "On schedule", "Delayed", "At terminal", "Delivered"];
+    let showingHistory = false;
+
+    historyToggle.addEventListener("click", () => {
+      showingHistory = !showingHistory;
+      shipmentBody.querySelectorAll("[data-past-shipment]").forEach((row) => {
+        row.hidden = !showingHistory;
+      });
+      historyToggle.setAttribute("aria-expanded", String(showingHistory));
+      historyToggle.textContent = showingHistory ? "Hide past shipments" : "Show past shipments";
+    });
+
+    function setMessage(message, isError = false) {
+      shipmentMessage.textContent = message;
+      shipmentMessage.classList.toggle("is-error", isError);
+    }
+
+    function getRowData(row) {
+      return {
+        id: row.cells[0].textContent.trim(),
+        origin: row.cells[1].textContent.trim(),
+        destination: row.cells[2].textContent.trim(),
+        status: row.cells[3].textContent.trim(),
+        arrival: row.cells[4].textContent.trim(),
+        past: row.hasAttribute("data-past-shipment"),
+      };
+    }
+
+    function saveShipments() {
+      try {
+        const shipments = [...shipmentBody.rows].map(getRowData);
+        localStorage.setItem(storageKey, JSON.stringify(shipments));
+        setMessage("Shipment changes saved in this browser.");
+      } catch (error) {
+        setMessage("Could not save shipment changes in this browser.", true);
+        console.error("Unable to save shipments to browser storage.", error);
+      }
+    }
+
+    function makeButton(label, action, className = "") {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = label;
+      button.dataset.shipmentAction = action;
+      button.className = `shipment-row-button ${className}`.trim();
+      return button;
+    }
+
+    function renderShipment(shipment) {
+      const row = document.createElement("tr");
+      if (shipment.past) {
+        row.dataset.pastShipment = "";
+        row.hidden = !showingHistory;
+      }
+
+      const values = [shipment.id, shipment.origin, shipment.destination];
+      values.forEach((value, index) => {
+        const cell = row.insertCell();
+        cell.textContent = value;
+        if (index === 0) cell.className = "shipment-id";
+      });
+
+      const statusCell = row.insertCell();
+      const badge = document.createElement("span");
+      badge.className = `badge ${shipment.status === "Delayed" ? "low" : "ok"}`;
+      badge.textContent = shipment.status;
+      statusCell.append(badge);
+
+      row.insertCell().textContent = shipment.arrival;
+
+      const actionsCell = row.insertCell();
+      actionsCell.className = "shipment-row-actions";
+      actionsCell.append(
+        makeButton("Edit", "edit"),
+        makeButton("Delete", "delete", "delete-shipment"),
+      );
+      shipmentBody.append(row);
+      return row;
+    }
+
+    function isShipment(value) {
+      return value
+        && typeof value.id === "string"
+        && typeof value.origin === "string"
+        && typeof value.destination === "string"
+        && statuses.includes(value.status)
+        && typeof value.arrival === "string"
+        && typeof value.past === "boolean";
+    }
+
+    function loadShipments() {
+      const defaults = [...shipmentBody.rows].map(getRowData);
+      let shipments = defaults;
+      try {
+        const saved = localStorage.getItem(storageKey);
+        if (saved !== null) {
+          const parsed = JSON.parse(saved);
+          if (!Array.isArray(parsed) || !parsed.every(isShipment)) {
+            throw new Error("Saved shipment data has an invalid format.");
+          }
+          shipments = parsed;
+        }
+      } catch (error) {
+        setMessage("Saved shipments could not be loaded; showing the default list.", true);
+        console.error("Unable to load shipments from browser storage.", error);
+      }
+      shipmentBody.replaceChildren();
+      shipments.forEach(renderShipment);
+    }
+
+    function createEditor(value, label) {
+      const input = document.createElement("input");
+      input.type = "text";
+      input.value = value;
+      input.setAttribute("aria-label", label);
+      input.required = true;
+      return input;
+    }
+
+    function startEditing(row, isNew = false) {
+      const data = getRowData(row);
+      row.dataset.editing = "true";
+      row.dataset.newShipment = String(isNew);
+      row.dataset.original = JSON.stringify(data);
+
+      [data.id, data.origin, data.destination].forEach((value, index) => {
+        const labels = ["Shipment ID", "Origin", "Destination"];
+        const cell = row.cells[index];
+        cell.replaceChildren(createEditor(value, labels[index]));
+      });
+
+      const statusSelect = document.createElement("select");
+      statusSelect.setAttribute("aria-label", "Shipment status");
+      statuses.forEach((status) => {
+        const option = document.createElement("option");
+        option.value = status;
+        option.textContent = status;
+        option.selected = status === data.status;
+        statusSelect.append(option);
+      });
+      row.cells[3].replaceChildren(statusSelect);
+      row.cells[4].replaceChildren(createEditor(data.arrival, "Arrival or delivery"));
+      row.cells[5].replaceChildren(
+        makeButton("Save", "save"),
+        makeButton("Cancel", "cancel"),
+      );
+      row.cells[0].className = "";
+    }
+
+    function finishEditing(row) {
+      const fields = [...row.querySelectorAll("input")];
+      if (fields.some((field) => !field.value.trim())) {
+        setMessage("Complete every shipment field before saving.", true);
+        fields.find((field) => !field.value.trim())?.focus();
+        return;
+      }
+
+      const data = {
+        id: row.cells[0].querySelector("input").value.trim(),
+        origin: row.cells[1].querySelector("input").value.trim(),
+        destination: row.cells[2].querySelector("input").value.trim(),
+        status: row.cells[3].querySelector("select").value,
+        arrival: row.cells[4].querySelector("input").value.trim(),
+        past: row.cells[3].querySelector("select").value === "Delivered",
+      };
+      const duplicateId = [...shipmentBody.rows].some(
+        (otherRow) => otherRow !== row && getRowData(otherRow).id === data.id,
+      );
+      if (duplicateId) {
+        setMessage("Shipment IDs must be unique.", true);
+        row.cells[0].querySelector("input").focus();
+        return;
+      }
+
+      const replacement = renderShipment(data);
+      shipmentBody.insertBefore(replacement, row);
+      row.remove();
+      saveShipments();
+    }
+
+    document.querySelector("[data-add-shipment]").addEventListener("click", () => {
+      if (shipmentBody.querySelector("[data-editing]")) {
+        setMessage("Save or cancel the current edit before adding a shipment.", true);
+        return;
+      }
+      const row = renderShipment({
+        id: `SHP-${Date.now()}`,
+        origin: "Pretoria, Gauteng",
+        destination: "",
+        status: "In transit",
+        arrival: "",
+        past: false,
+      });
+      startEditing(row, true);
+      row.cells[2].querySelector("input").focus();
+    });
+
+    shipmentBody.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-shipment-action]");
+      if (!button) return;
+      const row = button.closest("tr");
+
+      if (button.dataset.shipmentAction === "edit") {
+        if (shipmentBody.querySelector("[data-editing]")) {
+          setMessage("Save or cancel the current edit before editing another shipment.", true);
+          return;
+        }
+        startEditing(row);
+      } else if (button.dataset.shipmentAction === "save") {
+        finishEditing(row);
+      } else if (button.dataset.shipmentAction === "cancel") {
+        const isNew = row.dataset.newShipment === "true";
+        if (isNew) {
+          row.remove();
+        } else {
+          const original = JSON.parse(row.dataset.original);
+          const replacement = renderShipment(original);
+          shipmentBody.insertBefore(replacement, row);
+          row.remove();
+        }
+        setMessage("Shipment edit cancelled.");
+      } else if (button.dataset.shipmentAction === "delete") {
+        if (window.confirm(`Delete shipment ${row.cells[0].textContent.trim()}?`)) {
+          row.remove();
+          saveShipments();
+        }
+      }
+    });
+
+    loadShipments();
 
     document.querySelector("[data-focus-shipments]").addEventListener("click", () => {
       document.querySelector("#shipments-title").scrollIntoView({ behavior: "smooth", block: "center" });
@@ -198,9 +454,12 @@
     });
 
     document.querySelector("[data-export-shipments]").addEventListener("click", () => {
+      const shipmentRows = [...shipmentBody.rows];
       const rows = [
-        ["Shipment", "Origin", "Destination", "Status", "Estimated arrival"],
-        ...shipmentRows.map((row) => [...row.cells].map((cell) => cell.textContent.trim())),
+        ["Shipment", "Origin", "Destination", "Status", "Arrival / delivery"],
+        ...shipmentRows
+          .filter((row) => !row.hidden && !row.hasAttribute("data-editing"))
+          .map((row) => [...row.cells].slice(0, 5).map((cell) => cell.textContent.trim())),
       ];
       const csv = rows
         .map((row) => row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(","))
@@ -208,7 +467,9 @@
       const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
       const download = document.createElement("a");
       download.href = url;
-      download.download = "active-shipments.csv";
+      download.download = historyToggle.getAttribute("aria-expanded") === "true"
+        ? "shipment-history.csv"
+        : "active-shipments.csv";
       download.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     });

@@ -176,14 +176,44 @@
   font-size: 8px;
 }
 
-.view-shipments {
+.shipment-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.history-toggle {
   padding: 6px 10px;
   border-radius: 5px;
   font-size: 8px;
 }
 
+.add-shipment {
+  padding: 6px 10px;
+  border-radius: 5px;
+  background: #355a40;
+  color: #fff;
+  font-size: 8px;
+}
+
+.shipment-message {
+  min-height: 0;
+  margin: 0;
+  padding: 0 13px;
+  color: #36684a;
+  font-size: 8px;
+}
+
+.shipment-message:not(:empty) {
+  padding-top: 7px;
+}
+
+.shipment-message.is-error {
+  color: #a33a32;
+}
+
 .shipment-table {
-  min-width: 560px;
+  min-width: 700px;
   font-size: 8px;
 }
 
@@ -201,6 +231,41 @@
   border-bottom-color: #e3e8e3;
   color: #64736a;
   white-space: nowrap;
+}
+
+.shipment-table input,
+.shipment-table select {
+  width: 100%;
+  min-width: 86px;
+  padding: 5px 6px;
+  border: 1px solid #cbd6cd;
+  border-radius: 4px;
+  background: #fff;
+  color: #25382e;
+  font: inherit;
+}
+
+.shipment-row-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.shipment-row-button {
+  padding: 4px 7px;
+  border: 1px solid #cbd6cd;
+  border-radius: 4px;
+  background: #fff;
+  color: #355a40;
+  cursor: pointer;
+  font: inherit;
+}
+
+.shipment-row-button:hover {
+  background: #e8f0ea;
+}
+
+.shipment-row-button.delete-shipment {
+  color: #a33a32;
 }
 
 .shipment-table tbody tr:last-child td {
@@ -272,5 +337,10 @@
 
   .shipment-panel .panel-head {
     align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .shipment-actions {
+    width: 100%;
   }
 }
