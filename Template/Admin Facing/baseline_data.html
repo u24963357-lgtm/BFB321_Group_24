@@ -24,7 +24,7 @@
 
     <div class="topbar-right">
       <span class="pill-status"><span class="dot"></span>All systems operational</span>
-      <button class="icon-btn" type="button" aria-label="View weekly production output" title="View weekly output" data-focus-output>
+      <button class="icon-btn" type="button" aria-label="View monthly paintings table" title="View monthly paintings" data-focus-output>
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.5 15.5 4.2 4.2" /></svg>
       </button>
       <span class="icon-btn notification-icon" role="img" aria-label="Notifications">
@@ -37,14 +37,14 @@
   <main class="container storage-content production-content">
     <a class="back-link" href="{{ url_for('home') }}">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7" /></svg>
-      Back to overview
+      Home page
     </a>
 
     <section class="page-header">
       <div>
         <p class="eyebrow">Production</p>
         <h1 class="page-title">Factory operations</h1>
-        <p class="page-subtitle">Track output, active lines, quality, and production efficiency.</p>
+        <p class="page-subtitle">Track painting goals and production efficiency.</p>
       </div>
       <button class="btn export-button" type="button" data-export-production>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 18v3h14v-3" /></svg>
@@ -52,20 +52,23 @@
       </button>
     </section>
 
-    <section class="card-grid storage-metrics production-metrics" aria-label="Production summary">
-      <article class="card">
+    <section class="card-grid storage-metrics production-metrics" aria-label="Production KPIs">
+      <article class="card painting-kpi-card">
         <div class="card-top">
-          <span class="card-label">Daily output</span>
-          <span class="card-badge">+12.4%</span>
+          <span class="card-label">Monthly New Painting KPI</span>
+          <span class="card-badge painting-kpi-badge">1 to goal</span>
         </div>
-        <div class="card-value">2,847 <small>units</small></div>
-      </article>
-      <article class="card">
-        <div class="card-top">
-          <span class="card-label">Active lines</span>
-          <span class="card-badge">2 idle</span>
+        <div class="card-value">2 <small>paintings this month</small></div>
+        <div class="painting-kpi-progress"
+             role="progressbar"
+             aria-label="New paintings completed this month"
+             aria-valuemin="0"
+             aria-valuemax="3"
+             aria-valuenow="2"
+             aria-valuetext="2 of 3 paintings; monthly goal is 3">
+          <span class="painting-kpi-marker" aria-hidden="true"></span>
         </div>
-        <div class="card-value">8 / 10 <small>running</small></div>
+        <div class="painting-kpi-goal">Monthly goal <strong>3 paintings</strong></div>
       </article>
       <article class="card">
         <div class="card-top">
@@ -74,47 +77,36 @@
         </div>
         <div class="card-value">94.2% <small>OEE score</small></div>
       </article>
-      <article class="card">
-        <div class="card-top">
-          <span class="card-label">Quality rate</span>
-          <span class="card-badge">+0.8%</span>
-        </div>
-        <div class="card-value">98.7% <small>pass rate</small></div>
-      </article>
     </section>
 
     <section class="panel output-panel" aria-labelledby="output-title">
       <div class="output-panel-head">
-        <h2 class="panel-title" id="output-title" tabindex="-1">Weekly production output</h2>
-        <p class="panel-sub">Performance over the last seven days</p>
+        <h2 class="panel-title" id="output-title" tabindex="-1">Monthly paintings</h2>
+        <p class="panel-sub">New paintings completed from January to December</p>
       </div>
-      <div class="output-chart-wrap">
-        <svg class="output-chart" viewBox="0 0 1160 190" role="img" aria-labelledby="output-chart-title output-chart-description">
-          <title id="output-chart-title">Weekly production output</title>
-          <desc id="output-chart-description">Daily unit output from Monday to Sunday: 2,120; 2,580; 2,420; 3,120; 2,820; 3,480; and 2,520 units.</desc>
-          <g class="output-grid">
-            <path d="M0 25H1160M0 70H1160M0 115H1160M0 160H1160" />
-          </g>
-          <g class="output-bars">
-            <rect x="65" y="100" width="28" height="60" rx="3" />
-            <rect x="229" y="75" width="28" height="85" rx="3" />
-            <rect x="393" y="84" width="28" height="76" rx="3" />
-            <rect x="557" y="52" width="28" height="108" rx="3" />
-            <rect x="721" y="66" width="28" height="94" rx="3" />
-            <rect x="885" y="38" width="28" height="122" rx="3" />
-            <rect x="1049" y="78" width="28" height="82" rx="3" />
-          </g>
-          <path class="output-baseline" d="M0 160H1160" />
-          <g class="output-labels">
-            <text x="79" y="180">Mon</text>
-            <text x="243" y="180">Tue</text>
-            <text x="407" y="180">Wed</text>
-            <text x="571" y="180">Thu</text>
-            <text x="735" y="180">Fri</text>
-            <text x="899" y="180">Sat</text>
-            <text x="1063" y="180">Sun</text>
-          </g>
-        </svg>
+      <div class="painting-table-wrap">
+        <table class="painting-table">
+          <thead>
+            <tr>
+              <th scope="col">Month</th>
+              <th scope="col">New paintings</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">January</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">February</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">March</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">April</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">May</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">June</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">July</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">August</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">September</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">October</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">November</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">December</th><td aria-label="No total recorded">—</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
   </main>
@@ -129,19 +121,22 @@
     document.querySelector("[data-export-production]").addEventListener("click", () => {
       const rows = [
         ["Production metric", "Value"],
-        ["Daily output", "2,847 units"],
-        ["Active lines", "8 / 10 running"],
+        ["New paintings this month", "2 of 3 (monthly goal)"],
         ["Efficiency", "94.2% OEE score"],
-        ["Quality rate", "98.7% pass rate"],
         [],
-        ["Day", "Units produced"],
-        ["Monday", "2,120"],
-        ["Tuesday", "2,580"],
-        ["Wednesday", "2,420"],
-        ["Thursday", "3,120"],
-        ["Friday", "2,820"],
-        ["Saturday", "3,480"],
-        ["Sunday", "2,520"],
+        ["Month", "New paintings"],
+        ["January", "Not recorded"],
+        ["February", "Not recorded"],
+        ["March", "Not recorded"],
+        ["April", "Not recorded"],
+        ["May", "Not recorded"],
+        ["June", "Not recorded"],
+        ["July", "Not recorded"],
+        ["August", "Not recorded"],
+        ["September", "Not recorded"],
+        ["October", "Not recorded"],
+        ["November", "Not recorded"],
+        ["December", "Not recorded"],
       ];
       const csv = rows
         .map((row) => row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(","))
