@@ -67,6 +67,112 @@
   letter-spacing: 0;
 }
 
+.order-management-panel {
+  margin-bottom: 17px;
+  border-color: #dce3dc;
+  border-radius: 10px;
+  background: #fbfcfa;
+  box-shadow: 0 1px 2px rgb(28 46 36 / 3%);
+}
+
+.order-management-panel .panel-head {
+  min-height: 57px;
+  padding: 10px 15px;
+  border-bottom-color: #e0e6e0;
+}
+
+.order-management-panel .panel-title {
+  font-size: 13px;
+}
+
+.order-management-panel .panel-sub {
+  margin-top: 2px;
+  font-size: 10px;
+}
+
+.order-add {
+  flex: 0 0 auto;
+  padding: 7px 10px;
+  border-radius: 6px;
+  background: #355a40;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.order-message {
+  min-height: 0;
+  margin: 0;
+  padding: 0 15px;
+  color: #36684a;
+  font-size: 9px;
+}
+
+.order-message:not(:empty) {
+  padding-top: 8px;
+}
+
+.order-message.is-error {
+  color: #a33a32;
+}
+
+.managed-order-table {
+  min-width: 760px;
+}
+
+.managed-order-table thead th {
+  padding: 8px 13px;
+  border-bottom-color: #e0e6e0;
+  background: #f4f6f3;
+  font-size: 8px;
+}
+
+.managed-order-table tbody td {
+  width: auto;
+  padding: 9px 13px;
+  color: #64736a;
+  white-space: nowrap;
+}
+
+.managed-order-table input,
+.managed-order-table select {
+  min-width: 120px;
+  padding: 5px 6px;
+  border: 1px solid #cbd6cd;
+  border-radius: 4px;
+  background: #fff;
+  color: #25382e;
+  font: inherit;
+}
+
+.managed-order-table .order-row-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.order-row-button {
+  padding: 4px 7px;
+  border: 1px solid #cbd6cd;
+  border-radius: 4px;
+  background: #fff;
+  color: #355a40;
+  cursor: pointer;
+  font: inherit;
+}
+
+.order-row-button:hover {
+  background: #e8f0ea;
+}
+
+.order-row-button[data-order-action="delete"] {
+  color: #a33a32;
+}
+
+.managed-order-table .empty-order-state td {
+  color: #89948d;
+  text-align: center;
+}
+
 .order-volume-panel {
   margin: 0;
   padding: 17px 19px 12px;

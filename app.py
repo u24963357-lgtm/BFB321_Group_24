@@ -21,7 +21,8 @@ def logistics():
 
 @app.route('/orders')
 def orders():
-    return render_template('Admin Facing/order_management.html')
+    return render_template('Admin Facing/order_management.html', revenue=2450, open_order=7, fulfillment_rate=95, backorders=8)
+
 
 @app.route('/storage')
 def storage():
