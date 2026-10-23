@@ -56,26 +56,26 @@
       <article class="card painting-kpi-card">
         <div class="card-top">
           <span class="card-label">Monthly New Painting KPI</span>
-          <span class="card-badge painting-kpi-badge">1 to goal</span>
+          <span class="card-badge painting-kpi-badge">{{ cur_frm_goal }} to goal</span>
         </div>
-        <div class="card-value">2 <small>paintings this month</small></div>
+        <div class="card-value"> {{num_in_stock[10]}} <small>paintings this month</small></div>
         <div class="painting-kpi-progress"
              role="progressbar"
              aria-label="New paintings completed this month"
              aria-valuemin="0"
-             aria-valuemax="3"
-             aria-valuenow="2"
-             aria-valuetext="2 of 3 paintings; monthly goal is 3">
+             aria-valuemax="{{ monthly_goal[10] }}"
+             aria-valuenow="{{ num_in_stock[10] }}"
+             aria-valuetext="{{ num_in_stock[10] }} of {{ monthly_goal[10] }} paintings; monthly goal is {{ monthly_goal[10] }}">
           <span class="painting-kpi-marker" aria-hidden="true"></span>
         </div>
-        <div class="painting-kpi-goal">Monthly goal <strong>3 paintings</strong></div>
+        <div class="painting-kpi-goal">Monthly goal <strong>{{ monthly_goal[10] }} paintings</strong></div>
       </article>
       <article class="card">
         <div class="card-top">
           <span class="card-label">Efficiency</span>
           <span class="card-badge">+2.1%</span>
         </div>
-        <div class="card-value">94.2% <small>OEE score</small></div>
+        <div class="card-value">{{ efficiency|round(1) }}% <small> Efficiency score</small></div>
       </article>
     </section>
 
@@ -89,23 +89,24 @@
           <thead>
             <tr>
               <th scope="col">Month</th>
+              <th scope="col">Value</th>
+              <th scope="col">Money Spent</th>
+              <th scope="col">Efficiency</th>
               <th scope="col">New paintings</th>
             </tr>
           </thead>
-          <tbody>
-            <tr><th scope="row">January</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">February</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">March</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">April</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">May</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">June</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">July</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">August</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">September</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">October</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">November</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">December</th><td aria-label="No total recorded">—</td></tr>
-          </tbody>
+          <tbody><tr><th scope="row">January</th><td>{{ value[0] }}</td><td>{{ moneyspent[0] }}</td><td>{{ efficiency_monthly[0] }}</td><td>{{ num_in_stock[0] }}</td></tr>
+          <tr><th scope="row">February</th><td>{{ value[1] }}</td><td>{{ moneyspent[1] }}</td><td>{{ efficiency_monthly[1] }}</td><td>{{ num_in_stock[1] }}</td></tr>
+          <tr><th scope="row">March</th><td>{{ value[2] }}</td><td>{{ moneyspent[2] }}</td><td>{{ efficiency_monthly[2] }}</td><td>{{ num_in_stock[2] }}</td></tr>
+          <tr><th scope="row">April</th><td>{{ value[3] }}</td><td>{{ moneyspent[3] }}</td><td>{{ efficiency_monthly[3] }}</td><td>{{ num_in_stock[3] }}</td></tr>
+          <tr><th scope="row">May</th><td>{{ value[4] }}</td><td>{{ moneyspent[4] }}</td><td>{{ efficiency_monthly[4] }}</td><td>{{ num_in_stock[4] }}</td></tr>
+          <tr><th scope="row">June</th><td>{{ value[5] }}</td><td>{{ moneyspent[5] }}</td><td>{{ efficiency_monthly[5] }}</td><td>{{ num_in_stock[5] }}</td></tr>
+          <tr><th scope="row">July</th><td>{{ value[6] }}</td><td>{{ moneyspent[6] }}</td><td>{{ efficiency_monthly[6] }}</td><td>{{ num_in_stock[6] }}</td></tr>
+          <tr><th scope="row">August</th><td>{{ value[7] }}</td><td>{{ moneyspent[7] }}</td><td>{{ efficiency_monthly[7] }}</td><td>{{ num_in_stock[7] }}</td></tr>
+          <tr><th scope="row">September</th><td>{{ value[8] }}</td><td>{{ moneyspent[8] }}</td><td>{{ efficiency_monthly[8] }}</td><td>{{ num_in_stock[8] }}</td></tr>
+          <tr><th scope="row">October</th><td>{{ value[9] }}</td><td>{{ moneyspent[9] }}</td><td>{{ efficiency_monthly[9] }}</td><td>{{ num_in_stock[9] }}</td></tr>
+          <tr><th scope="row">November</th><td>{{ value[10] }}</td><td>{{ moneyspent[10] }}</td><td>{{ efficiency_monthly[10] }}</td><td>{{ num_in_stock[10] }}</td></tr>
+          <tr><th scope="row">December</th><td>{{ value[11] }}</td><td>{{ moneyspent[11] }}</td><td>{{ efficiency_monthly[11] }}</td><td>{{ num_in_stock[11] }}</td></tr>          </tbody>
         </table>
       </div>
     </section>

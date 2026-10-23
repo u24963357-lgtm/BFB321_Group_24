@@ -56,30 +56,30 @@
       <article class="card">
         <div class="card-top">
           <span class="card-label">Total SKUs</span>
-          <span class="card-badge">+24</span>
+          
         </div>
-        <div class="card-value">1,284 <small>active items</small></div>
+        <div class="card-value">{{ sum_quantity }}  <small>active items</small></div>
       </article>
       <article class="card">
         <div class="card-top">
           <span class="card-label">Units on hand</span>
-          <span class="card-badge">+4.2%</span>
+          
         </div>
-        <div class="card-value">84,216 <small>all locations</small></div>
+        <div class="card-value">{{ sum_quantity }} <small>all locations</small></div>
       </article>
       <article class="card">
         <div class="card-top">
           <span class="card-label">Capacity used</span>
-          <span class="card-badge">+2.4%</span>
+          
         </div>
-        <div class="card-value">78.6% <small>network-wide</small></div>
+        <div class="card-value">{{ capacity_utilization }} <small>network-wide</small></div>
       </article>
       <article class="card">
         <div class="card-top">
           <span class="card-label">Low stock</span>
           <span class="card-badge warn">Needs review</span>
         </div>
-        <div class="card-value">18 <small>SKUs</small></div>
+        <div class="card-value">{{ low_stock_items }} <small>SKUs</small></div>
       </article>
     </section>
 
@@ -114,7 +114,7 @@
           </thead>
           <tbody data-inventory-rows>
             <tr>
-              <td class="sku">SKU-10482</td>
+              <td class="sku">SKU-1</td>
               <td>Stretched cotton canvas, 40 x 50 cm</td>
               <td>Canvases</td>
               <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-01 · A-14-03</span></td>
@@ -122,7 +122,7 @@
               <td><span class="badge ok">In stock</span></td>
             </tr>
             <tr>
-              <td class="sku">SKU-20741</td>
+              <td class="sku">SKU-2</td>
               <td>Acrylic paint set, primary colours</td>
               <td>Paints</td>
               <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-01 · B-08-12</span></td>
@@ -130,7 +130,7 @@
               <td><span class="badge ok">In stock</span></td>
             </tr>
             <tr>
-              <td class="sku">SKU-30918</td>
+              <td class="sku">SKU-3</td>
               <td>Detail brush set, round sizes 0-6</td>
               <td>Brushes</td>
               <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-02 · C-02-08</span></td>
@@ -138,7 +138,7 @@
               <td><span class="badge low">Low stock</span></td>
             </tr>
             <tr>
-              <td class="sku">SKU-40233</td>
+              <td class="sku">SKU-4</td>
               <td>Canvas panels, 20 x 25 cm (pack of 10)</td>
               <td>Canvases</td>
               <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-03 · D-11-01</span></td>
@@ -146,7 +146,7 @@
               <td><span class="badge ok">In stock</span></td>
             </tr>
             <tr>
-              <td class="sku">SKU-50124</td>
+              <td class="sku">SKU-5</td>
               <td>Flat shader brush, 25 mm</td>
               <td>Brushes</td>
               <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-01 · A-18-06</span></td>
@@ -154,7 +154,7 @@
               <td><span class="badge ok">In stock</span></td>
             </tr>
             <tr>
-              <td class="sku">SKU-60887</td>
+              <td class="sku">SKU-6</td>
               <td>Heavy-body acrylic paint, titanium white</td>
               <td>Paints</td>
               <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-02 · E-04-02</span></td>
@@ -162,7 +162,7 @@
               <td><span class="badge reorder">Reorder</span></td>
             </tr>
             <tr>
-              <td class="sku">SKU-70336</td>
+              <td class="sku">SKU-7</td>
               <td>Stainless-steel palette knife set</td>
               <td>Painting tools</td>
               <td><span class="location"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2.2" /></svg>WH-04 · B-06-09</span></td>
