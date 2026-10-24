@@ -9,6 +9,6 @@ Kelley Thlamo u24963357
 Snethemba Ndlovu u24
 Kelebone Kgalaeng
 
-Installation and setup distance:
+Installation and setup instructions:
 
 

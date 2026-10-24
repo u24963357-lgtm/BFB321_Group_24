@@ -1,8 +1,10 @@
 from flask import Flask, render_template
 import numpy as np  
+from eoq import calculate_eoq_canvas, calculate_eoq_frame
 
 
 #Global data
+SALES_MONTHLY = np.array([10, 12, 11, 13, 12, 14, 15, 16, 17, 18, 19, 20])
 
 
 app = Flask(
@@ -39,11 +41,21 @@ def production():
 
 @app.route('/logistics')
 def logistics():
-    return render_template('Admin Facing/inventory_management.html')
+    monthly_demand = SALES_MONTHLY[10] * 100
+    eoq_canvas = round(calculate_eoq_canvas(monthly_demand))
+    eoq_frame = round(calculate_eoq_frame(monthly_demand))
+    return render_template('Admin Facing/inventory_management.html', eoq_canvas=eoq_canvas, eoq_frame=eoq_frame)
 
 @app.route('/orders')
-def orders():
-    return render_template('Admin Facing/order_management.html', revenue=2450, open_order=7, fulfillment_rate=95, backorders=8)
+def orders(): # values coming from the database, for now, we are using static values
+    monthly_revenue = np.array([1000, 1220, 1240, 1260, 1280, 1300, 1320, 1340, 1360, 1380, 1400, 1420])
+    revenue = monthly_revenue[9]  # October revenue
+    open_order = 7
+    fulfillment_rate = 95
+    backorders = 8
+    sales_monthly = SALES_MONTHLY
+    revenue_precentage = round((monthly_revenue[9] - monthly_revenue[8]) / monthly_revenue[8], 2) * 100 # calculating revenue percentage change from September to October
+    return render_template('Admin Facing/order_management.html', revenue=revenue, open_order=open_order, fulfillment_rate=fulfillment_rate, backorders=backorders, sales_monthly=sales_monthly, monthly_revenue=monthly_revenue, revenue_precentage=revenue_precentage)
 
 
 @app.route('/storage')

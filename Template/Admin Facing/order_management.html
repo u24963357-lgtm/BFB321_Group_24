@@ -3,12 +3,12 @@
 {% block title %}Demand &amp; fulfillment | Kelvic the Artist{% endblock %}
 {% block body_class %}storage-page sales-page{% endblock %}
 {% set active_page = 'orders' %}
-{% block styles %}
+{% block styles %} 
   <link rel="stylesheet" href="{{ url_for('static', filename='storage.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='sales.css') }}">
 {% endblock %}
 {% block content %}
-  <header class="topbar">
+  <header class="topbar"> <!-- chatgpt luna used to filling CSS and script-->
     <a class="brand" href="{{ url_for('home') }}" aria-label="Kelvic the Artist home">
       <span class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 24 24">
@@ -63,7 +63,7 @@
       <article class="card">
         <div class="card-top">
           <span class="card-label"> Monthly Revenue</span>
-          <span class="card-badge">+14.7%</span>
+          <span class="card-badge">{{ revenue_precentage }}%</span>
         </div>
         <div class="card-value">R{{ revenue }}</div>
       </article>
@@ -77,7 +77,7 @@
       <article class="card">
         <div class="card-top">
           <span class="card-label">Backorders</span>
-          <span class="card-badge">−12.5%</span>
+          <span class="card-badge">12.5%</span>
         </div>
         <div class="card-value">{{ backorders }}<small>orders</small></div>
       </article>
@@ -115,8 +115,8 @@
 
     <section class="panel output-panel order-volume-panel" aria-labelledby="order-volume-title">
       <div class="output-panel-head">
-        <h2 class="panel-title" id="order-volume-title" tabindex="-1">Monthly orders</h2>
-        <p class="panel-sub">Order totals from January to December</p>
+        <h2 class="panel-title" id="order-volume-title" tabindex="-1">Monthly orders and revenue</h2>
+        <p class="panel-sub"> revenue provided; March-December</p>
       </div>
       <div class="order-table-wrap">
         <table class="order-table">
@@ -124,21 +124,22 @@
             <tr>
               <th scope="col">Month</th>
               <th scope="col">Orders</th>
+              <th scope="col">Revenue</th>
             </tr>
           </thead>
           <tbody>
-            <tr><th scope="row">January</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">February</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">March</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">April</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">May</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">June</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">July</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">August</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">September</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">October</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">November</th><td aria-label="No total recorded">—</td></tr>
-            <tr><th scope="row">December</th><td aria-label="No total recorded">—</td></tr>
+            <tr><th scope="row">January</th><td aria-label="January orders">{{ sales_monthly[0] }}</td><td aria-label="January revenue">R{{ "{:,}".format(monthly_revenue[0]) }}</td></tr>
+            <tr><th scope="row">February</th><td aria-label="February orders">{{ sales_monthly[1] }}</td><td aria-label="February revenue">R{{ "{:,}".format(monthly_revenue[1]) }}</td></tr>
+            <tr><th scope="row">March</th><td aria-label="March orders">{{ sales_monthly[2] }}</td><td aria-label="March revenue">R{{ "{:,}".format(monthly_revenue[2]) }}</td></tr>
+            <tr><th scope="row">April</th><td aria-label="April orders">{{ sales_monthly[3] }}</td><td aria-label="April revenue">R{{ "{:,}".format(monthly_revenue[3]) }}</td></tr>
+            <tr><th scope="row">May</th><td aria-label="May orders">{{ sales_monthly[4] }}</td><td aria-label="May revenue">R{{ "{:,}".format(monthly_revenue[4]) }}</td></tr>
+            <tr><th scope="row">June</th><td aria-label="June orders">{{ sales_monthly[5] }}</td><td aria-label="June revenue">R{{ "{:,}".format(monthly_revenue[5]) }}</td></tr>
+            <tr><th scope="row">July</th><td aria-label="July orders">{{ sales_monthly[6] }}</td><td aria-label="July revenue">R{{ "{:,}".format(monthly_revenue[6]) }}</td></tr>
+            <tr><th scope="row">August</th><td aria-label="August orders">{{ sales_monthly[7] }}</td><td aria-label="August revenue">R{{ "{:,}".format(monthly_revenue[7]) }}</td></tr>
+            <tr><th scope="row">September</th><td aria-label="September orders">{{ sales_monthly[8] }}</td><td aria-label="September revenue">R{{ "{:,}".format(monthly_revenue[8]) }}</td></tr>
+            <tr><th scope="row">October</th><td aria-label="October orders">{{ sales_monthly[9] }}</td><td aria-label="October revenue">R{{ "{:,}".format(monthly_revenue[9]) }}</td></tr>
+            <tr><th scope="row">November</th><td aria-label="November orders">{{ sales_monthly[10] }}</td><td aria-label="November revenue">R{{ "{:,}".format(monthly_revenue[10]) }}</td></tr>
+            <tr><th scope="row">December</th><td aria-label="December orders">{{ sales_monthly[11] }}</td><td aria-label="December revenue">R{{ "{:,}".format(monthly_revenue[11]) }}</td></tr>
           </tbody>
         </table>
       </div>

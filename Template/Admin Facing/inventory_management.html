@@ -89,26 +89,20 @@
         <div class="planning-panel-head">
           <div>
             <h2 class="panel-title">Economic order quantity</h2>
-            <p class="panel-sub">Cost optimization by order quantity</p>
+            <p class="panel-sub">reccomended number of units to order</p>
           </div>
           <span class="model-tag">EOQ</span>
         </div>
-        <svg class="planning-chart" viewBox="0 0 400 150" role="img" aria-labelledby="eoq-title eoq-description">
-          <title id="eoq-title">Economic order quantity model</title>
-          <desc id="eoq-description">Ordering cost decreases as order size increases while holding cost rises. Their combined cost reaches its minimum at an order quantity of 1,240 units.</desc>
-          <g class="chart-grid">
-            <path d="M44 24H378M44 53H378M44 82H378M44 111H378" />
-          </g>
-          <path class="chart-axis" d="M44 15V119H380" />
-          <path class="chart-order-cost" d="M50 25 368 117" />
-          <path class="chart-holding-cost" d="M50 117 368 25" />
-          <path class="chart-total-fill" d="M50 107C103 67 150 36 210 29C269 35 319 67 368 107L368 117H50Z" />
-          <path class="chart-total-cost" d="M50 107C103 67 150 36 210 29C269 35 319 67 368 107" />
-          <path class="chart-optimum" d="M210 29V117" />
-          <circle class="chart-optimum-dot" cx="210" cy="29" r="4" />
-          <text class="chart-callout" x="220" y="23">Optimal EOQ: 1,240 units</text>
-          <text class="chart-axis-label" x="44" y="135">Order / production cycle</text>
-        </svg>
+        <div class="eoq-values" role="group" aria-label="Illustrative economic order quantities">
+          <div class="eoq-value">
+            <span class="eoq-material">Canvas</span>
+            <strong class="eoq-quantity">{{ eoq_canvas }} <small>units</small></strong>
+          </div>
+          <div class="eoq-value">
+            <span class="eoq-material">Frames</span>
+            <strong class="eoq-quantity">{{ eoq_frame }} <small>units</small></strong>
+          </div>
+        </div>
       </article>
 
       <article class="panel planning-panel">
