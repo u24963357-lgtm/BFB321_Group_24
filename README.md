@@ -1,6 +1,8 @@
 # Kelvic-the-Artist-Webpage
 Web page for BFB 321
-Project Description:
+Project Title and  Description:
+Kelvic The Artist Websolution
+An enterprise system for small independant artists without business background and no money for large ERP systems like SAP. We are using the small artist Kelvic the artist as a base to make this web solution.
 
 
 Group names and student numbers:
