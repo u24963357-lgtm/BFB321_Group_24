@@ -31,7 +31,7 @@ def production():
     moneyspent = np.array([1000, 1200, 1100, 1300, 1250, 1400, 1500, 1600, 1700, 1800, 1900, 2000])
     value = np.array([5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000, 10500])
     monthly_goal = np.array([3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3])
-    cur_frm_goal = abs(monthly_goal[10] - num_in_stock[10]) 
+    cur_frm_goal = abs(monthly_goal[10] - NUM_IN_STOCK[10]) 
     efficiency = (value[10] / moneyspent[10]) * 100
     efficiency_monthly = (value / moneyspent) * 100
     return render_template('Admin Facing/baseline_data.html', 
