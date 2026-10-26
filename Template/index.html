@@ -54,7 +54,7 @@
                 </span>
                 <span class="card-divider"></span>
                 <span class="card-metric">
-                    <span class="metric-value">96.4%</span>
+                    <span class="metric-value">{{ on_time_rate }}</span>
                     <span class="metric-label">on-time rate</span>
                     <span class="metric-trend">+1.2%</span>
                 </span>
@@ -71,19 +71,16 @@
                 </span>
                 <span class="card-title">
                     <span class="area-name">Sales / Orders</span>
-                    <span class="area-count">8 open orders</span>
+                    
                 </span>
                 <span class="card-divider"></span>
                 <span class="card-metric">
-<<<<<<< HEAD
-                    <span class="metric-value">R2 400
-                        
-                    </span>
-                    <span class="metric-label">weekly revenue</span>
-=======
-                    <span class="metric-value">R 2,450</span>
+
+
+
+                    <span class="metric-value">R {{ monthly_revenue }}</span>
                     <span class="metric-label">Monthly revenue</span>
->>>>>>> 185c4704229f319313ef4cfa6668b22582f40db0
+
                     <span class="metric-trend">+4.7%</span>
                 </span>
             </a>
@@ -99,12 +96,12 @@
                 </span>
                 <span class="card-title">
                     <span class="area-name">Storage</span>
-                    <span class="area-count">18 low-stock SKUs</span>
+                    
                 </span>
                 <span class="card-divider"></span>
                 <span class="card-metric">
-                    <span class="metric-value">78.6%</span>
-                    <span class="metric-label">capacity used</span>
+                    <span class="metric-value">{{low_stock_items}}</span>
+                    <span class="metric-label">low-stock items</span>
                     <span class="metric-trend">+6.2%</span>
                 </span>
             </a>

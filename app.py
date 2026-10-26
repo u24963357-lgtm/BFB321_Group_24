@@ -5,7 +5,9 @@ from eoq import calculate_eoq_canvas, calculate_eoq_frame
 
 #Global data
 SALES_MONTHLY = np.array([10, 12, 11, 13, 12, 14, 15, 16, 17, 18, 19, 20])
-
+NUM_IN_STOCK = np.array([5, 4, 6, 5, 5,5,5,3, 4, 5, 6, 5]) 
+MONTHLY_REVENUE = np.array([1000, 1220, 1240, 1260, 1280, 1300, 1320, 1340, 1360, 1380, 1400, 1420])
+    
 
 app = Flask(
     __name__,
@@ -16,16 +18,19 @@ app = Flask(
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    new_paintings=NUM_IN_STOCK[10] # October stock
+    on_time_rate= 95
+    monthly_revenue=MONTHLY_REVENUE[10] # October revenue
+    low_stock_items=18
+    return render_template('index.html', new_paintings=new_paintings, on_time_rate=on_time_rate, monthly_revenue=monthly_revenue, low_stock_items=low_stock_items)
 
 @app.route('/production')
 def production():
 
-    num_in_stock = np.array([5, 4, 6, 5, 5,5,5,3, 4, 5, 6, 5]) 
+    num_in_stock = NUM_IN_STOCK[9] # October stock
     moneyspent = np.array([1000, 1200, 1100, 1300, 1250, 1400, 1500, 1600, 1700, 1800, 1900, 2000])
     value = np.array([5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000, 10500])
     monthly_goal = np.array([3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3])
-    
     cur_frm_goal = abs(monthly_goal[10] - num_in_stock[10]) 
     efficiency = (value[10] / moneyspent[10]) * 100
     efficiency_monthly = (value / moneyspent) * 100
@@ -48,7 +53,7 @@ def logistics():
 
 @app.route('/orders')
 def orders(): # values coming from the database, for now, we are using static values
-    monthly_revenue = np.array([1000, 1220, 1240, 1260, 1280, 1300, 1320, 1340, 1360, 1380, 1400, 1420])
+    monthly_revenue = MONTHLY_REVENUE
     revenue = monthly_revenue[9]  # October revenue
     open_order = 7
     fulfillment_rate = 95
