@@ -68,9 +68,9 @@ def storage():
 
     quantity = np.array([1840,624,86,4250,312,42,168])
     sum_quantity = np.sum(quantity)
-    low_stock_items = 18
+    low_stock_items = 3
     capacity = 10000
-    capacity_utilization = round(sum_quantity / capacity) * 100
+    capacity_utilization = round((sum_quantity / capacity) * 100, 2)
 
     return render_template('Admin Facing/replenishment.html',quantity=quantity, sum_quantity=sum_quantity, low_stock_items=low_stock_items, capacity_utilization=capacity_utilization)
 
