@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, redirect, render_template, request, url_for
 import numpy as np  
 from eoq import calculate_eoq_canvas, calculate_eoq_frame
 
@@ -17,7 +17,18 @@ app = Flask(
 )
 
 @app.route('/')
+def login():
+    return render_template('login.html')
+
+@app.route('/index', methods=['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '')
+        if not username or not password:
+            return render_template('login.html', error='Enter both a username and password.'), 400
+        return redirect(url_for('home'))
+
     new_paintings=NUM_IN_STOCK[10] # October stock
     on_time_rate= 95
     monthly_revenue=MONTHLY_REVENUE[10] # October revenue
