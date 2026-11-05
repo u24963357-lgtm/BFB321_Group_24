@@ -22,43 +22,8 @@
   color: inherit;
 }
 
-.login-page .brand-mark {
-  display: grid;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-  border-radius: 8px;
-  background: #1f3d2b;
-  color: #fff;
-}
-
-.login-page .brand-mark svg {
-  width: 19px;
-  height: 19px;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.4;
-}
-
-.login-page .brand-text {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  line-height: 1.15;
-}
-
-.login-page .brand-title {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.login-page .brand-sub {
-  color: #6b6f6b;
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+.login-page .brand-logo {
+  height: 36px;
 }
 
 .login-main {

@@ -9,15 +9,10 @@
 {% block content %}
   <header class="topbar">
     <a class="brand" href="{{ url_for('home') }}" aria-label="Kelvic the Artist">
-      <span class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24">
-          <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
-          <path d="m8 10 4 2.3 4-2.3M8 13l4 2.3 4-2.3M12 12.3v4.5" />
-        </svg>
-      </span>
+      <img class="brand-logo" src="{{ url_for('static', filename='kelvic-logo.png') }}" alt="">
       <span class="brand-text">
         <span class="brand-title">Kelvic the Artist</span>
-        <span class="brand-sub">Operations command</span>
+        <span class="brand-sub">Artworks</span>
       </span>
     </a>
 

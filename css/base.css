@@ -66,33 +66,30 @@ a:hover {
   gap: 12px;
 }
 
-.topbar .brand-mark {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  background: var(--accent);
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-weight: 700;
-  font-size: 14px;
+.brand-logo {
+  display: block;
+  width: auto;
+  height: 36px;
+  max-width: 100%;
+  object-fit: contain;
 }
 
-.topbar .brand-text {
+.brand-text {
   display: flex;
   flex-direction: column;
   line-height: 1.15;
 }
 
-.topbar .brand-title {
-  font-weight: 600;
+.brand-title {
+  color: var(--text);
   font-size: 14px;
+  font-weight: 600;
 }
 
-.topbar .brand-sub {
+.brand-sub {
+  color: var(--text-muted);
   font-size: 10px;
   letter-spacing: 0.12em;
-  color: var(--text-muted);
   text-transform: uppercase;
 }
 

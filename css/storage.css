@@ -15,34 +15,16 @@
   color: inherit;
 }
 
-.storage-page .brand-mark {
-  width: 29px;
-  height: 29px;
-  border-radius: 7px;
-}
-
-.brand-mark svg {
-  width: 16px;
-  height: 16px;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.4;
-}
-
-.storage-page .brand-text {
-  gap: 3px;
+.storage-page .brand-logo {
+  height: 35px;
 }
 
 .storage-page .brand-title {
   font-size: 12px;
-  line-height: 1;
 }
 
 .storage-page .brand-sub {
   font-size: 8px;
-  letter-spacing: 0.1em;
 }
 
 .storage-page .topbar-right {
@@ -480,7 +462,6 @@
 }
 
 @media (max-width: 480px) {
-  .storage-page .brand-sub,
   .storage-page .pill-status {
     display: none;
   }
