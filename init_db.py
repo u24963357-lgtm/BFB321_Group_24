@@ -6,8 +6,14 @@ from db import BASE_DIR, connect
 # Children before parents (orders before clients - a table with a foreign key
 # must be dropped BEFORE the table it points to)
 TABLES_IN_DROP_ORDER = [
-    "production_record", "purchase_order", "order_item", "customer_order",
-    "product", "supplier", "storage_location", "customer",
+    "production_records",
+    "purchase_orders",
+    "order_items",
+    "orders",
+    "products",
+    "suppliers",
+    "customers",
+    "storage_locations",
 ]
 
 
@@ -34,7 +40,7 @@ def main(reset=False):
             for stmt in read_statements("schema.sql"):
                 cur.execute(stmt)
 
-            cur.execute("SELECT COUNT(*) AS n FROM product")
+            cur.execute("SELECT COUNT(*) AS n FROM products")
             if cur.fetchone()["n"] == 0:
                 print("Loading sample data from seed.sql ...")
                 for stmt in read_statements("seed.sql"):

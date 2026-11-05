@@ -12,7 +12,7 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))  # DB_HOST, DB_PASSWORD, ... from .e
 def connect():
     """Open a new connection using the settings in .env."""
     options = dict(
-        host=os.getenv("DB_HOST", "DB_HOST=your-service-name-your-project.a.aivencloud.com"),
+        host=os.getenv("DB_HOST", "DB_HOST=mysql-2117e049-tuks-490c.e.aivencloud.com"),
         port=int(os.getenv("DB_PORT", "26525")),
         user=os.getenv("DB_USER", "avnadmin"),
         password=os.getenv("DB_PASSWORD", ""),
