@@ -1,18 +1,17 @@
-from flask import Flask, redirect, render_template, request, url_for
+import os
+import secrets
+
+from flask import Flask, redirect, render_template, request, session, url_for
 import numpy as np  
 from eoq import calculate_eoq_canvas, calculate_eoq_frame
-
-import pymysql
-
-import db
-import eoq
-import eoqmodel
-
-
-
+from werkzeug.security import check_password_hash
 
 
 #Global data
+VALID_USERS = {
+    "adminA": "pbkdf2:sha256:600000$cb76IivmMSLD8fFK$01760879a4953b8cf91adb090ef6c7f74f8ea9825737cbb218d223a08a3a8894",
+    "adminB": "pbkdf2:sha256:600000$GSUXAPSubV5qockQ$57bf56d20358068e9394e626de73075cd34f2e5b3a84a9214f967f3e87e790a7",
+}
 SALES_MONTHLY = np.array([10, 12, 11, 13, 12, 14, 15, 16, 17, 18, 19, 20])
 NUM_IN_STOCK = np.array([5, 4, 6, 5, 5,5,5,3, 4, 5, 6, 5]) 
 MONTHLY_REVENUE = np.array([1000, 1220, 1240, 1260, 1280, 1300, 1320, 1340, 1360, 1380, 1400, 1420])
@@ -24,18 +23,33 @@ app = Flask(
     static_folder="css",
     static_url_path="/css",
 )
+app.secret_key = os.environ.get("FLASK_SECRET_KEY") or secrets.token_hex(32)
 
 @app.route('/')
 def login():
     return render_template('login.html')
 
+@app.before_request
+def require_login():
+    if request.endpoint in ('login', 'static'):
+        return
+    if request.endpoint == 'home' and request.method == 'POST':
+        return
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
 @app.route('/index', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        username = request.form.get('username', '').strip()
+        session.clear()
+        username = request.form.get('username', '')
         password = request.form.get('password', '')
         if not username or not password:
             return render_template('login.html', error='Enter both a username and password.'), 400
+        password_hash = VALID_USERS.get(username)
+        if password_hash is None or not check_password_hash(password_hash, password):
+            return render_template('login.html', error='Invalid username or password.'), 401
+        session['username'] = username
         return redirect(url_for('home'))
 
     new_paintings=NUM_IN_STOCK[10] # October stock
