@@ -2,6 +2,15 @@ from flask import Flask, render_template
 import numpy as np  
 from eoq import calculate_eoq_canvas, calculate_eoq_frame
 
+import pymysql
+
+import db
+import eoq
+import eoqmodel
+
+
+
+
 
 #Global data
 SALES_MONTHLY = np.array([10, 12, 11, 13, 12, 14, 15, 16, 17, 18, 19, 20])

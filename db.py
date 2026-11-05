@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from flask import g
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-load_dotenv(os.path.join(BASE_DIR, ".env"))  # DB_HOST, DB_PASSWORD, ... from .env
+load_dotenv(os.path.join(BASE_DIR, ".env")) 
 
 
 def connect():
