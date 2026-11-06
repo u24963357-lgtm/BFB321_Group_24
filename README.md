@@ -22,3 +22,7 @@ Installation and setup instructions:
    cd Kelvic-the-Artist-Webpage
 
 4. Open your browser and go to http://127.0.0.1:5000/
+
+5. Log in information:
+       username :adminA  password : Kelvic_2026A
+       username :adminB  password : Kelvic_2026B
