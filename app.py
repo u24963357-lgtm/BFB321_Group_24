@@ -1,9 +1,20 @@
 import os
 import secrets
 
-from flask import Flask, redirect, render_template, request, session, url_for
+from flask import Flask, flash, redirect, render_template, request, session, url_for
 import numpy as np  
 from eoq import calculate_eoq_canvas, calculate_eoq_frame
+from db import init_app as init_db_app, query_all, query_one
+from models import (
+    add_shipment,
+    delete_inventory as delete_inventory_record,
+    delete_shipment as delete_shipment_record,
+    get_inventory,
+    get_production_data,
+    get_recent_orders,
+    get_shipments,
+    place_order,
+)
 from werkzeug.security import check_password_hash
 
 
@@ -24,6 +35,7 @@ app = Flask(
     static_url_path="/css",
 )
 app.secret_key = os.environ.get("FLASK_SECRET_KEY") or secrets.token_hex(32)
+init_db_app(app)
 
 @app.route('/')
 def login():
@@ -74,39 +86,109 @@ def production():
                            efficiency=efficiency,
                            num_in_stock=num_in_stock,
                            efficiency_monthly=np.round(efficiency_monthly, 2),
-                           moneyspent=moneyspent, value=value)
+                           moneyspent=moneyspent, value=value,
+                           production=get_production_data())
 
 
 
-@app.route('/logistics')
+@app.route('/logistics', methods=['GET', 'POST'])
 def logistics():
+    if request.method == 'POST':
+        success, message = add_shipment(
+            request.form.get('shipment_id', '').strip(),
+            request.form.get('origin', '').strip(),
+            request.form.get('destination', '').strip(),
+            request.form.get('status', '').strip(),
+            request.form.get('arrival_date', '').strip(),
+        )
+        flash(message, 'success' if success else 'error')
+        return redirect(url_for('logistics'))
+
     monthly_demand = SALES_MONTHLY[10] * 100
     eoq_canvas = round(calculate_eoq_canvas(monthly_demand))
     eoq_frame = round(calculate_eoq_frame(monthly_demand))
-    return render_template('Admin Facing/inventory_management.html', eoq_canvas=eoq_canvas, eoq_frame=eoq_frame)
+    return render_template(
+        'Admin Facing/inventory_management.html',
+        eoq_canvas=eoq_canvas,
+        eoq_frame=eoq_frame,
+        shipments=get_shipments(),
+    )
 
-@app.route('/orders')
-def orders(): # values coming from the database, for now, we are using static values
+
+@app.route(
+    '/shipments/<string:shipment_id>/delete',
+    methods=['POST'],
+)
+def delete_shipment(shipment_id):
+    delete_shipment_record(shipment_id)
+    return redirect(url_for('logistics'))
+
+
+@app.route('/orders', methods=['GET', 'POST'])
+def orders():
+    if request.method == 'POST':
+        customer_id = request.form.get('customer_id', type=int)
+        product_id = request.form.get('product_id', type=int)
+        quantity = request.form.get('quantity', type=int)
+        if not customer_id or not product_id or not quantity:
+            flash('Choose a customer, product, and quantity.', 'error')
+        else:
+            success, message = place_order(customer_id, product_id, quantity)
+            flash(message, 'success' if success else 'error')
+        return redirect(url_for('orders'))
+
     monthly_revenue = MONTHLY_REVENUE
     revenue = monthly_revenue[9]  # October revenue
-    open_order = 7
+    open_order = query_one(
+        "SELECT COUNT(*) AS count FROM orders WHERE status = 'Open'"
+    )['count']
     fulfillment_rate = 95
     backorders = 8
     sales_monthly = SALES_MONTHLY
     revenue_precentage = round((monthly_revenue[9] - monthly_revenue[8]) / monthly_revenue[8], 2) * 100 # calculating revenue percentage change from September to October
-    return render_template('Admin Facing/order_management.html', revenue=revenue, open_order=open_order, fulfillment_rate=fulfillment_rate, backorders=backorders, sales_monthly=sales_monthly, monthly_revenue=monthly_revenue, revenue_precentage=revenue_precentage)
+    return render_template(
+        'Admin Facing/order_management.html',
+        revenue=revenue,
+        open_order=open_order,
+        fulfillment_rate=fulfillment_rate,
+        backorders=backorders,
+        sales_monthly=sales_monthly,
+        monthly_revenue=monthly_revenue,
+        revenue_precentage=revenue_precentage,
+        orders=get_recent_orders(),
+        products=query_all(
+            "SELECT id, name, stock_quantity, price FROM products ORDER BY name"
+        ),
+        customers=query_all("SELECT id, name FROM customers ORDER BY name"),
+    )
 
 
 @app.route('/storage')
 def storage():
+    inventory = get_inventory()
+    sum_quantity = sum(item['quantity'] for item in inventory)
+    low_stock_items = sum(item['status'] != 'In stock' for item in inventory)
+    capacity = query_one(
+        "SELECT COALESCE(SUM(capacity), 0) AS total FROM storage_locations"
+    )['total']
+    capacity_utilization = round((sum_quantity / capacity) * 100, 2) if capacity else 0
 
-    quantity = np.array([1840,624,86,4250,312,42,168])
-    sum_quantity = np.sum(quantity)
-    low_stock_items = 3
-    capacity = 10000
-    capacity_utilization = round((sum_quantity / capacity) * 100, 2)
+    return render_template(
+        'Admin Facing/replenishment.html',
+        inventory=inventory,
+        sum_quantity=sum_quantity,
+        low_stock_items=low_stock_items,
+        capacity_utilization=capacity_utilization,
+    )
 
-    return render_template('Admin Facing/replenishment.html',quantity=quantity, sum_quantity=sum_quantity, low_stock_items=low_stock_items, capacity_utilization=capacity_utilization)
+
+@app.route(
+    '/inventory/<int:product_id>/delete',
+    methods=['POST'],
+)
+def delete_inventory(product_id):
+    delete_inventory_record(product_id)
+    return redirect(url_for('storage'))
 
 
 

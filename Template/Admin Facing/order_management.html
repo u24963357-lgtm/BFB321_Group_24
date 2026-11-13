@@ -53,7 +53,7 @@
           <span class="card-label">Open orders</span>
           <span class="card-badge">+2 this month</span>
         </div>
-        <div class="card-value">8 <small>orders</small></div>
+        <div class="card-value">{{ open_order }} <small>orders</small></div>
       </article>
       <article class="card">
         <div class="card-top">
@@ -78,6 +78,31 @@
       </article>
     </section>
 
+    {% for message in get_flashed_messages() %}
+    <p class="order-message" role="status">{{ message }}</p>
+    {% endfor %}
+    <section class="panel" style="margin-bottom: 20px;">
+      <div class="panel-head">
+        <h2 class="panel-title">Place Order</h2>
+      </div>
+      <form method="POST" action="{{ url_for('orders') }}" style="padding: 15px; display: flex; gap: 10px;">
+        <select name="customer_id" class="search-input" required>
+          <option value="">Select Customer...</option>
+          {% for customer in customers %}
+            <option value="{{ customer.id }}">{{ customer.name }}</option>
+          {% endfor %}
+        </select>
+        <select name="product_id" class="search-input" required>
+          <option value="">Select Product...</option>
+          {% for p in products %}
+            <option value="{{ p.id }}">{{ p.name }} (Stock: {{ p.stock_quantity }}) - R{{ p.price }}</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="quantity" placeholder="Quantity" min="1" required class="search-input" style="width: 120px;">
+        <button type="submit" class="btn">Place Order</button>
+      </form>
+    </section>
+
     <section class="panel output-panel order-management-panel" aria-labelledby="customer-orders-title">
       <div class="panel-head">
         <div>
@@ -93,16 +118,27 @@
             <tr>
               <th scope="col">Order</th>
               <th scope="col">Date of order</th>
-              <th scope="col">Location</th>
-              <th scope="col">Date needed</th>
-              <th scope="col">Order type</th>
+              <th scope="col">Customer</th>
+              <th scope="col">Status</th>
+              <th scope="col">Total</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody data-order-rows>
-            <tr class="empty-order-state">
-              <td colspan="6">No customer orders have been added yet.</td>
+            {% for o in orders %}
+            <tr>
+              <td>{{ o.id }}</td>
+              <td>{{ o.order_date.strftime('%Y-%m-%d') }}</td>
+              <td>{{ o.customer }}</td>
+              <td>{{ o.status }}</td>
+              <td>R{{ "{:,.2f}".format(o.total_value if o.total_value else 0) }}</td>
+              <td class="order-row-actions">
+                <button class="order-row-button">View</button>
+              </td>
             </tr>
+            {% else %}
+            <tr><td colspan="6">No orders found.</td></tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
@@ -141,277 +177,5 @@
     </section>
   </main>
 
-  <script>
-    const orderBody = document.querySelector("[data-order-rows]");
-    const orderMessage = document.querySelector("[data-order-message]");
-    const orderStorageKey = "kelvic-customer-orders";
-    const orderLocations = [
-      "Pretoria, Gauteng",
-      "Johannesburg, Gauteng",
-      "Cape Town, Western Cape",
-      "Durban, KwaZulu-Natal",
-      "Other / remote",
-    ];
-    const orderTypes = ["Physical", "Digital", "Original"];
 
-    function setOrderMessage(message, isError = false) {
-      orderMessage.textContent = message;
-      orderMessage.classList.toggle("is-error", isError);
-    }
-
-    function getOrderData(row) {
-      return {
-        id: row.cells[0].textContent.trim(),
-        orderDate: row.cells[1].textContent.trim(),
-        location: row.cells[2].textContent.trim(),
-        deliveryDate: row.cells[3].textContent.trim(),
-        type: row.cells[4].textContent.trim(),
-      };
-    }
-
-    function saveOrders() {
-      try {
-        const orders = [...orderBody.querySelectorAll("tr:not(.empty-order-state)")].map(getOrderData);
-        localStorage.setItem(orderStorageKey, JSON.stringify(orders));
-        setOrderMessage("Order changes saved in this browser.");
-      } catch (error) {
-        setOrderMessage("Could not save order changes in this browser.", true);
-        console.error("Unable to save orders to browser storage.", error);
-      }
-    }
-
-    function makeOrderButton(label, action, className = "") {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.textContent = label;
-      button.dataset.orderAction = action;
-      button.className = `order-row-button ${className}`.trim();
-      return button;
-    }
-
-    function renderOrder(order) {
-      const row = document.createElement("tr");
-      [order.id, order.orderDate, order.location, order.deliveryDate, order.type].forEach((value) => {
-        row.insertCell().textContent = value;
-      });
-      const actionsCell = row.insertCell();
-      actionsCell.className = "order-row-actions";
-      actionsCell.append(
-        makeOrderButton("Edit", "edit"),
-        makeOrderButton("Delete", "delete"),
-      );
-      orderBody.append(row);
-      return row;
-    }
-
-    function isOrder(value) {
-      return value
-        && typeof value.id === "string"
-        && /^\d{4}-\d{2}-\d{2}$/.test(value.orderDate)
-        && orderLocations.includes(value.location)
-        && /^\d{4}-\d{2}-\d{2}$/.test(value.deliveryDate)
-        && orderTypes.includes(value.type);
-    }
-
-    function updateEmptyOrderState() {
-      const emptyState = orderBody.querySelector(".empty-order-state");
-      if (orderBody.querySelector("tr:not(.empty-order-state)")) {
-        emptyState?.remove();
-      } else if (!emptyState) {
-        const row = orderBody.insertRow();
-        row.className = "empty-order-state";
-        const cell = row.insertCell();
-        cell.colSpan = 6;
-        cell.textContent = "No customer orders have been added yet.";
-      }
-    }
-
-    function loadOrders() {
-      try {
-        const saved = localStorage.getItem(orderStorageKey);
-        if (saved === null) return;
-        const orders = JSON.parse(saved);
-        if (!Array.isArray(orders) || !orders.every(isOrder)) {
-          throw new Error("Saved order data has an invalid format.");
-        }
-        orderBody.replaceChildren();
-        orders.forEach(renderOrder);
-        updateEmptyOrderState();
-      } catch (error) {
-        setOrderMessage("Saved orders could not be loaded; add orders again.", true);
-        console.error("Unable to load orders from browser storage.", error);
-      }
-    }
-
-    function createOrderInput(value, label, type = "text") {
-      const input = document.createElement("input");
-      input.type = type;
-      input.value = value;
-      input.setAttribute("aria-label", label);
-      input.required = true;
-      return input;
-    }
-
-    function createOrderSelect(options, value, label, placeholder = "") {
-      const select = document.createElement("select");
-      select.setAttribute("aria-label", label);
-      select.required = true;
-      if (placeholder) {
-        const option = document.createElement("option");
-        option.value = "";
-        option.textContent = placeholder;
-        select.append(option);
-      }
-      options.forEach((optionValue) => {
-        const option = document.createElement("option");
-        option.value = optionValue;
-        option.textContent = optionValue;
-        option.selected = optionValue === value;
-        select.append(option);
-      });
-      return select;
-    }
-
-    function startOrderEditing(row, isNew = false) {
-      const data = getOrderData(row);
-      row.dataset.editing = "true";
-      row.dataset.newOrder = String(isNew);
-      row.dataset.original = JSON.stringify(data);
-      row.cells[0].textContent = data.id;
-      row.cells[1].replaceChildren(createOrderInput(data.orderDate, "Date of order", "date"));
-      row.cells[2].replaceChildren(createOrderSelect(orderLocations, data.location, "Order location", "Select a location"));
-      row.cells[3].replaceChildren(createOrderInput(data.deliveryDate, "Date needed for delivery", "date"));
-      row.cells[4].replaceChildren(createOrderSelect(orderTypes, data.type, "Order type", "Select an order type"));
-      row.cells[5].replaceChildren(
-        makeOrderButton("Save", "save"),
-        makeOrderButton("Cancel", "cancel"),
-      );
-    }
-
-    function finishOrderEditing(row) {
-      const fields = [...row.querySelectorAll("input, select")];
-      const invalidField = fields.find((field) => !field.reportValidity());
-      if (invalidField) {
-        invalidField.focus();
-        setOrderMessage("Complete every order field before saving.", true);
-        return;
-      }
-
-      const data = {
-        id: row.cells[0].textContent.trim(),
-        orderDate: row.cells[1].querySelector("input").value,
-        location: row.cells[2].querySelector("select").value,
-        deliveryDate: row.cells[3].querySelector("input").value,
-        type: row.cells[4].querySelector("select").value,
-      };
-      if (data.deliveryDate < data.orderDate) {
-        setOrderMessage("The delivery date cannot be earlier than the order date.", true);
-        row.cells[3].querySelector("input").focus();
-        return;
-      }
-
-      const replacement = renderOrder(data);
-      orderBody.insertBefore(replacement, row);
-      row.remove();
-      updateEmptyOrderState();
-      saveOrders();
-    }
-
-    orderBody.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-order-action]");
-      if (!button) return;
-      const row = button.closest("tr");
-      const action = button.dataset.orderAction;
-
-      if (action === "edit") {
-        if (orderBody.querySelector("[data-editing]")) {
-          setOrderMessage("Save or cancel the current edit before editing another order.", true);
-          return;
-        }
-        startOrderEditing(row);
-      } else if (action === "save") {
-        finishOrderEditing(row);
-      } else if (action === "cancel") {
-        if (row.dataset.newOrder === "true") {
-          row.remove();
-        } else {
-          const original = JSON.parse(row.dataset.original);
-          const replacement = renderOrder(original);
-          orderBody.insertBefore(replacement, row);
-          row.remove();
-        }
-        updateEmptyOrderState();
-        setOrderMessage("Order edit cancelled.");
-      } else if (action === "delete" && window.confirm(`Delete order ${getOrderData(row).id}?`)) {
-        row.remove();
-        updateEmptyOrderState();
-        saveOrders();
-      }
-    });
-
-    document.querySelector("[data-add-order]").addEventListener("click", () => {
-      if (orderBody.querySelector("[data-editing]")) {
-        setOrderMessage("Save or cancel the current edit before adding an order.", true);
-        return;
-      }
-      orderBody.querySelector(".empty-order-state")?.remove();
-      const today = new Date();
-      const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-      const row = renderOrder({
-        id: `ORD-${Date.now()}`,
-        orderDate: localDate,
-        location: "",
-        deliveryDate: "",
-        type: "",
-      });
-      startOrderEditing(row, true);
-      row.cells[1].querySelector("input").focus();
-    });
-
-    loadOrders();
-
-    document.querySelector("[data-focus-orders]").addEventListener("click", () => {
-      const ordersTitle = document.querySelector("#customer-orders-title");
-      ordersTitle.scrollIntoView({ behavior: "smooth", block: "center" });
-      ordersTitle.focus({ preventScroll: true });
-    });
-
-    document.querySelector("[data-export-orders]").addEventListener("click", () => {
-      const rows = [
-        ["Sales metric", "Value"],
-        ["Open orders", "8 orders"],
-        ["Revenue", "R 2,450 this month"],
-        ["Fill rate", "97.1% fulfilled"],
-        ["Backorders", "28 orders"],
-        [],
-        [],
-        ["Order", "Date of order", "Location", "Date needed", "Order type"],
-        ...[...orderBody.querySelectorAll("tr:not(.empty-order-state):not([data-editing])")]
-          .map((row) => [...row.cells].slice(0, 5).map((cell) => cell.textContent.trim())),
-        [],
-        ["Month", "Orders"],
-        ["January", "Not recorded"],
-        ["February", "Not recorded"],
-        ["March", "Not recorded"],
-        ["April", "Not recorded"],
-        ["May", "Not recorded"],
-        ["June", "Not recorded"],
-        ["July", "Not recorded"],
-        ["August", "Not recorded"],
-        ["September", "Not recorded"],
-        ["October", "Not recorded"],
-        ["November", "Not recorded"],
-        ["December", "Not recorded"],
-      ];
-      const csv = rows
-        .map((row) => row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(","))
-        .join("\r\n");
-      const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
-      const download = document.createElement("a");
-      download.href = url;
-      download.download = "demand-and-fulfillment-report.csv";
-      download.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    });
-  </script>
 {% endblock %}

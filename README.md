@@ -12,14 +12,18 @@ Snethemba Ndlovu u24990150
 Kelebone Kgalaeng  u16068221
 
 Installation and setup instructions:
-1. To run our supply chain logic model ensure that you install python on your device.
-    run this on your terminal: (i) python -m venv venv (ii).\venv\Scripts\Activate.ps1 (iii) pip install -r requirements.txt (iv)run the python file from our repository app.py
-
-2. Install git on your device: https://git-scm.com/
-3. Then clone the repository:
+1. Install Python and git on your device: https://git-scm.com/
+2. Clone the repository:
 
    git clone [https://github.com/u24963357-lgtm/Kelvic-the-Artist-Webpage]
    cd Kelvic-the-Artist-Webpage
+
+3. Configure the database connection values in a local `.env` file (`DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME`). In the repository terminal, run:
+   - `python -m venv venv`
+   - `.\venv\Scripts\Activate.ps1`
+   - `pip install -r requirements.txt`
+   - `python init_db.py` to create the tables and load sample data when the database is empty
+   - `python app.py`
 
 4. Open your browser and go to http://127.0.0.1:5000/
 

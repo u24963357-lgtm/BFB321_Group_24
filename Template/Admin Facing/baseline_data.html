@@ -90,18 +90,21 @@
               <th scope="col">New paintings</th>
             </tr>
           </thead>
-          <tbody><tr><th scope="row">January</th><td>{{ value[0] }}</td><td>{{ moneyspent[0] }}</td><td>{{ efficiency_monthly[0] }}</td><td>{{ num_in_stock[0] }}</td></tr>
-          <tr><th scope="row">February</th><td>{{ value[1] }}</td><td>{{ moneyspent[1] }}</td><td>{{ efficiency_monthly[1] }}</td><td>{{ num_in_stock[1] }}</td></tr>
-          <tr><th scope="row">March</th><td>{{ value[2] }}</td><td>{{ moneyspent[2] }}</td><td>{{ efficiency_monthly[2] }}</td><td>{{ num_in_stock[2] }}</td></tr>
-          <tr><th scope="row">April</th><td>{{ value[3] }}</td><td>{{ moneyspent[3] }}</td><td>{{ efficiency_monthly[3] }}</td><td>{{ num_in_stock[3] }}</td></tr>
-          <tr><th scope="row">May</th><td>{{ value[4] }}</td><td>{{ moneyspent[4] }}</td><td>{{ efficiency_monthly[4] }}</td><td>{{ num_in_stock[4] }}</td></tr>
-          <tr><th scope="row">June</th><td>{{ value[5] }}</td><td>{{ moneyspent[5] }}</td><td>{{ efficiency_monthly[5] }}</td><td>{{ num_in_stock[5] }}</td></tr>
-          <tr><th scope="row">July</th><td>{{ value[6] }}</td><td>{{ moneyspent[6] }}</td><td>{{ efficiency_monthly[6] }}</td><td>{{ num_in_stock[6] }}</td></tr>
-          <tr><th scope="row">August</th><td>{{ value[7] }}</td><td>{{ moneyspent[7] }}</td><td>{{ efficiency_monthly[7] }}</td><td>{{ num_in_stock[7] }}</td></tr>
-          <tr><th scope="row">September</th><td>{{ value[8] }}</td><td>{{ moneyspent[8] }}</td><td>{{ efficiency_monthly[8] }}</td><td>{{ num_in_stock[8] }}</td></tr>
-          <tr><th scope="row">October</th><td>{{ value[9] }}</td><td>{{ moneyspent[9] }}</td><td>{{ efficiency_monthly[9] }}</td><td>{{ num_in_stock[9] }}</td></tr>
-          <tr><th scope="row">November</th><td>{{ value[10] }}</td><td>{{ moneyspent[10] }}</td><td>{{ efficiency_monthly[10] }}</td><td>{{ num_in_stock[10] }}</td></tr>
-          <tr><th scope="row">December</th><td>{{ value[11] }}</td><td>{{ moneyspent[11] }}</td><td>{{ efficiency_monthly[11] }}</td><td>{{ num_in_stock[11] }}</td></tr>          </tbody>
+          <tbody>        
+
+              {% for row in production %}
+              <tr>
+                <th scope="row">{{ row.month.strftime('%B %Y') }} ({{ row.name }})</th>
+                <td>R{{ row.value_produced }}</td>
+                <td>R{{ row.money_spent }}</td>
+                <td>{{ row.efficiency|round(1) }}%</td>
+                <td>{{ row.units_produced }} / {{ row.monthly_goal }}</td>
+              </tr>
+              {% else %}
+              <tr><td colspan="5">No production records found.</td></tr>
+              {% endfor %}
+
+          </tbody>
         </table>
       </div>
     </section>

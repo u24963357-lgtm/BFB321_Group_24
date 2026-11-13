@@ -188,6 +188,20 @@ VALUES
 (4, DATE_FORMAT(CURDATE(), '%Y-%m-01'),
     5, 10, 6000.00, 13750.00);
 
+
+
+-- Add Shipments
+INSERT INTO shipments (id, origin, destination, status, arrival_date, is_past) VALUES
+('SHP-24908', 'Pretoria, Gauteng', 'Johannesburg, Gauteng', 'In transit', 'Today, 16:30', FALSE),
+('SHP-24904', 'Pretoria, Gauteng', 'Sandton, Gauteng', 'On schedule', 'Tomorrow, 08:15', FALSE),
+('SHP-24897', 'Pretoria, Gauteng', 'Centurion, Gauteng', 'Delayed', 'Tomorrow, 14:20', FALSE),
+('SHP-24891', 'Pretoria, Gauteng', 'Kempton Park, Gauteng', 'At terminal', 'May 24, 11:00', FALSE),
+('SHP-24886', 'Pretoria, Gauteng', 'Midrand, Gauteng', 'Delivered', 'Oct 20, 2026', TRUE);
+
+
+INSERT INTO users (username, password_hash) VALUES 
+('adminA', 'pbkdf2:sha256:600000$cb76IivmMSLD8fFK$01760879a4953b8cf91adb090ef6c7f74f8ea9825737cbb218d223a08a3a8894'),
+('adminB', 'pbkdf2:sha256:600000$GSUXAPSubV5qockQ$57bf56d20358068e9394e626de73075cd34f2e5b3a84a9214f967f3e87e790a7');
 -- ============================================
 -- END OF SEED DATA
 -- ============================================

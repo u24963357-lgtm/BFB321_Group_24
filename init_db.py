@@ -14,6 +14,8 @@ TABLES_IN_DROP_ORDER = [
     "suppliers",
     "customers",
     "storage_locations",
+    "shipments",
+    "users"
 ]
 
 
@@ -25,6 +27,8 @@ def read_statements(filename):
     return [s.strip()
             for s in "\n".join(lines).split(";")
             if s.strip()]
+
+
 
 
 def main(reset=False):
