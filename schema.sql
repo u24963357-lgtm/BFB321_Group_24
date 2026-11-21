@@ -19,16 +19,22 @@ CREATE TABLE IF NOT EXISTS products (
     reorder_level   INT            NOT NULL DEFAULT 10,
     setup_cost      DECIMAL(10,2)  NOT NULL DEFAULT 50.00,
     holding_cost    DECIMAL(10,2)  NOT NULL DEFAULT 5.00,
+    gsm_grade       INT            NULL,
     created_at      TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_products_location
         FOREIGN KEY (location_id) REFERENCES storage_locations (id),
     CONSTRAINT chk_products_type
-        CHECK (product_type IN ('Painting', 'Canvas', 'Frame')),
+        CHECK (product_type IN ('Painting', 'Canvas', 'Frame', 'Linen', 'Paper')),
     CONSTRAINT chk_products_price   CHECK (price >= 0),
     CONSTRAINT chk_products_stock   CHECK (stock_quantity >= 0),
     CONSTRAINT chk_products_reorder CHECK (reorder_level >= 0),
     CONSTRAINT chk_products_setup   CHECK (setup_cost >= 0),
-    CONSTRAINT chk_products_holding CHECK (holding_cost >= 0)
+    CONSTRAINT chk_products_holding CHECK (holding_cost >= 0),
+    CONSTRAINT chk_products_gsm
+        CHECK (
+            gsm_grade IS NULL
+            OR (gsm_grade BETWEEN 100 AND 300 AND gsm_grade % 50 = 0)
+        )
 );
  
 -- CUSTOMERS: who buys from Kelvic

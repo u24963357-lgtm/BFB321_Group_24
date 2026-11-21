@@ -31,20 +31,30 @@ INSERT INTO suppliers (name, email, phone) VALUES
 -- 4. PRODUCTS (references storage_locations)
 INSERT INTO products
     (location_id, name, product_type, price, stock_quantity,
-     reorder_level, setup_cost, holding_cost)
+     reorder_level, setup_cost, holding_cost, gsm_grade)
 VALUES
-(2, 'African Sunset Painting', 'Painting', 2500.00, 12, 5, 150.00, 25.00),
-(2, 'Mountain Landscape Painting', 'Painting', 3200.00, 8, 5, 180.00, 30.00),
-(2, 'Abstract Blue Painting', 'Painting', 1800.00, 4, 6, 120.00, 20.00),
-(2, 'Wildlife Canvas Painting', 'Painting', 2750.00, 10, 5, 160.00, 25.00),
-(3, 'Small Blank Canvas', 'Canvas', 120.00, 80, 20, 50.00, 3.00),
-(3, 'Medium Blank Canvas', 'Canvas', 220.00, 45, 15, 60.00, 5.00),
-(3, 'Large Blank Canvas', 'Canvas', 350.00, 12, 15, 75.00, 8.00),
-(4, 'Small Wooden Frame', 'Frame', 180.00, 50, 15, 45.00, 4.00),
-(4, 'Medium Wooden Frame', 'Frame', 280.00, 25, 10, 55.00, 6.00),
-(4, 'Large Wooden Frame', 'Frame', 420.00, 8, 10, 70.00, 9.00),
-(1, 'Gold Decorative Frame', 'Frame', 650.00, 6, 8, 90.00, 12.00),
-(1, 'Premium Stretched Canvas', 'Canvas', 480.00, 18, 10, 80.00, 10.00);
+(2, 'A5 Painting', 'Painting', 2500.00, 12, 5, 150.00, 25.00, NULL),
+(2, 'A4 Painting', 'Painting', 3200.00, 8, 5, 180.00, 30.00, NULL),
+(2, 'A3 Painting', 'Painting', 1800.00, 4, 6, 120.00, 20.00, NULL),
+(2, 'A2 Painting', 'Painting', 2750.00, 10, 5, 160.00, 25.00, NULL),
+(3, 'A1 Blank Canvas', 'Canvas', 120.00, 80, 20, 50.00, 3.00, NULL),
+(3, '1m*1m Blank Canvas', 'Canvas', 220.00, 45, 15, 60.00, 5.00, NULL),
+(3, '1.5m*1m Blank Canvas', 'Canvas', 350.00, 12, 15, 75.00, 8.00, NULL),
+(4, '1.8m*2.3m Wooden Frame', 'Frame', 180.00, 50, 15, 45.00, 4.00, NULL),
+(4, '1m*1m Wooden Frame', 'Frame', 280.00, 25, 10, 55.00, 6.00, NULL),
+(4, '1.5m*1m Wooden Frame', 'Frame', 420.00, 8, 10, 70.00, 9.00, NULL),
+(1, 'Gold Decorative Frame', 'Frame', 650.00, 6, 8, 90.00, 12.00, NULL),
+(1, 'Premium Stretched Canvas', 'Canvas', 480.00, 18, 10, 80.00, 10.00, NULL),
+(3, 'A1 Linen - 100gsm', 'Linen', 180.00, 30, 10, 55.00, 6.00, 100),
+(3, 'A1 Linen - 150gsm', 'Linen', 210.00, 28, 10, 55.00, 6.50, 150),
+(3, 'A1 Linen - 200gsm', 'Linen', 240.00, 25, 10, 55.00, 7.00, 200),
+(3, 'A1 Linen - 250gsm', 'Linen', 270.00, 22, 10, 55.00, 7.50, 250),
+(3, 'A1 Linen - 300gsm', 'Linen', 300.00, 20, 10, 55.00, 8.00, 300),
+(3, 'A1 Paper - 100gsm', 'Paper', 95.00, 60, 20, 45.00, 3.00, 100),
+(3, 'A1 Paper - 150gsm', 'Paper', 115.00, 55, 20, 45.00, 3.50, 150),
+(3, 'A1 Paper - 200gsm', 'Paper', 135.00, 50, 20, 45.00, 4.00, 200),
+(3, 'A1 Paper - 250gsm', 'Paper', 155.00, 45, 20, 45.00, 4.50, 250),
+(3, 'A1 Paper - 300gsm', 'Paper', 175.00, 40, 20, 45.00, 5.00, 300);
 
 -- 5. ORDERS (references customers)
 -- Dates are relative to the current date so the data remains useful.
