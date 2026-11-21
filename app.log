@@ -118,3 +118,28 @@
 2026-11-21 16:30:01,610 - INFO -  * Restarting with stat
 2026-11-21 16:30:04,885 - WARNING -  * Debugger is active!
 2026-11-21 16:30:04,917 - INFO -  * Debugger PIN: 738-845-450
+2026-11-21 16:42:16,354 - INFO - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-11-21 16:42:16,357 - INFO - Press CTRL+C to quit
+2026-11-21 16:42:16,368 - INFO -  * Restarting with stat
+2026-11-21 16:42:19,246 - WARNING -  * Debugger is active!
+2026-11-21 16:42:19,272 - INFO -  * Debugger PIN: 738-845-450
+2026-11-21 16:42:24,399 - INFO - 127.0.0.1 - - [21/Nov/2026 16:42:24] "GET / HTTP/1.1" 200 -
+2026-11-21 16:42:24,945 - INFO - 127.0.0.1 - - [21/Nov/2026 16:42:24] "GET /css/kelvic-logo.png HTTP/1.1" 304 -
+2026-11-21 16:42:24,949 - INFO - 127.0.0.1 - - [21/Nov/2026 16:42:24] "GET /css/login.css HTTP/1.1" 304 -
+2026-11-21 16:42:24,948 - INFO - 127.0.0.1 - - [21/Nov/2026 16:42:24] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:42:55,257 - INFO - User adminA logged in.
+2026-11-21 16:42:55,273 - INFO - 127.0.0.1 - - [21/Nov/2026 16:42:55] "POST /index HTTP/1.1" 302 -
+2026-11-21 16:42:59,261 - INFO - 127.0.0.1 - - [21/Nov/2026 16:42:59] "GET /index HTTP/1.1" 200 -
+2026-11-21 16:42:59,314 - INFO - 127.0.0.1 - - [21/Nov/2026 16:42:59] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:42:59,318 - INFO - 127.0.0.1 - - [21/Nov/2026 16:42:59] "GET /css/home.css HTTP/1.1" 200 -
+2026-11-21 16:42:59,454 - INFO - 127.0.0.1 - - [21/Nov/2026 16:42:59] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:42:59,458 - INFO - 127.0.0.1 - - [21/Nov/2026 16:42:59] "GET /css/home.css HTTP/1.1" 304 -
+2026-11-21 16:43:53,814 - INFO - 127.0.0.1 - - [21/Nov/2026 16:43:53] "GET /logistics HTTP/1.1" 200 -
+2026-11-21 16:43:53,851 - INFO - 127.0.0.1 - - [21/Nov/2026 16:43:53] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:43:53,858 - INFO - 127.0.0.1 - - [21/Nov/2026 16:43:53] "GET /css/storage.css HTTP/1.1" 200 -
+2026-11-21 16:43:53,860 - INFO - 127.0.0.1 - - [21/Nov/2026 16:43:53] "GET /css/logistics.css HTTP/1.1" 200 -
+2026-11-21 16:43:53,871 - INFO - 127.0.0.1 - - [21/Nov/2026 16:43:53] "GET /css/kelvic-logo.png HTTP/1.1" 304 -
+2026-11-21 16:43:54,090 - INFO - 127.0.0.1 - - [21/Nov/2026 16:43:54] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:43:54,092 - INFO - 127.0.0.1 - - [21/Nov/2026 16:43:54] "GET /css/storage.css HTTP/1.1" 304 -
+2026-11-21 16:43:54,097 - INFO - 127.0.0.1 - - [21/Nov/2026 16:43:54] "GET /css/logistics.css HTTP/1.1" 304 -
