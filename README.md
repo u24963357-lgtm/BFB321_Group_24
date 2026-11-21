@@ -5,11 +5,28 @@ Kelvic The Artist Websolution
 An enterprise system for small independant artists without business background and no money for large ERP systems like SAP. We are using the small artist Kelvic the artist as a base to make this web solution.
 
 
-Group names and student numbers:
-Siviwe Vilane u24693180
-Kelley Thlamo u24963357
-Snethemba Ndlovu u24990150
-Kelebone Kgalaeng  u16068221
+| Group names |  student numbers|
+|-------------|----------------|
+|Siviwe Vilane | u24693180 |
+|Kelley Thlamo | u24963357 |
+|Snethemba Ndlovu | u24990150 |
+|Kelebone Kgalaeng | u16068221 |
+
+
+features
+| Page |  What it does |
+|-------------|----------------|
+| overview/ | The Web solution woks as an ERP system as in connects the business operations to one database. It has modules such as production, logistics, orders, orders and storage. |
+| /login | The login page aunthenticates if the user is the admin meant to access the web solution, it uses mySQL tables. |
+| /index | The welcome page. Summarises data shown in each and every page and provides current status. |
+| /production | Tracks the artists studio operations. It uses the database to show data such as monthly goals and cost efficiency |
+| /logistics | The shipping manager. Uses EOQ and EPQ to provide insights to the user. |
+| /orders | Handles demand and fulfilment. Shows historic demand and fulfilment and also takes new orders. |
+| /orders/<id> | It allows the user to see a more detailed view of the individual order. |
+| /storage | The storage of the business. Uses the EPQ/EOQ formulas to show the status of an SKU. |
+| / |  |
+| / |  |
+| / |  |
 
 Installation and setup instructions:
 1. Install Python and git on your device: https://git-scm.com/
