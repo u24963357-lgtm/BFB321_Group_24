@@ -42,6 +42,16 @@
   background: #4d9a72;
 }
 
+.inventory-create-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 15px;
+}
+
+.inventory-create-form[hidden] {
+  display: none;
+}
 .storage-page .icon-btn {
   position: relative;
   width: 19px;

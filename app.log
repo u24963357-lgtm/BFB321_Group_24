@@ -1,0 +1,112 @@
+2026-11-21 15:34:08,411 - INFO - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-11-21 15:34:08,412 - INFO - Press CTRL+C to quit
+2026-11-21 15:34:08,425 - INFO -  * Restarting with stat
+2026-11-21 15:34:11,047 - WARNING -  * Debugger is active!
+2026-11-21 15:34:11,063 - INFO -  * Debugger PIN: 738-845-450
+2026-11-21 15:47:24,159 - INFO - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-11-21 15:47:24,160 - INFO - Press CTRL+C to quit
+2026-11-21 15:48:26,561 - INFO - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-11-21 15:48:26,563 - INFO - Press CTRL+C to quit
+2026-11-21 15:48:45,878 - INFO - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-11-21 15:48:45,879 - INFO - Press CTRL+C to quit
+2026-11-21 15:48:45,887 - INFO -  * Restarting with stat
+2026-11-21 15:48:48,128 - WARNING -  * Debugger is active!
+2026-11-21 15:48:48,139 - INFO -  * Debugger PIN: 738-845-450
+2026-11-21 15:51:52,872 - INFO - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-11-21 15:51:52,873 - INFO - Press CTRL+C to quit
+2026-11-21 16:01:49,325 - INFO - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-11-21 16:01:49,326 - INFO - Press CTRL+C to quit
+2026-11-21 16:01:49,337 - INFO -  * Restarting with stat
+2026-11-21 16:01:51,837 - WARNING -  * Debugger is active!
+2026-11-21 16:01:51,851 - INFO -  * Debugger PIN: 738-845-450
+2026-11-21 16:04:41,451 - INFO - 127.0.0.1 - - [21/Nov/2026 16:04:41] "GET / HTTP/1.1" 200 -
+2026-11-21 16:06:19,690 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:19] "GET / HTTP/1.1" 200 -
+2026-11-21 16:06:20,421 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:20] "GET /css/base.css HTTP/1.1" 200 -
+2026-11-21 16:06:20,423 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:20] "GET /css/kelvic-logo.png HTTP/1.1" 200 -
+2026-11-21 16:06:20,423 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:20] "GET /css/login.css HTTP/1.1" 200 -
+2026-11-21 16:06:20,538 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:20] "GET / HTTP/1.1" 200 -
+2026-11-21 16:06:20,790 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:20] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:06:20,797 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:20] "GET /css/login.css HTTP/1.1" 304 -
+2026-11-21 16:06:20,812 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:20] "GET /css/kelvic-logo.png HTTP/1.1" 304 -
+2026-11-21 16:06:20,967 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:20] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:06:20,973 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:20] "GET /css/login.css HTTP/1.1" 304 -
+2026-11-21 16:06:34,120 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:34] "GET / HTTP/1.1" 200 -
+2026-11-21 16:06:34,181 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:34] "GET /css/base.css HTTP/1.1" 200 -
+2026-11-21 16:06:34,200 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:34] "GET /css/login.css HTTP/1.1" 200 -
+2026-11-21 16:06:34,236 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:34] "GET /css/kelvic-logo.png HTTP/1.1" 200 -
+2026-11-21 16:06:34,387 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:34] "GET /favicon.ico HTTP/1.1" 302 -
+2026-11-21 16:06:34,437 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:34] "GET / HTTP/1.1" 200 -
+2026-11-21 16:06:48,858 - WARNING - Failed login attempt for user: jghf
+2026-11-21 16:06:48,870 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:48] "POST /index HTTP/1.1" 401 -
+2026-11-21 16:06:48,902 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:48] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:06:48,923 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:48] "GET /css/login.css HTTP/1.1" 304 -
+2026-11-21 16:06:48,943 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:48] "GET /css/kelvic-logo.png HTTP/1.1" 304 -
+2026-11-21 16:06:48,991 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:48] "GET /favicon.ico HTTP/1.1" 302 -
+2026-11-21 16:06:49,036 - INFO - 127.0.0.1 - - [21/Nov/2026 16:06:49] "GET / HTTP/1.1" 200 -
+2026-11-21 16:07:12,562 - INFO - User adminA logged in.
+2026-11-21 16:07:12,565 - INFO - 127.0.0.1 - - [21/Nov/2026 16:07:12] "POST /index HTTP/1.1" 302 -
+2026-11-21 16:07:16,520 - INFO - 127.0.0.1 - - [21/Nov/2026 16:07:16] "GET /index HTTP/1.1" 200 -
+2026-11-21 16:07:16,552 - INFO - 127.0.0.1 - - [21/Nov/2026 16:07:16] "GET /css/home.css HTTP/1.1" 200 -
+2026-11-21 16:07:16,554 - INFO - 127.0.0.1 - - [21/Nov/2026 16:07:16] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:07:16,737 - INFO - 127.0.0.1 - - [21/Nov/2026 16:07:16] "GET /favicon.ico HTTP/1.1" 404 -
+2026-11-21 16:07:56,985 - INFO - 127.0.0.1 - - [21/Nov/2026 16:07:56] "GET /production HTTP/1.1" 200 -
+2026-11-21 16:07:57,019 - INFO - 127.0.0.1 - - [21/Nov/2026 16:07:57] "GET /css/storage.css HTTP/1.1" 200 -
+2026-11-21 16:07:57,075 - INFO - 127.0.0.1 - - [21/Nov/2026 16:07:57] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:07:57,107 - INFO - 127.0.0.1 - - [21/Nov/2026 16:07:57] "GET /css/production.css HTTP/1.1" 200 -
+2026-11-21 16:07:57,121 - INFO - 127.0.0.1 - - [21/Nov/2026 16:07:57] "GET /css/kelvic-logo.png HTTP/1.1" 304 -
+2026-11-21 16:08:07,782 - INFO - 127.0.0.1 - - [21/Nov/2026 16:08:07] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:08:07,786 - INFO - 127.0.0.1 - - [21/Nov/2026 16:08:07] "GET /css/storage.css HTTP/1.1" 304 -
+2026-11-21 16:08:07,788 - INFO - 127.0.0.1 - - [21/Nov/2026 16:08:07] "GET /css/production.css HTTP/1.1" 304 -
+2026-11-21 16:08:07,965 - INFO - 127.0.0.1 - - [21/Nov/2026 16:08:07] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+2026-11-21 16:09:25,259 - INFO - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-11-21 16:09:25,260 - INFO - Press CTRL+C to quit
+2026-11-21 16:09:25,271 - INFO -  * Restarting with stat
+2026-11-21 16:09:27,244 - WARNING -  * Debugger is active!
+2026-11-21 16:09:27,256 - INFO -  * Debugger PIN: 738-845-450
+2026-11-21 16:09:37,325 - INFO - 127.0.0.1 - - [21/Nov/2026 16:09:37] "GET /production HTTP/1.1" 302 -
+2026-11-21 16:09:37,410 - INFO - 127.0.0.1 - - [21/Nov/2026 16:09:37] "GET / HTTP/1.1" 200 -
+2026-11-21 16:09:37,917 - INFO - 127.0.0.1 - - [21/Nov/2026 16:09:37] "GET /css/base.css HTTP/1.1" 200 -
+2026-11-21 16:09:38,052 - INFO - 127.0.0.1 - - [21/Nov/2026 16:09:38] "GET /css/kelvic-logo.png HTTP/1.1" 200 -
+2026-11-21 16:09:38,054 - INFO - 127.0.0.1 - - [21/Nov/2026 16:09:38] "GET /css/login.css HTTP/1.1" 200 -
+2026-11-21 16:09:50,013 - INFO - User adminA logged in.
+2026-11-21 16:09:50,017 - INFO - 127.0.0.1 - - [21/Nov/2026 16:09:50] "POST /index HTTP/1.1" 302 -
+2026-11-21 16:09:54,099 - INFO - 127.0.0.1 - - [21/Nov/2026 16:09:54] "GET /index HTTP/1.1" 200 -
+2026-11-21 16:09:54,134 - INFO - 127.0.0.1 - - [21/Nov/2026 16:09:54] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:09:54,144 - INFO - 127.0.0.1 - - [21/Nov/2026 16:09:54] "GET /css/home.css HTTP/1.1" 200 -
+2026-11-21 16:09:58,351 - INFO - 127.0.0.1 - - [21/Nov/2026 16:09:58] "GET /logout HTTP/1.1" 302 -
+2026-11-21 16:09:58,383 - INFO - 127.0.0.1 - - [21/Nov/2026 16:09:58] "GET / HTTP/1.1" 200 -
+2026-11-21 16:09:58,455 - INFO - 127.0.0.1 - - [21/Nov/2026 16:09:58] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:09:58,470 - INFO - 127.0.0.1 - - [21/Nov/2026 16:09:58] "GET /css/login.css HTTP/1.1" 304 -
+2026-11-21 16:09:58,484 - INFO - 127.0.0.1 - - [21/Nov/2026 16:09:58] "GET /css/kelvic-logo.png HTTP/1.1" 304 -
+2026-11-21 16:13:34,997 - INFO -  * Detected change in 'C:\\Users\\kelly\\OneDrive\\Documentos\\BFB semester project\\BFB321_Group_24\\app.py', reloading
+2026-11-21 16:13:35,521 - INFO -  * Restarting with stat
+2026-11-21 16:13:39,524 - WARNING -  * Debugger is active!
+2026-11-21 16:13:39,541 - INFO -  * Debugger PIN: 738-845-450
+2026-11-21 16:15:16,535 - INFO - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-11-21 16:15:16,537 - INFO - Press CTRL+C to quit
+2026-11-21 16:15:49,816 - INFO - WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+2026-11-21 16:15:49,818 - INFO - Press CTRL+C to quit
+2026-11-21 16:15:49,828 - INFO -  * Restarting with stat
+2026-11-21 16:15:52,579 - WARNING -  * Debugger is active!
+2026-11-21 16:15:52,606 - INFO -  * Debugger PIN: 738-845-450
+2026-11-21 16:16:06,867 - INFO - 127.0.0.1 - - [21/Nov/2026 16:16:06] "GET / HTTP/1.1" 200 -
+2026-11-21 16:16:07,151 - INFO - 127.0.0.1 - - [21/Nov/2026 16:16:07] "GET /css/login.css HTTP/1.1" 200 -
+2026-11-21 16:16:07,153 - INFO - 127.0.0.1 - - [21/Nov/2026 16:16:07] "GET /css/base.css HTTP/1.1" 200 -
+2026-11-21 16:16:07,152 - INFO - 127.0.0.1 - - [21/Nov/2026 16:16:07] "GET /css/kelvic-logo.png HTTP/1.1" 200 -
+2026-11-21 16:16:07,269 - INFO - 127.0.0.1 - - [21/Nov/2026 16:16:07] "GET /favicon.ico HTTP/1.1" 302 -
+2026-11-21 16:16:07,287 - INFO - 127.0.0.1 - - [21/Nov/2026 16:16:07] "GET / HTTP/1.1" 200 -
+2026-11-21 16:25:45,789 - INFO - 127.0.0.1 - - [21/Nov/2026 16:25:45] "GET / HTTP/1.1" 200 -
+2026-11-21 16:25:46,173 - INFO - 127.0.0.1 - - [21/Nov/2026 16:25:46] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:25:46,179 - INFO - 127.0.0.1 - - [21/Nov/2026 16:25:46] "GET /css/login.css HTTP/1.1" 304 -
+2026-11-21 16:25:46,185 - INFO - 127.0.0.1 - - [21/Nov/2026 16:25:46] "GET /css/kelvic-logo.png HTTP/1.1" 304 -
+2026-11-21 16:25:46,387 - INFO - 127.0.0.1 - - [21/Nov/2026 16:25:46] "GET /css/base.css HTTP/1.1" 304 -
+2026-11-21 16:25:46,388 - INFO - 127.0.0.1 - - [21/Nov/2026 16:25:46] "GET /css/login.css HTTP/1.1" 304 -

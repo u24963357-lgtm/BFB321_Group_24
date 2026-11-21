@@ -18,7 +18,7 @@
     </a>
 
     <div class="topbar-right">
-      <span class="pill-status"><span class="dot"></span>All systems operational</span>
+      <span class="pill-status"><span class="dot"></span>Database connected</span>
       <button class="icon-btn" type="button" aria-label="View monthly paintings table" title="View monthly paintings" data-focus-output>
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.5 15.5 4.2 4.2" /></svg>
       </button>
@@ -50,28 +50,74 @@
     <section class="card-grid storage-metrics production-metrics" aria-label="Production KPIs">
       <article class="card painting-kpi-card">
         <div class="card-top">
-          <span class="card-label">Monthly New Painting KPI</span>
-          <span class="card-badge painting-kpi-badge">{{ cur_frm_goal }} to goal</span>
+          <span class="card-label">{{ current_month_name }} painting goal</span>
+          <span class="card-badge painting-kpi-badge">
+            {% if not monthly_goal[current_month_index] %}No orders yet
+            {% elif goal_met %}Goal met{% else %}{{ cur_frm_goal }} to goal{% endif %}
+          </span>
         </div>
-        <div class="card-value"> {{num_in_stock[10]}} <small>paintings this month</small></div>
+        <div class="card-value">{{ num_in_stock[current_month_index] }} <small>paintings this month</small></div>
         <div class="painting-kpi-progress"
              role="progressbar"
              aria-label="New paintings completed this month"
              aria-valuemin="0"
-             aria-valuemax="{{ monthly_goal[10] }}"
-             aria-valuenow="{{ num_in_stock[10] }}"
-             aria-valuetext="{{ num_in_stock[10] }} of {{ monthly_goal[10] }} paintings; monthly goal is {{ monthly_goal[10] }}">
+             aria-valuemax="{{ [monthly_goal[current_month_index], 1]|max }}"
+             aria-valuenow="{{ num_in_stock[current_month_index] }}"
+             aria-valuetext="{{ num_in_stock[current_month_index] }} of {{ monthly_goal[current_month_index] }} paintings; monthly goal is {{ monthly_goal[current_month_index] }}">
           <span class="painting-kpi-marker" aria-hidden="true"></span>
         </div>
-        <div class="painting-kpi-goal">Monthly goal <strong>{{ monthly_goal[10] }} paintings</strong></div>
+        <div class="painting-kpi-goal">Monthly goal <strong>{{ monthly_goal[current_month_index] }} paintings</strong></div>
       </article>
       <article class="card">
         <div class="card-top">
           <span class="card-label">Efficiency</span>
-          <span class="card-badge">+2.1%</span>
         </div>
-        <div class="card-value">{{ efficiency|round(1) }}% <small> Efficiency score</small></div>
+        <div class="card-value">{{ efficiency|round(1) }}% <small> value / cost</small></div>
       </article>
+    </section>
+
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+      <p class="inventory-message" role="status">{{ message }}</p>
+    {% endfor %}
+
+    <section class="panel" style="margin-bottom: 20px;">
+      <div class="panel-head"><h2 class="panel-title">Add or edit production record</h2></div>
+      <form method="POST" action="{{ url_for('production') }}" id="production-form" style="padding: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+        <input type="hidden" name="record_id" id="production-record-id">
+        <label>Product
+          <select name="product_id" id="production-product" class="search-input" required>
+            <option value="">Select product...</option>
+            {% for product in products %}
+              <option value="{{ product.id }}">{{ product.name }}</option>
+            {% endfor %}
+            <option value="new">Add a new painting...</option>
+          </select>
+        </label>
+        <div id="new-piece-fields" hidden style="gap: 10px; flex-wrap: wrap; width: 100%;">
+          <label>New painting name
+            <input type="text" name="piece_name" maxlength="120" class="search-input" disabled>
+          </label>
+          <label>Storage location
+            <select name="location_id" class="search-input" disabled>
+              <option value="">Select location...</option>
+              {% for location in locations %}
+                <option value="{{ location.id }}">{{ location.name }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label>Unit price
+            <input type="number" name="piece_price" min="0" step="0.01" class="search-input" disabled>
+          </label>
+          <p class="panel-sub" style="width: 100%; margin: 0;">A new painting is added to inventory with stock equal to the units produced below.</p>
+        </div>
+        <label>Month <input type="date" name="month" id="production-month" value="{{ current_month_date }}" class="search-input" required></label>
+        <label>Units <input type="number" name="units_produced" id="production-units" min="0" step="1" class="search-input" required></label>
+        <label>Monthly goal <input type="number" name="monthly_goal" id="production-goal" min="0" step="1" class="search-input" required></label>
+        <label>Money spent <input type="number" name="money_spent" id="production-spent" min="0" step="0.01" class="search-input" required></label>
+        <label>Value produced <input type="number" name="value_produced" id="production-value" min="0" step="0.01" class="search-input" required></label>
+        <button class="btn" type="submit">Save record</button>
+        <button class="btn btn-outline" type="reset" data-reset-production>Clear form</button>
+      </form>
     </section>
 
     <section class="panel output-panel" aria-labelledby="output-title">
@@ -88,6 +134,7 @@
               <th scope="col">Money Spent</th>
               <th scope="col">Efficiency</th>
               <th scope="col">New paintings</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>        
@@ -99,9 +146,20 @@
                 <td>R{{ row.money_spent }}</td>
                 <td>{{ row.efficiency|round(1) }}%</td>
                 <td>{{ row.units_produced }} / {{ row.monthly_goal }}</td>
+                <td>
+                  <button class="btn btn-outline" type="button"
+                    data-edit-production
+                    data-id="{{ row.id }}"
+                    data-product-id="{{ row.product_id }}"
+                    data-month="{{ row.month.strftime('%Y-%m-%d') }}"
+                    data-units="{{ row.units_produced }}"
+                    data-goal="{{ row.monthly_goal }}"
+                    data-spent="{{ row.money_spent }}"
+                    data-value="{{ row.value_produced }}">Edit</button>
+                </td>
               </tr>
               {% else %}
-              <tr><td colspan="5">No production records found.</td></tr>
+              <tr><td colspan="6">No production records found.</td></tr>
               {% endfor %}
 
           </tbody>
@@ -117,34 +175,53 @@
       outputTitle.focus({ preventScroll: true });
     });
 
+    const form = document.querySelector("#production-form");
+    const productSelect = document.querySelector("#production-product");
+    const newPieceFields = document.querySelector("#new-piece-fields");
+    const toggleNewPieceFields = () => {
+      const creatingPiece = productSelect.value === "new";
+      newPieceFields.hidden = !creatingPiece;
+      newPieceFields.style.display = creatingPiece ? "flex" : "none";
+      newPieceFields.querySelectorAll("input, select").forEach((field) => {
+        field.disabled = !creatingPiece;
+        field.required = creatingPiece;
+      });
+    };
+    productSelect.addEventListener("change", toggleNewPieceFields);
+    toggleNewPieceFields();
+    const resetForm = () => {
+      form.reset();
+      document.querySelector("#production-record-id").value = "";
+      toggleNewPieceFields();
+    };
+    document.querySelectorAll("[data-edit-production]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelector("#production-record-id").value = button.dataset.id;
+        document.querySelector("#production-product").value = button.dataset.productId;
+        document.querySelector("#production-month").value = button.dataset.month;
+        document.querySelector("#production-units").value = button.dataset.units;
+        document.querySelector("#production-goal").value = button.dataset.goal;
+        document.querySelector("#production-spent").value = button.dataset.spent;
+        document.querySelector("#production-value").value = button.dataset.value;
+        toggleNewPieceFields();
+        form.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    });
+    document.querySelector("[data-reset-production]").addEventListener("click", resetForm);
     document.querySelector("[data-export-production]").addEventListener("click", () => {
-      const rows = [
-        ["Production metric", "Value"],
-        ["New paintings this month", "2 of 3 (monthly goal)"],
-        ["Efficiency", "94.2% OEE score"],
-        [],
-        ["Month", "New paintings"],
-        ["January", "Not recorded"],
-        ["February", "Not recorded"],
-        ["March", "Not recorded"],
-        ["April", "Not recorded"],
-        ["May", "Not recorded"],
-        ["June", "Not recorded"],
-        ["July", "Not recorded"],
-        ["August", "Not recorded"],
-        ["September", "Not recorded"],
-        ["October", "Not recorded"],
-        ["November", "Not recorded"],
-        ["December", "Not recorded"],
-      ];
-      const csv = rows
-        .map((row) => row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(","))
-        .join("\r\n");
+      const rows = [...document.querySelectorAll(".painting-table tr")].map((row) =>
+        [...row.querySelectorAll("th, td")].slice(0, -1).map((cell) => cell.innerText.trim())
+      );
+      const csv = rows.map((row) =>
+        row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(",")
+      ).join("\r\n");
       const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
       const download = document.createElement("a");
       download.href = url;
-      download.download = "factory-operations-report.csv";
+      download.download = "production-records.csv";
+      document.body.appendChild(download);
       download.click();
+      download.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
   </script>

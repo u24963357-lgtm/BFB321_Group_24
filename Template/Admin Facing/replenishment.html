@@ -17,7 +17,7 @@
     </a>
 
     <div class="topbar-right">
-      <span class="pill-status"><span class="dot"></span>All systems operational</span>
+      <span class="pill-status"><span class="dot"></span>Database connected</span>
       <button class="icon-btn" type="button" aria-label="Search" title="Search inventory" data-focus-search>
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.5 15.5 4.2 4.2" /></svg>
       </button>
@@ -97,6 +97,26 @@
       {% for message in get_flashed_messages() %}
       <p class="inventory-message" role="status">{{ message }}</p>
       {% endfor %}
+      <form method="POST" action="{{ url_for('create_inventory') }}" id="inventory-create-form"
+            class="inventory-create-form" hidden>
+        <input type="text" name="name" placeholder="Product name" required maxlength="120" class="search-input">
+        <select name="category" required class="search-input">
+          <option value="">Select category...</option>
+          <option value="Painting">Painting</option>
+          <option value="Canvas">Canvas</option>
+          <option value="Frame">Frame</option>
+        </select>
+        <select name="location_id" required class="search-input">
+          <option value="">Select location...</option>
+          {% for location in locations %}
+            <option value="{{ location.id }}">{{ location.name }}</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="quantity" placeholder="Quantity" min="0" required class="search-input">
+        <input type="number" name="reorder_level" placeholder="Reorder level" min="0" value="10" required class="search-input">
+        <input type="number" name="price" placeholder="Price (R)" min="0" step="0.01" required class="search-input">
+        <button type="submit" class="btn">Save SKU</button>
+      </form>
       <div class="table-scroll">
         <table class="inventory-table">
           <thead>
@@ -144,5 +164,47 @@
     </section>
   </main>
 
- 
+  <script>
+    const inventorySearch = document.querySelector("[data-inventory-search]");
+    const inventoryRows = [...document.querySelectorAll("[data-inventory-rows] tr")];
+    const inventoryCount = document.querySelector("#inventory-count");
+    inventorySearch.addEventListener("input", () => {
+      const term = inventorySearch.value.trim().toLowerCase();
+      let visible = 0;
+      inventoryRows.forEach((row) => {
+        const matches = row.innerText.toLowerCase().includes(term);
+        row.hidden = !matches;
+        if (matches) visible += 1;
+      });
+      inventoryCount.textContent = `${visible} inventory records shown`;
+    });
+    document.querySelector("[data-focus-search]").addEventListener("click", () => {
+      inventorySearch.focus();
+    });
+    document.querySelector("[data-add-inventory]").addEventListener("click", () => {
+      const form = document.querySelector("#inventory-create-form");
+      form.hidden = !form.hidden;
+      if (!form.hidden) {
+        form.scrollIntoView({ behavior: "smooth", block: "center" });
+        form.querySelector("input[name='name']").focus();
+      }
+    });
+    document.querySelector("[data-export]").addEventListener("click", () => {
+      const rows = [...document.querySelectorAll(".inventory-table tr")]
+        .filter((row) => !row.hidden)
+        .map((row) => [...row.querySelectorAll("th, td")].slice(0, -1)
+          .map((cell) => cell.innerText.trim()));
+      const csv = rows.map((row) =>
+        row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(",")
+      ).join("\r\n");
+      const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      const download = document.createElement("a");
+      download.href = url;
+      download.download = "inventory.csv";
+      document.body.appendChild(download);
+      download.click();
+      download.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+  </script>
 {% endblock %}

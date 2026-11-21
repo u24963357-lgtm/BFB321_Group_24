@@ -18,7 +18,7 @@
     </a>
 
     <div class="topbar-right">
-      <span class="pill-status"><span class="dot"></span>All systems operational</span>
+      <span class="pill-status"><span class="dot"></span>Database connected</span>
       <button class="icon-btn" type="button" aria-label="View active shipments" title="View active shipments" data-focus-shipments>
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.5 15.5 4.2 4.2" /></svg>
       </button>
@@ -51,31 +51,27 @@
     <section class="card-grid storage-metrics logistics-metrics" aria-label="Logistics summary">
       <article class="card">
         <div class="card-top">
-          <span class="card-label">In transit</span>
-          <span class="card-badge">+8 today</span>
+          <span class="card-label">Active shipments</span>
         </div>
-        <div class="card-value">124 <small>shipments</small></div>
+        <div class="card-value">{{ active_shipments }} <small>shipments</small></div>
       </article>
       <article class="card">
         <div class="card-top">
-          <span class="card-label">On-time rate</span>
-          <span class="card-badge">+1.2%</span>
+          <span class="card-label">Delayed</span>
         </div>
-        <div class="card-value">96.4% <small>this month</small></div>
+        <div class="card-value">{{ delayed_shipments }} <small>shipments</small></div>
       </article>
       <article class="card">
         <div class="card-top">
-          <span class="card-label">Avg. lead time</span>
-          <span class="card-badge">−0.4d</span>
+          <span class="card-label">Delivered</span>
         </div>
-        <div class="card-value">3.8 <small>days</small></div>
+        <div class="card-value">{{ delivered_shipments }} <small>shipments</small></div>
       </article>
       <article class="card">
         <div class="card-top">
-          <span class="card-label">Freight cost</span>
-          <span class="card-badge">−3.2%</span>
+          <span class="card-label">Total recorded</span>
         </div>
-        <div class="card-value">R500 <small>this week</small></div>
+        <div class="card-value">{{ total_shipments }} <small>shipments</small></div>
       </article>
     </section>
 
@@ -84,19 +80,21 @@
         <div class="planning-panel-head">
           <div>
             <h2 class="panel-title">Economic order quantity</h2>
-            <p class="panel-sub">reccomended number of units to order</p>
+            <p class="panel-sub">Demand from the last 12 months; holding costs are annualized.</p>
           </div>
           <span class="model-tag">EOQ</span>
         </div>
-        <div class="eoq-values" role="group" aria-label="Illustrative economic order quantities">
-          <div class="eoq-value">
-            <span class="eoq-material">Canvas</span>
-            <strong class="eoq-quantity">{{ eoq_canvas }} <small>units</small></strong>
+        <div class="eoq-values" role="list" aria-label="Economic order quantities based on order history">
+          {% for item in eoq_items %}
+          <div class="eoq-value" role="listitem">
+            <span class="eoq-material">{{ item.name }}</span>
+            <strong class="eoq-quantity">
+              {% if item.eoq is not none %}{{ item.eoq }} <small>units</small>{% else %}No recorded demand{% endif %}
+            </strong>
           </div>
-          <div class="eoq-value">
-            <span class="eoq-material">Frames</span>
-            <strong class="eoq-quantity">{{ eoq_frame }} <small>units</small></strong>
-          </div>
+          {% else %}
+          <p>No canvas or frame products are available.</p>
+          {% endfor %}
         </div>
       </article>
 
@@ -104,23 +102,22 @@
         <div class="planning-panel-head">
           <div>
             <h2 class="panel-title">Economic production quantity</h2>
-            <p class="panel-sub">Inventory level across each production cycle</p>
+            <p class="panel-sub">Production rate is annualized from recorded production months.</p>
           </div>
           <span class="model-tag">EPQ</span>
         </div>
-        <svg class="planning-chart" viewBox="0 0 400 150" role="img" aria-labelledby="epq-title epq-description">
-          <title id="epq-title">Economic production quantity model</title>
-          <desc id="epq-description">Inventory rises during production and falls as items are used. The dashed line marks an average inventory level of 620 units.</desc>
-          <g class="chart-grid">
-            <path d="M44 24H378M44 53H378M44 82H378M44 111H378" />
-          </g>
-          <path class="chart-axis" d="M44 15V119H380" />
-          <path class="chart-total-fill" d="M50 107 105 24V107 107L164 24V107 107L223 24V107 107L282 24V107 107L341 24V107 107L368 55V117H50Z" />
-          <path class="chart-sawtooth" d="M50 107 105 24V107L164 24V107L223 24V107L282 24V107L341 24V107L368 64" />
-          <path class="chart-average" d="M44 65H378" />
-          <text class="chart-average-label" x="269" y="59">Average inventory: 620</text>
-          <text class="chart-axis-label" x="44" y="135">Order / production cycle</text>
-        </svg>
+        <div class="eoq-values" role="list" aria-label="Economic production quantities based on production records">
+          {% for item in epq_items %}
+          <div class="eoq-value" role="listitem">
+            <span class="eoq-material">{{ item.name }} <small>(demand {{ item.demand|round|int }} / production {{ item.production_rate|round|int }} per year)</small></span>
+            <strong class="eoq-quantity">
+              {% if item.epq is not none %}{{ item.epq }} <small>units</small>{% else %}Insufficient rate or data{% endif %}
+            </strong>
+          </div>
+          {% else %}
+          <p>Production records are needed to calculate EPQ.</p>
+          {% endfor %}
+        </div>
       </article>
     </section>
 
@@ -128,7 +125,7 @@
       <div class="panel-head">
         <h2 class="panel-title">Add Shipment</h2>
       </div>
-      <form method="POST" action="{{ url_for('logistics') }}" style="padding: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+      <form id="add-shipment-form" method="POST" action="{{ url_for('logistics') }}" style="padding: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
         <input type="text" name="shipment_id" placeholder="SHP-12345" required class="search-input">
         <input type="text" name="origin" placeholder="Origin" required class="search-input">
         <input type="text" name="destination" placeholder="Destination" required class="search-input">
@@ -136,6 +133,8 @@
           <option value="In transit">In transit</option>
           <option value="On schedule">On schedule</option>
           <option value="Delayed">Delayed</option>
+          <option value="At terminal">At terminal</option>
+          <option value="Delivered">Delivered</option>
         </select>
         <input type="text" name="arrival_date" placeholder="Arrival Date/Time" required class="search-input">
         <button type="submit" class="btn">Add Shipment</button>
@@ -203,4 +202,43 @@
   </main>
 
 
+  <script>
+    const shipmentRows = [...document.querySelectorAll(".shipment-table tbody tr.past-shipment")];
+    const historyButton = document.querySelector("[data-toggle-history]");
+    shipmentRows.forEach((row) => { row.hidden = true; });
+    historyButton.addEventListener("click", () => {
+      const showHistory = historyButton.getAttribute("aria-expanded") !== "true";
+      shipmentRows.forEach((row) => { row.hidden = !showHistory; });
+      historyButton.setAttribute("aria-expanded", String(showHistory));
+      historyButton.textContent = showHistory ? "Hide past shipments" : "Show past shipments";
+    });
+    document.querySelector("[data-focus-shipments]").addEventListener("click", () => {
+      const heading = document.querySelector("#shipments-title");
+      heading.scrollIntoView({ behavior: "smooth", block: "center" });
+      heading.focus({ preventScroll: true });
+    });
+    document.querySelector("[data-add-shipment]").addEventListener("click", () => {
+      document.querySelector("#add-shipment-form").scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    });
+    document.querySelector("[data-export-shipments]").addEventListener("click", () => {
+      const rows = [...document.querySelectorAll(".shipment-table tr")]
+        .filter((row) => !row.hidden)
+        .map((row) => [...row.querySelectorAll("th, td")].slice(0, -1)
+          .map((cell) => cell.innerText.trim()));
+      const csv = rows.map((row) =>
+        row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(",")
+      ).join("\r\n");
+      const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      const download = document.createElement("a");
+      download.href = url;
+      download.download = "shipments.csv";
+      document.body.appendChild(download);
+      download.click();
+      download.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+  </script>
 {% endblock %}

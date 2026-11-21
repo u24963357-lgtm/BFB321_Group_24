@@ -10,7 +10,7 @@
     <main class="control-tower">
         <header class="welcome">
             <p class="eyebrow">Supply Chain Control Tower</p>
-            <h1>Good morning Victor.</h1>
+            <h1>Welcome, {{ session.get('username', 'there') }}.</h1>
             <p class="welcome-copy">Choose an area to view detailed operations, analytics, and records.</p>
         </header>
 
@@ -27,13 +27,13 @@
                 </span>
                 <span class="card-title">
                     <span class="area-name">Production</span>
-                    <span class="area-count">efficiency 94.2%</span>
+                    <span class="area-count">efficiency {{ production_efficiency }}%</span>
                 </span>
                 <span class="card-divider"></span>
                 <span class="card-metric">
-                    <span class="metric-value">2</span>
-                    <span class="metric-label">Painitngs made this month</span>
-                    <span class="metric-trend">+2.4%</span>
+                    <span class="metric-value">{{ new_paintings }}</span>
+                    <span class="metric-label">Paintings made this month</span>
+                    <span class="metric-trend">of {{ monthly_goal }} goal</span>
                 </span>
             </a>
 
@@ -50,13 +50,12 @@
                 </span>
                 <span class="card-title">
                     <span class="area-name">Logistics</span>
-                    <span class="area-count">124 in transit</span>
+                    <span class="area-count">{{ active_shipments }} active</span>
                 </span>
                 <span class="card-divider"></span>
                 <span class="card-metric">
-                    <span class="metric-value">{{ on_time_rate }}</span>
-                    <span class="metric-label">on-time rate</span>
-                    <span class="metric-trend">+1.2%</span>
+                    <span class="metric-value">{{ delayed_shipments }}</span>
+                    <span class="metric-label">delayed shipments</span>
                 </span>
             </a>
 
@@ -78,10 +77,8 @@
 
 
 
-                    <span class="metric-value">R {{ monthly_revenue }}</span>
+                    <span class="metric-value">R {{ "{:,.2f}".format(monthly_revenue) }}</span>
                     <span class="metric-label">Monthly revenue</span>
-
-                    <span class="metric-trend">+4.7%</span>
                 </span>
             </a>
 
@@ -102,7 +99,6 @@
                 <span class="card-metric">
                     <span class="metric-value">{{low_stock_items}}</span>
                     <span class="metric-label">low-stock items</span>
-                    <span class="metric-trend">+6.2%</span>
                 </span>
             </a>
         </nav>

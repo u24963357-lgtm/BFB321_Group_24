@@ -11,12 +11,19 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))  # DB_HOST, DB_PASSWORD, ... from .e
 
 def connect():
     """Open a new connection using the settings in .env."""
+    required = ("DB_HOST", "DB_USER", "DB_NAME")
+    missing = [name for name in required if not os.getenv(name)]
+    if missing:
+        raise RuntimeError(
+            "Missing database configuration: " + ", ".join(missing)
+        )
+
     options = dict(
-        host=os.getenv("DB_HOST", "DB_HOST=mysql-2117e049-tuks-490c.e.aivencloud.com"),
-        port=int(os.getenv("DB_PORT", "26525")),
-        user=os.getenv("DB_USER", "avnadmin"),
+        host=os.environ["DB_HOST"],
+        port=int(os.getenv("DB_PORT", "3306")),
+        user=os.environ["DB_USER"],
         password=os.getenv("DB_PASSWORD", ""),
-        database=os.getenv("DB_NAME", "defaultdb"),
+        database=os.environ["DB_NAME"],
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor,  # rows come back as dictionaries
         autocommit=False,                        # nothing is saved until commit()
