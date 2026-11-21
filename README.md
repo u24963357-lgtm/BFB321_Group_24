@@ -243,7 +243,7 @@ erDiagram
 | password_hash | VARCHAR(255)| required (Werkzeug PBKDF2 hash) |
 
 
-## 🚀 How to Run
+## How to Run
 
 ### Prerequisites
 * [Python 3.10+](https://www.python.org/downloads/)
@@ -314,7 +314,7 @@ Use the following test credentials:
 
 ---
 
-## 🔌 REST API Documentation
+## REST API Documentation
 
 The application includes a RESTful JSON API layer for integration with external systems. You can test these endpoints using Postman or `curl`.
 
