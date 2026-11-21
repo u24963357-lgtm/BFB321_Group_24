@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Manage order #{{ order.id }} | Kelvic the Artist{% endblock %}
+{% block body_class %}storage-page sales-page{% endblock %}
+{% set active_page = 'orders' %}
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='storage.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='sales.css') }}">
+{% endblock %}
+{% block content %}
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('home') }}" aria-label="Kelvic the Artist home">
+      <img class="brand-logo" src="{{ url_for('static', filename='kelvic-logo.png') }}" alt="">
+      <span class="brand-text">
+        <span class="brand-title">Kelvic the Artist</span>
+        <span class="brand-sub">Artworks</span>
+      </span>
+    </a>
+  </header>
+
+  <main class="container storage-content sales-content">
+    <a class="back-link" href="{{ url_for('orders') }}">Back to orders</a>
+    <section class="page-header">
+      <div>
+        <p class="eyebrow">Order management</p>
+        <h1 class="page-title">Order #{{ order.id }}</h1>
+        <p class="page-subtitle">{{ order.customer }} · {{ order.order_date.strftime('%Y-%m-%d') }} · {{ order.status }}</p>
+      </div>
+    </section>
+
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+      <p class="order-message" role="status">{{ message }}</p>
+    {% endfor %}
+
+    {% if order.status in ('Open', 'Backordered') %}
+    <section class="panel" style="margin-bottom: 20px;">
+      <div class="panel-head"><h2 class="panel-title">Update order status</h2></div>
+      <form method="POST" action="{{ url_for('change_order_status', order_id=order.id) }}" style="padding: 15px; display: flex; gap: 10px;">
+        <select name="status" class="search-input" required>
+          {% if order.status == 'Open' and order.stock_reserved %}
+            <option value="Fulfilled">Fulfilled</option>
+            <option value="Backordered">Backordered</option>
+          {% else %}
+            <option value="Open">Open</option>
+          {% endif %}
+          <option value="Cancelled">Cancelled</option>
+        </select>
+        <button type="submit" class="btn">Save status</button>
+      </form>
+    </section>
+    {% endif %}
+
+    <section class="panel">
+      <div class="panel-head"><h2 class="panel-title">Order items</h2></div>
+      <div class="table-scroll">
+        <table class="order-table">
+          <thead>
+            <tr><th>Product, quantity, unit price, stock, and actions</th></tr>
+          </thead>
+          <tbody>
+            {% for item in order["items"] %}
+            <tr>
+              <td>
+                {% if order.status == 'Open' %}
+                <form method="POST" action="{{ url_for('edit_order_item', order_id=order.id, item_id=item.id) }}"
+                      style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                  <select name="product_id" class="search-input" required>
+                    {% for product in order["products"] %}
+                      <option value="{{ product.id }}" {% if product.id == item.product_id %}selected{% endif %}>
+                        {{ product.name }} (stock {{ product.stock_quantity }})
+                      </option>
+                    {% endfor %}
+                  </select>
+                  <input type="number" name="quantity" min="1" value="{{ item.quantity }}" required class="search-input">
+                  <span>R{{ "{:,.2f}".format(item.unit_price) }} each</span>
+                  <span>{{ item.stock_quantity }} in stock</span>
+                  <button type="submit" class="btn">Update item</button>
+                </form>
+                {% else %}
+                  {{ item.product }} · {{ item.quantity }} × R{{ "{:,.2f}".format(item.unit_price) }}
+                {% endif %}
+              </td>
+            </tr>
+            {% else %}
+            <tr><td>This order has no items.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% if order.status == 'Open' and not order.stock_reserved %}
+        <p class="panel-sub" style="padding: 0 15px 15px;">
+          This order predates stock reservation tracking. Cancel it and place a new order before editing items.
+        </p>
+      {% endif %}
+    </section>
+  </main>
+{% endblock %}

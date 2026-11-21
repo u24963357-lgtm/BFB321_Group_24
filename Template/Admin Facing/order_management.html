@@ -18,7 +18,7 @@
     </a>
 
     <div class="topbar-right">
-      <span class="pill-status"><span class="dot"></span>All systems operational</span>
+      <span class="pill-status"><span class="dot"></span>Database connected</span>
       <button class="icon-btn" type="button" aria-label="View customer orders" title="View customer orders" data-focus-orders>
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.5 15.5 4.2 4.2" /></svg>
       </button>
@@ -51,7 +51,7 @@
       <article class="card">
         <div class="card-top">
           <span class="card-label">Open orders</span>
-          <span class="card-badge">+2 this month</span>
+          <span class="card-badge">+{{ open_this_month }} this month</span>
         </div>
         <div class="card-value">{{ open_order }} <small>orders</small></div>
       </article>
@@ -65,14 +65,13 @@
       <article class="card">
         <div class="card-top">
           <span class="card-label">Fulfillment rate</span>
-          <span class="card-badge">+0.9%</span>
         </div>
         <div class="card-value">{{ fulfillment_rate }}% <small>fulfilled</small></div>
       </article>
       <article class="card">
         <div class="card-top">
           <span class="card-label">Backorders</span>
-          <span class="card-badge">12.5%</span>
+          <span class="card-badge">{{ backorder_pct }}% of active orders</span>
         </div>
         <div class="card-value">{{ backorders }}<small>orders</small></div>
       </article>
@@ -85,7 +84,7 @@
       <div class="panel-head">
         <h2 class="panel-title">Place Order</h2>
       </div>
-      <form method="POST" action="{{ url_for('orders') }}" style="padding: 15px; display: flex; gap: 10px;">
+      <form method="POST" action="{{ url_for('orders') }}" id="place-order-form" style="padding: 15px; display: flex; gap: 10px;">
         <select name="customer_id" class="search-input" required>
           <option value="">Select Customer...</option>
           {% for customer in customers %}
@@ -107,8 +106,9 @@
       <div class="panel-head">
         <div>
           <h2 class="panel-title" id="customer-orders-title" tabindex="-1">Customer orders</h2>
-          <p class="panel-sub">Add and manage physical, digital, and original orders</p>
+          <p class="panel-sub">Review, update, and manage customer orders</p>
         </div>
+        <input type="search" class="search-input" placeholder="Search orders" aria-label="Search orders" data-orders-search>
         <button class="btn order-add" type="button" data-add-order>Add order</button>
       </div>
       <p class="order-message" aria-live="polite" data-order-message></p>
@@ -133,7 +133,7 @@
               <td>{{ o.status }}</td>
               <td>R{{ "{:,.2f}".format(o.total_value if o.total_value else 0) }}</td>
               <td class="order-row-actions">
-                <button class="order-row-button">View</button>
+                <a class="order-row-button" href="{{ url_for('order_detail', order_id=o.id) }}">Manage</a>
               </td>
             </tr>
             {% else %}
@@ -147,7 +147,7 @@
     <section class="panel output-panel order-volume-panel" aria-labelledby="order-volume-title">
       <div class="output-panel-head">
         <h2 class="panel-title" id="order-volume-title" tabindex="-1">Monthly orders and revenue</h2>
-        <p class="panel-sub"> revenue provided; March-December</p>
+        <p class="panel-sub">January through December</p>
       </div>
       <div class="order-table-wrap">
         <table class="order-table">
@@ -177,5 +177,39 @@
     </section>
   </main>
 
-
+  <script>
+    const ordersSearch = document.querySelector("[data-orders-search]");
+    const orderRows = [...document.querySelectorAll("[data-order-rows] tr")];
+    ordersSearch.addEventListener("input", () => {
+      const term = ordersSearch.value.trim().toLowerCase();
+      orderRows.forEach((row) => {
+        row.hidden = !row.innerText.toLowerCase().includes(term);
+      });
+    });
+    document.querySelector("[data-focus-orders]").addEventListener("click", () => {
+      ordersSearch.focus();
+    });
+    document.querySelector("[data-add-order]").addEventListener("click", () => {
+      const form = document.querySelector("#place-order-form");
+      form.scrollIntoView({ behavior: "smooth", block: "center" });
+      form.querySelector("select[name='customer_id']").focus();
+    });
+    document.querySelector("[data-export-orders]").addEventListener("click", () => {
+      const rows = [...document.querySelectorAll(".managed-order-table tr")]
+        .filter((row) => !row.hidden)
+        .map((row) => [...row.querySelectorAll("th, td")].slice(0, -1)
+          .map((cell) => cell.innerText.trim()));
+      const csv = rows.map((row) =>
+        row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(",")
+      ).join("\r\n");
+      const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      const download = document.createElement("a");
+      download.href = url;
+      download.download = "orders.csv";
+      document.body.appendChild(download);
+      download.click();
+      download.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+  </script>
 {% endblock %}

@@ -115,6 +115,31 @@
   background: #294d37;
 }
 
+.login-test-credentials {
+  margin-top: 22px;
+  padding: 12px 14px;
+  border: 1px solid #dfe5df;
+  border-radius: 6px;
+  background: #fafbf9;
+  color: #4d554f;
+  font-size: 12px;
+}
+
+.login-test-credentials p {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.login-test-credentials p + p {
+  margin-top: 8px;
+}
+
+.login-test-credentials .credentials-title {
+  margin-bottom: 6px;
+  color: #18251f;
+  font-weight: 600;
+}
+
 .login-error {
   margin: 0 0 18px;
   padding: 10px 12px;

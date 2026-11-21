@@ -54,11 +54,10 @@ CREATE TABLE IF NOT EXISTS orders (
     order_date      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     due_date        DATE         NULL,
     fulfilled_date  DATE         NULL,
-    status          enum('Open', 'Fulfilled', 'Backordered') NOT NULL DEFAULT 'Open',
+    status          enum('Open', 'Fulfilled', 'Backordered', 'Cancelled') NOT NULL DEFAULT 'Open',
+    stock_reserved  BOOLEAN      NOT NULL DEFAULT FALSE,
     CONSTRAINT fk_orders_customer
-        FOREIGN KEY (customer_id) REFERENCES customers (id),
-    CONSTRAINT chk_orders_status
-        CHECK (status IN ('Open', 'Fulfilled', 'Backordered'))
+        FOREIGN KEY (customer_id) REFERENCES customers (id)
 );
  
 -- ORDER_ITEMS: link table between orders and products

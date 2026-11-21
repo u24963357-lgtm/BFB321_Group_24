@@ -17,6 +17,7 @@
                 <a href="{{ url_for('logistics') }}"{% if active_page == 'logistics' %} aria-current="page"{% endif %}>Logistics</a>
                 <a href="{{ url_for('orders') }}"{% if active_page == 'orders' %} aria-current="page"{% endif %}>Sales / Orders</a>
                 <a href="{{ url_for('storage') }}"{% if active_page == 'storage' %} aria-current="page"{% endif %}>Storage</a>
+                <a href="{{ url_for('logout') }}" style="color: #a33a32;">Logout</a>
             </div>
         </nav>
     </header>
