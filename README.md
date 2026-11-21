@@ -13,7 +13,7 @@ An enterprise system for small independant artists without business background a
 |Kelebone Kgalaeng | u16068221 |
 
 
-features
+## Features
 | Page |  What it does |
 |-------------|----------------|
 | overview/ | The Web solution woks as an ERP system as in connects the business operations to one database. It has modules such as production, logistics, orders, orders and storage. |
@@ -25,8 +25,18 @@ features
 | /orders/<id> | It allows the user to see a more detailed view of the individual order. |
 | /storage | The storage of the business. Uses the EPQ/EOQ formulas to show the status of an SKU. |
 | / |  |
-| / |  |
-| / |  |
+
+All pages use the same data base and all the tables and KPI's are updated by calculated values from the database.
+
+## Tech stack
+------------------------------------------------------------------------------------------
+| Group names |  | |
+|-------------|-------------|------------|
+| Python & flask| Werkzeug Security | Jinja 2  |
+| MySQL | PyMySQL | Aiven | 
+| HTML 5 | CSS | Javascript | 
+| Git/GitH |  |  | 
+
 
 Installation and setup instructions:
 1. Install Python and git on your device: https://git-scm.com/
