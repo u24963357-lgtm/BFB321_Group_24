@@ -242,27 +242,91 @@ erDiagram
 | username | VARCHAR(50) | required, unique |
 | password_hash | VARCHAR(255)| required (Werkzeug PBKDF2 hash) |
 
-Installation and setup instructions:
-1. Install Python and git on your device: https://git-scm.com/
-2. Clone the repository:
 
-   git clone [https://github.com/u24963357-lgtm/Kelvic-the-Artist-Webpage]
-   cd Kelvic-the-Artist-Webpage
+## 🚀 How to Run
 
-3. Configure the database connection values in a local `.env` file. Start from the example:
-   - On first setup only, if `.env` does not already exist: `Copy-Item .env.example .env`
-   - Edit `.env` and set `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME`. Set a long, random `FLASK_SECRET_KEY`; do not commit `.env`.
+### Prerequisites
+* [Python 3.10+](https://www.python.org/downloads/)
+* [Git](https://git-scm.com/)
+* Access to a MySQL Database (This project uses [Aiven Cloud MySQL](https://aiven.io/), but a local MySQL server will also work).
 
-   In the repository terminal, run:
-   - `python -m venv venv`
-   - `.\venv\Scripts\Activate.ps1`
-   - `pip install -r requirements.txt`
-   - `python -c "from db import connect; c = connect(); c.close(); print('Database connection OK')"` to verify the connection
-   - `python init_db.py` to create/update the tables and load sample data when the database is empty
-   - `python app.py`
+### Step 1: Clone the Repository
+Open your terminal and clone the project:
+```bash
+git clone    git clone [https://github.com/u24963357-lgtm/BFB321_Group_24
+cd BFB321_Group_24
+```
 
-4. Open your browser and go to http://127.0.0.1:5000/
+### Step 2: Create and Activate a Virtual Environment
+```bash
+# Windows
+python -m venv venv
+.\venv\Scripts\Activate.ps1
 
-5. Log in information:
-       username :adminA  password : Kelvic_2026A
-       username :adminB  password : Kelvic_2026B
+# macOS / Linux
+python3 -m venv venv
+source venv/bin/activate
+```
+*(You will know the environment is active when your terminal prompt starts with `(venv)`).*
+
+### Step 3: Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### Step 4: Configure Environment Variables
+1. Copy the template file to create your actual environment file:
+   ```bash
+   cp .env.example .env
+   ```
+2. Open the newly created `.env` file and fill in your database credentials:
+   ```ini
+   DB_HOST=your-database-host.aivencloud.com
+   DB_PORT=26525
+   DB_USER=avnadmin
+   DB_PASSWORD=your-secure-password
+   DB_NAME=defaultdb
+   FLASK_SECRET_KEY=any-random-string-here
+   ```
+
+### Step 5: Initialize the Database
+Run the initialization script to create tables, constraints, and load the sample data:
+```bash
+python init_db.py --reset
+```
+
+### Step 6: Run the Application
+```bash
+python app.py
+```
+
+### Step 7: Access the System
+Open your web browser and navigate to:
+**http://127.0.0.1:5000/**
+
+### Step 8: Log In
+Use the following test credentials:
+
+| Username | Password |
+| :--- | :--- |
+| `adminA` | `Kelvic_2026A` |
+| `adminB` | `Kelvic_2026B` |
+
+---
+
+## 🔌 REST API Documentation
+
+The application includes a RESTful JSON API layer for integration with external systems. You can test these endpoints using Postman or `curl`.
+
+| Method | Endpoint | Description | Request Body (JSON) or Query Params |
+| :--- | :--- | :--- | :--- |
+| **GET** | `/api/products` | Returns a paginated list of products. | `?limit=10&offset=0&category=Canvas` |
+| **GET** | `/api/orders/<id>` | Returns details for a specific order. | None |
+| **POST** | `/api/orders` | Creates a new order and deducts stock. | `{"customer_id": 1, "product_id": 2, "quantity": 5}` |
+| **PUT** | `/api/products/<id>` | Updates the price of a specific product. | `{"price": 1500.00}` |
+
+*Note: API routes return appropriate HTTP status codes (200 OK, 201 Created, 400 Bad Request, 404 Not Found) and errors are logged to `app.log`.*
+
+---
+
+
