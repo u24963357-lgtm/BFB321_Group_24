@@ -23,7 +23,7 @@ An enterprise system for small independant artists without business background a
 | /logistics | The shipping manager. Uses EOQ and EPQ to provide insights to the user. |
 | /orders | Handles demand and fulfilment. Shows historic demand and fulfilment and also takes new orders. |
 | /orders/<id> | It allows the user to see a more detailed view of the individual order. |
-| /storage | The storage of the business. Uses the EPQ/EOQ formulas to show the status of an SKU. |
+| /storage | The storage of the business. Uses the EPQ/EOQ formulas to show SKU status, and lets the user edit an item's location, quantity, and replenishment status in the shared database. |
 | / |  |
 
 All pages use the same data base and all the tables and KPI's are updated by calculated values from the database.
