@@ -43,6 +43,7 @@ All pages use the same data base and all the tables and KPI's are updated by cal
 ├── models.py           # SQL queries, business logic, and supply chain math
 ├── db.py               # MySQL connection pool and query helpers
 ├── init_db.py          # Script to create tables and load seed data
+├── test_workflows.py   # Tests the website functionality
 ├── schema.sql          # CREATE TABLE statements
 ├── seed.sql            # Sample data for demo
 ├── requirements.txt    # Python package dependencies
@@ -253,7 +254,7 @@ erDiagram
 ### Step 1: Clone the Repository
 Open your terminal and clone the project:
 ```bash
-git clone    git clone [https://github.com/u24963357-lgtm/BFB321_Group_24
+git clone https://github.com/u24963357-lgtm/BFB321_Group_24
 cd BFB321_Group_24
 ```
 
