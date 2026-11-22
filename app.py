@@ -19,6 +19,7 @@ from models import (
     get_storage_page_data,
     place_order,
     save_production_record,
+    update_inventory as update_inventory_record,
     update_order_item,
     update_order_status,
     authenticate_user,
@@ -218,6 +219,21 @@ def storage():
 def delete_inventory(product_id):
     success, message = delete_inventory_record(product_id)
     flash(message, 'success' if success else 'error')
+    return redirect(url_for('storage'))
+
+
+@app.route('/inventory/<int:product_id>/update', methods=['POST'])
+def update_inventory(product_id):
+    location_id = request.form.get('location_id', type=int)
+    quantity = request.form.get('quantity', type=int)
+    status = request.form.get('status', '')
+    if location_id is None or quantity is None:
+        flash('Enter a valid storage location and quantity.', 'error')
+    else:
+        success, message = update_inventory_record(
+            product_id, location_id, quantity, status
+        )
+        flash(message, 'success' if success else 'error')
     return redirect(url_for('storage'))
 
 

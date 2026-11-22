@@ -751,6 +751,48 @@ def add_inventory(name, category, location_id, quantity, price, reorder_level):
         return False, "The selected storage location or product details are invalid."
 
 
+def update_inventory(product_id, location_id, quantity, status):
+    if location_id <= 0 or quantity < 0:
+        return False, "Choose a valid storage location and a non-negative quantity."
+    if status not in {"In stock", "Low stock", "Reorder"}:
+        return False, "Choose a valid inventory status."
+    if (quantity == 0) != (status == "Reorder"):
+        return False, "Reorder status requires zero quantity; other statuses require a positive quantity."
+
+    db = get_db()
+    try:
+        with db.cursor() as cur:
+            cur.execute(
+                "SELECT stock_quantity, reorder_level FROM products "
+                "WHERE id = %s FOR UPDATE",
+                (product_id,),
+            )
+            product = cur.fetchone()
+            if not product:
+                db.rollback()
+                return False, "Inventory item not found."
+
+            reorder_level = int(product["reorder_level"])
+            if status == "Low stock" and quantity > reorder_level:
+                reorder_level = quantity
+            elif status == "In stock" and quantity <= reorder_level:
+                reorder_level = quantity - 1
+
+            cur.execute(
+                "UPDATE products SET location_id = %s, stock_quantity = %s, "
+                "reorder_level = %s WHERE id = %s",
+                (location_id, quantity, reorder_level, product_id),
+            )
+        db.commit()
+        return True, "Inventory item updated."
+    except pymysql.err.IntegrityError:
+        db.rollback()
+        return False, "The selected storage location or inventory item is invalid."
+    except pymysql.MySQLError:
+        db.rollback()
+        raise
+
+
 def delete_inventory(product_id):
     references = query_one("""
         SELECT EXISTS(SELECT 1 FROM order_items WHERE product_id = %s) AS ordered,

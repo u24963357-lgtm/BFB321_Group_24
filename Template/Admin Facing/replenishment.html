@@ -137,20 +137,47 @@
               <td class="sku">{{ item.sku }}</td>
               <td>{{ item.name }}</td>
               <td>{{ item.category }}</td>
-              <td><span class="location">{{ item.location }}</span></td>
-              <td class="quantity">{{ item.quantity }}</td>
               <td>
-                {% if item.status == 'In stock' %}
-                  <span class="badge ok">In stock</span>
-                {% elif item.status == 'Low stock' %}
-                  <span class="badge low">Low stock</span>
-                {% else %}
-                  <span class="badge reorder">Reorder</span>
-                {% endif %}
+                <span data-inventory-display>{{ item.location }}</span>
+                <select name="location_id" form="inventory-edit-{{ item.id }}" class="search-input"
+                        aria-label="Storage location for {{ item.name }}" hidden disabled>
+                  {% for location in locations %}
+                    <option value="{{ location.id }}"{% if location.name == item.location %} selected{% endif %}>{{ location.name }}</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td class="quantity">
+                <span data-inventory-display>{{ item.quantity }}</span>
+                <input type="number" name="quantity" form="inventory-edit-{{ item.id }}"
+                       value="{{ item.quantity }}" min="0" required
+                       aria-label="Quantity for {{ item.name }}" hidden disabled>
+              </td>
+              <td>
+                <span data-inventory-display>
+                  {% if item.status == 'In stock' %}
+                    <span class="badge ok">In stock</span>
+                  {% elif item.status == 'Low stock' %}
+                    <span class="badge low">Low stock</span>
+                  {% else %}
+                    <span class="badge reorder">Reorder</span>
+                  {% endif %}
+                </span>
+                <select name="status" form="inventory-edit-{{ item.id }}" class="search-input"
+                        aria-label="Inventory status for {{ item.name }}" hidden disabled>
+                  <option value="In stock"{% if item.status == 'In stock' %} selected{% endif %}>In stock</option>
+                  <option value="Low stock"{% if item.status == 'Low stock' %} selected{% endif %}>Low stock</option>
+                  <option value="Reorder"{% if item.status == 'Reorder' %} selected{% endif %}>Reorder</option>
+                </select>
               </td>
               <td class="inventory-row-actions">
+                <form method="POST" action="{{ url_for('update_inventory', product_id=item.id) }}"
+                      id="inventory-edit-{{ item.id }}"></form>
+                <button type="button" class="inventory-row-button" data-edit-inventory>Edit</button>
+                <button type="submit" form="inventory-edit-{{ item.id }}"
+                        class="inventory-row-button" data-save-inventory hidden disabled>Save</button>
+                <button type="button" class="inventory-row-button" data-cancel-inventory hidden>Cancel</button>
                 <form method="POST" action="{{ url_for('delete_inventory', product_id=item.id) }}" style="display:inline;">
-                  <button type="submit" class="inventory-row-button" style="color: red;" onclick="return confirm('Delete this item?')">Delete</button>
+                  <button type="submit" class="inventory-row-button delete-inventory" onclick="return confirm('Delete this item?')">Delete</button>
                 </form>
               </td>
             </tr>
@@ -188,6 +215,32 @@
         form.scrollIntoView({ behavior: "smooth", block: "center" });
         form.querySelector("input[name='name']").focus();
       }
+    });
+    document.querySelectorAll("[data-inventory-rows] tr").forEach((row) => {
+      const editButton = row.querySelector("[data-edit-inventory]");
+      if (!editButton) return;
+      const form = row.querySelector("form[id^='inventory-edit-']");
+      const editFields = [...row.querySelectorAll("select[form], input[form]")];
+      const saveButton = row.querySelector("[data-save-inventory]");
+      const cancelButton = row.querySelector("[data-cancel-inventory]");
+      const setEditing = (editing) => {
+        row.querySelectorAll("[data-inventory-display]").forEach((element) => {
+          element.hidden = editing;
+        });
+        editFields.forEach((field) => {
+          field.hidden = !editing;
+          field.disabled = !editing;
+        });
+        editButton.hidden = editing;
+        saveButton.hidden = !editing;
+        saveButton.disabled = !editing;
+        cancelButton.hidden = !editing;
+      };
+      editButton.addEventListener("click", () => setEditing(true));
+      cancelButton.addEventListener("click", () => {
+        form.reset();
+        setEditing(false);
+      });
     });
     document.querySelector("[data-export]").addEventListener("click", () => {
       const rows = [...document.querySelectorAll(".inventory-table tr")]

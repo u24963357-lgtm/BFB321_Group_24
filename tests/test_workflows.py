@@ -23,6 +23,8 @@ class FakeCursor:
             self.row = {"status": "Open", "stock_reserved": True}
         elif sql.startswith("SELECT product_id, SUM(quantity)"):
             self.rows = [{"product_id": 8, "quantity": 2}]
+        elif sql.startswith("SELECT stock_quantity, reorder_level"):
+            self.row = {"stock_quantity": 3, "reorder_level": 5}
 
     def fetchone(self):
         return self.row
@@ -142,6 +144,33 @@ class WorkflowTests(unittest.TestCase):
 
         self.assertFalse(result[0])
         execute.assert_not_called()
+
+    def test_inventory_update_changes_location_quantity_and_selected_status(self):
+        db = FakeDatabase()
+        with patch.object(models, "get_db", return_value=db):
+            result = models.update_inventory(8, 2, 6, "In stock")
+
+        self.assertEqual(result, (True, "Inventory item updated."))
+        self.assertEqual(db.commits, 1)
+        self.assertEqual(db.rollbacks, 0)
+        self.assertEqual(
+            db.cursor_instance.statements[-1],
+            (
+                "UPDATE products SET location_id = %s, stock_quantity = %s, "
+                "reorder_level = %s WHERE id = %s",
+                (2, 6, 5, 8),
+            ),
+        )
+
+    def test_inventory_update_rejects_reorder_status_with_positive_quantity(self):
+        db = FakeDatabase()
+        with patch.object(models, "get_db", return_value=db):
+            result = models.update_inventory(8, 2, 6, "Reorder")
+
+        self.assertFalse(result[0])
+        self.assertEqual(db.commits, 0)
+        self.assertEqual(db.rollbacks, 0)
+        self.assertEqual(db.cursor_instance.statements, [])
 
     def test_logistics_quantities_use_recorded_demand_and_production(self):
         products = [

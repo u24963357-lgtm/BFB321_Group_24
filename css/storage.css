@@ -324,6 +324,12 @@
   min-width: 65px;
 }
 
+.storage-page .inventory-table select[form] {
+  width: 130px;
+  min-width: 110px;
+  padding: 5px 6px;
+}
+
 .inventory-row-actions {
   display: flex;
   gap: 5px;
